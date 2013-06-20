@@ -9,7 +9,8 @@
 // github test line
 
 #import <UIKit/UIKit.h>
+#import "WIMRLocationManager.h"
 
-@interface WIMRViewController : UIViewController
+@interface WIMRViewController : UIViewController <UpdateLocationDelegate>
 
 @end

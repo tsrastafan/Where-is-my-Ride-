@@ -10,14 +10,23 @@
 
 @interface WIMRViewController ()
 
+@property (strong, nonatomic) WIMRLocationManager * locationManager;
+@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+
 @end
 
 @implementation WIMRViewController
+- (IBAction)getLocation:(id)sender {
+    [self.locationManager startStandardUpdates];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.locationManager = [[WIMRLocationManager alloc] init];
+    [self.locationManager setDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -26,4 +35,18 @@
     // Dispose of any resources that can be recreated.
 }
 
+// delegate implementation
+-(void)locationUpdateSuccessful:(BOOL)success {
+    if (success) {
+        self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f, longitude %+.6f\n"),
+                                   self.locationManager.lastLocation.coordinate.latitude,
+                                   self.locationManager.lastLocation.coordinate.longitude];
+        self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@ %@"),
+                                  self.locationManager.placemark.subThoroughfare,
+                                  self.locationManager.placemark.thoroughfare,
+                                  self.locationManager.placemark.locality,
+                                  self.locationManager.placemark.administrativeArea,
+                                  self.locationManager.placemark.postalCode];
+    }
+}
 @end

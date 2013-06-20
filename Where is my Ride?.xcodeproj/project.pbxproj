@@ -21,6 +21,8 @@
 		8191514F176F3D9700C5E016 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81915131176F3D9600C5E016 /* UIKit.framework */; };
 		81915157176F3D9700C5E016 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81915155176F3D9700C5E016 /* InfoPlist.strings */; };
 		81915159176F3D9700C5E016 /* Where_is_my_Ride_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 81915158176F3D9700C5E016 /* Where_is_my_Ride_Tests.m */; };
+		E22B5AD017736F6F0001203D /* WIMRLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E22B5ACD17736F6F0001203D /* WIMRLocationManager.m */; };
+		E22B5AD117736F6F0001203D /* WIMRVehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = E22B5ACF17736F6F0001203D /* WIMRVehicle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,10 @@
 		81915154176F3D9700C5E016 /* Where is my Ride?Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Where is my Ride?Tests-Info.plist"; sourceTree = "<group>"; };
 		81915156176F3D9700C5E016 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		81915158176F3D9700C5E016 /* Where_is_my_Ride_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Where_is_my_Ride_Tests.m; sourceTree = "<group>"; };
+		E22B5ACC17736F6F0001203D /* WIMRLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRLocationManager.h; sourceTree = "<group>"; };
+		E22B5ACD17736F6F0001203D /* WIMRLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRLocationManager.m; sourceTree = "<group>"; };
+		E22B5ACE17736F6F0001203D /* WIMRVehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicle.h; sourceTree = "<group>"; };
+		E22B5ACF17736F6F0001203D /* WIMRVehicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicle.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +118,7 @@
 		81915133176F3D9600C5E016 /* Where is my Ride? */ = {
 			isa = PBXGroup;
 			children = (
+				E22B5ACB17736F6F0001203D /* Model */,
 				8191513C176F3D9600C5E016 /* WIMRAppDelegate.h */,
 				8191513D176F3D9600C5E016 /* WIMRAppDelegate.m */,
 				8191513F176F3D9600C5E016 /* Main.storyboard */,
@@ -150,6 +157,17 @@
 				81915155176F3D9700C5E016 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E22B5ACB17736F6F0001203D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E22B5ACC17736F6F0001203D /* WIMRLocationManager.h */,
+				E22B5ACD17736F6F0001203D /* WIMRLocationManager.m */,
+				E22B5ACE17736F6F0001203D /* WIMRVehicle.h */,
+				E22B5ACF17736F6F0001203D /* WIMRVehicle.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,6 +271,8 @@
 				8191513A176F3D9600C5E016 /* main.m in Sources */,
 				8191513E176F3D9600C5E016 /* WIMRAppDelegate.m in Sources */,
 				81915144176F3D9600C5E016 /* WIMRViewController.m in Sources */,
+				E22B5AD017736F6F0001203D /* WIMRLocationManager.m in Sources */,
+				E22B5AD117736F6F0001203D /* WIMRVehicle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +475,7 @@
 				8191515E176F3D9700C5E016 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8191515F176F3D9700C5E016 /* Build configuration list for PBXNativeTarget "Where is my Ride?Tests" */ = {
 			isa = XCConfigurationList;
@@ -463,6 +484,7 @@
 				81915161176F3D9700C5E016 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
