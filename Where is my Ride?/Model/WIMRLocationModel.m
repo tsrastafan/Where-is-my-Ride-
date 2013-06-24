@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Tobias Schultz and Steffen Heberle. All rights reserved.
 //
 
-#import "WIMRLocationManager.h"
+#import "WIMRLocationModel.h"
 
-@interface WIMRLocationManager ()
+@interface WIMRLocationModel ()
 
 @property (strong, nonatomic) CLLocationManager * locationManager;
 @property (strong, nonatomic) CLGeocoder * geocoder;
@@ -17,7 +17,7 @@
 @end
 
 
-@implementation WIMRLocationManager
+@implementation WIMRLocationModel
 
 @synthesize delegate;
 

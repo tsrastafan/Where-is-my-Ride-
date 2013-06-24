@@ -15,7 +15,7 @@
 @end
 
 
-@interface WIMRLocationManager : NSObject <CLLocationManagerDelegate> {
+@interface WIMRLocationModel : NSObject <CLLocationManagerDelegate> {
     id <UpdateLocationDelegate> delegate;
 }
 

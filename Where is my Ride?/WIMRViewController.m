@@ -10,7 +10,7 @@
 
 @interface WIMRViewController ()
 
-@property (strong, nonatomic) WIMRLocationManager * locationManager;
+@property (strong, nonatomic) WIMRLocationModel * locationManager;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 
@@ -25,7 +25,7 @@
 {
     [super viewDidLoad];
     
-    self.locationManager = [[WIMRLocationManager alloc] init];
+    self.locationManager = [[WIMRLocationModel alloc] init];
     [self.locationManager setDelegate:self];
 }
 
