@@ -35,7 +35,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-// delegate implementation
+#pragma mark - WIMRLocationModelDelegate
+
 -(void)locationUpdateSuccessful:(BOOL)success
 {
     if (success) {
