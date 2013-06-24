@@ -10,8 +10,8 @@
 
 @interface WIMRLocationModel ()
 
-@property (strong, nonatomic) CLLocationManager * locationManager;
-@property (strong, nonatomic) CLGeocoder * geocoder;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) CLGeocoder *geocoder;
 
 
 @end
@@ -19,13 +19,11 @@
 
 @implementation WIMRLocationModel
 
-@synthesize delegate;
-
 - (void)startStandardUpdates
 {
     // Create the location manager if this object does not
     // already have one.
-    if (nil == self.locationManager)
+    if (!self.locationManager)
         self.locationManager = [[CLLocationManager alloc] init];
     
     self.locationManager.delegate = self;
@@ -43,13 +41,13 @@
 }
 
 
-- (void)geocodeLocation:(CLLocation*)location
+- (void)geocodeLocation:(CLLocation *)location
 {
     if (!self.geocoder)
         self.geocoder = [[CLGeocoder alloc] init];
     
     [self.geocoder reverseGeocodeLocation:location completionHandler:
-     ^(NSArray* placemarks, NSError* error){
+     ^(NSArray *placemarks, NSError *error){
          if ([placemarks count] > 0)
          {
              self.placemark = [placemarks lastObject];
@@ -58,11 +56,13 @@
     
 }
 
-// Delegate method from the CLLocationManagerDelegate protocol.
+
+#pragma mark - CLLocationManagerDelegate
+
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations {
-    CLLocation* location = [locations lastObject];
-    NSDate* eventDate = location.timestamp;
+    CLLocation *location = [locations lastObject];
+    NSDate *eventDate = location.timestamp;
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
     if (abs(howRecent) < 15.0) {
         // If it's a relatively recent event, turn off updates to save power

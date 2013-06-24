@@ -10,7 +10,7 @@
 
 @interface WIMRViewController ()
 
-@property (strong, nonatomic) WIMRLocationModel * locationManager;
+@property (strong, nonatomic) WIMRLocationModel *locationManager;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 
@@ -26,7 +26,7 @@
     [super viewDidLoad];
     
     self.locationManager = [[WIMRLocationModel alloc] init];
-    [self.locationManager setDelegate:self];
+    self.locationManager.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -36,7 +36,8 @@
 }
 
 // delegate implementation
--(void)locationUpdateSuccessful:(BOOL)success {
+-(void)locationUpdateSuccessful:(BOOL)success
+{
     if (success) {
         self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f, longitude %+.6f\n"),
                                    self.locationManager.lastLocation.coordinate.latitude,

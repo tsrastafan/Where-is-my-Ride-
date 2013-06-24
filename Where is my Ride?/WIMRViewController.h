@@ -11,6 +11,6 @@
 #import <UIKit/UIKit.h>
 #import "WIMRLocationModel.h"
 
-@interface WIMRViewController : UIViewController <UpdateLocationDelegate>
+@interface WIMRViewController : UIViewController <WIMRLocationModelDelegate>
 
 @end

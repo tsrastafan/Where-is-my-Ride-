@@ -9,22 +9,21 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@protocol UpdateLocationDelegate <NSObject>
+@protocol WIMRLocationModelDelegate <NSObject>
 @required
 -(void) locationUpdateSuccessful: (BOOL)success;
 @end
 
 
-@interface WIMRLocationModel : NSObject <CLLocationManagerDelegate> {
-    id <UpdateLocationDelegate> delegate;
-}
+@interface WIMRLocationModel : NSObject <CLLocationManagerDelegate>
 
-@property (retain) id delegate;
-@property (strong, nonatomic) CLLocation * lastLocation;
-@property (strong, nonatomic) CLPlacemark * placemark;
+
+@property (strong) id <WIMRLocationModelDelegate> delegate; // retain ??
+@property (strong, nonatomic) CLLocation *lastLocation;
+@property (strong, nonatomic) CLPlacemark *placemark;
 
 - (void)startStandardUpdates;
 - (void)stopStandardUpdates;
-- (void)geocodeLocation:(CLLocation*)location;
+- (void)geocodeLocation:(CLLocation *)location;
 
 @end
