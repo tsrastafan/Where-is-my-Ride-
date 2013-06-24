@@ -11,7 +11,8 @@
 
 @protocol WIMRLocationModelDelegate <NSObject>
 @required
--(void) locationUpdateSuccessful: (BOOL)success;
+- (void)locationUpdateSuccessful:(BOOL)success;
+- (void)reverseGeocodingCompleted:(BOOL)completed;
 @end
 
 

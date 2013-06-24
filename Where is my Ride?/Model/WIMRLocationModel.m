@@ -9,15 +9,29 @@
 #import "WIMRLocationModel.h"
 
 @interface WIMRLocationModel ()
+{
+    BOOL performingReverseGeocoding;
+}
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLGeocoder *geocoder;
+
+
 
 
 @end
 
 
 @implementation WIMRLocationModel
+
+// designated initializer
+- (WIMRLocationModel *)init
+{
+    if (self = [super init]) {
+        performingReverseGeocoding = NO;
+    }
+    return self;
+}
 
 - (void)startStandardUpdates
 {
@@ -43,17 +57,22 @@
 
 - (void)geocodeLocation:(CLLocation *)location
 {
-    if (!self.geocoder)
+    if (!self.geocoder) {
         self.geocoder = [[CLGeocoder alloc] init];
-    
-    [self.geocoder reverseGeocodeLocation:location completionHandler:
-     ^(NSArray *placemarks, NSError *error){
-         if ([placemarks count] > 0)
-         {
-             self.placemark = [placemarks lastObject];
-         }
-     }];
-    
+    }
+    if (!performingReverseGeocoding) {
+        performingReverseGeocoding = YES;
+        [self.geocoder reverseGeocodeLocation:location completionHandler:
+         ^(NSArray *placemarks, NSError *error) {
+             if (error == nil && [placemarks count] > 0) {
+                 self.placemark = [placemarks lastObject];
+             } else {
+                 self.placemark = nil;
+             }
+             performingReverseGeocoding = NO;
+             [self.delegate reverseGeocodingCompleted:YES];
+         }];
+    }
 }
 
 
@@ -68,7 +87,7 @@
         [manager stopUpdatingLocation];
         self.lastLocation = location;
         [self geocodeLocation:location];
-        [[self delegate] locationUpdateSuccessful:YES];
+        [self.delegate locationUpdateSuccessful:YES];
     }
 }
 

@@ -35,6 +35,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)updateView
+{
+    
+}
+
 #pragma mark - WIMRLocationModelDelegate
 
 -(void)locationUpdateSuccessful:(BOOL)success
@@ -50,5 +55,18 @@
                                   self.locationManager.placemark.administrativeArea,
                                   self.locationManager.placemark.postalCode];
     }
+}
+
+- (void)reverseGeocodingCompleted:(BOOL)completed
+{
+    if (completed) {
+        self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@ %@"),
+                                  self.locationManager.placemark.subThoroughfare,
+                                  self.locationManager.placemark.thoroughfare,
+                                  self.locationManager.placemark.locality,
+                                  self.locationManager.placemark.administrativeArea,
+                                  self.locationManager.placemark.postalCode];
+    }
+
 }
 @end
