@@ -45,27 +45,22 @@
 -(void)locationUpdateSuccessful:(BOOL)success
 {
     if (success) {
-        self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f, longitude %+.6f\n"),
+        self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
                                    self.locationManager.lastLocation.coordinate.latitude,
                                    self.locationManager.lastLocation.coordinate.longitude];
-        self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@ %@"),
-                                  self.locationManager.placemark.subThoroughfare,
-                                  self.locationManager.placemark.thoroughfare,
-                                  self.locationManager.placemark.locality,
-                                  self.locationManager.placemark.administrativeArea,
-                                  self.locationManager.placemark.postalCode];
+
     }
 }
 
 - (void)reverseGeocodingCompleted:(BOOL)completed
 {
     if (completed) {
-        self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@ %@"),
-                                  self.locationManager.placemark.subThoroughfare,
+        self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
                                   self.locationManager.placemark.thoroughfare,
+                                  self.locationManager.placemark.subThoroughfare,
+                                  self.locationManager.placemark.postalCode,
                                   self.locationManager.placemark.locality,
-                                  self.locationManager.placemark.administrativeArea,
-                                  self.locationManager.placemark.postalCode];
+                                  self.locationManager.placemark.administrativeArea];
     }
 
 }
