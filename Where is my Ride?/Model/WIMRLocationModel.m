@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 Tobias Schultz and Steffen Heberle. All rights reserved.
 //
 
+#define TIME_INTERVAL_BETWEEN_GPS_FIXES 5
+#define TIME_FOR_PROBING_FOR_BEST_ACCURACY 5
+
 #import "WIMRLocationModel.h"
 
 @interface WIMRLocationModel ()
@@ -15,6 +18,7 @@
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLGeocoder *geocoder;
+@property (strong, nonatomic) CLLocation *firstLocationResult;
 
 
 
@@ -44,7 +48,7 @@
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     
     // Set a movement threshold for new events.
-    self.locationManager.distanceFilter = 5;
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
     
     [self.locationManager startUpdatingLocation];
 }
@@ -79,16 +83,37 @@
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    CLLocation *location = [locations lastObject];
-    NSDate *eventDate = location.timestamp;
-    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-    if (abs(howRecent) < 15.0) {
-        // If it's a relatively recent event, turn off updates to save power
-        [manager stopUpdatingLocation];
-        self.lastLocation = location;
-        [self geocodeLocation:location];
-        [self.delegate locationUpdateSuccessful:YES];
+    NSLog(@"***did update to location: %@", [locations lastObject]);
+    CLLocation *newLocation = [locations lastObject];
+    if (self.firstLocationResult == nil) {
+        self.firstLocationResult = newLocation;
     }
+    //NSDate *eventDate = newLocation.timestamp;
+    //NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+    
+    if ([newLocation.timestamp timeIntervalSinceNow] < -TIME_INTERVAL_BETWEEN_GPS_FIXES) {
+        NSLog(@"***TIME INTERVAL EXIT");
+        return;
+    }
+    if (newLocation.horizontalAccuracy < 0) {
+        NSLog(@"***Accuracy Exit");
+        return;
+    }
+    
+    if (self.lastLocation == nil || self.lastLocation.horizontalAccuracy >= newLocation.horizontalAccuracy) {
+        self.lastLocation = newLocation;
+        if ([self.firstLocationResult.timestamp timeIntervalSinceNow] < -TIME_FOR_PROBING_FOR_BEST_ACCURACY) {
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+        }
+        NSLog(@"******in last loop");
+        if (newLocation.horizontalAccuracy <= self.locationManager.desiredAccuracy) {
+            NSLog(@"***we're done!");
+            self.firstLocationResult = nil;
+            [self.locationManager stopUpdatingLocation];
+            [self.delegate locationUpdateSuccessful:YES];
+        }
+    }
+    
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
