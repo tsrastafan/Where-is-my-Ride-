@@ -35,6 +35,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    NSLog(@"***DID RECEIVE MEMORY WARNING");
     // Dispose of any resources that can be recreated.
 }
 
