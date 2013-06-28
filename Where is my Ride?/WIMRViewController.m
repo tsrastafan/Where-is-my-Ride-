@@ -32,6 +32,7 @@
     self.locationManager = [[WIMRLocationModel alloc] init];
     self.locationManager.delegate = self;
     self.vehicle = [[WIMRVehicle alloc] init];
+    self.vehicle.title = @"Mein Fahrzeug";
     self.mapView.delegate = self;
 }
 
@@ -110,6 +111,7 @@
             thePinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
                                                                     reuseIdentifier:@"Here I am!"];
             thePinAnnotationView.animatesDrop = YES;
+            thePinAnnotationView.canShowCallout = YES;
         }
         else
             thePinAnnotationView.annotation = annotation;

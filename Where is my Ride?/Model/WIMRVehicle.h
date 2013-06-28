@@ -13,5 +13,6 @@
 @interface WIMRVehicle : NSObject <MKAnnotation>
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;
+@property (nonatomic, copy) NSString *title;
 
 @end
