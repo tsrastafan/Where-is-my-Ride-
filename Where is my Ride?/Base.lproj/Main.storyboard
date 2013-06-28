@@ -51,22 +51,13 @@
                     <connections>
                         <outlet property="addressLabel" destination="XgC-2e-111" id="Nwx-ZL-4Ia"/>
                         <outlet property="locationLabel" destination="J81-oP-sFE" id="hF8-8f-Hxw"/>
+                        <outlet property="mapView" destination="csv-Cx-wVv" id="jr7-Jb-g3K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
-    <classes>
-        <class className="WIMRViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WIMRViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="getLocation:"/>
-                <relationship kind="outlet" name="addressLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="locationLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

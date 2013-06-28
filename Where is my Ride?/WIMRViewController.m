@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @end
 
 @implementation WIMRViewController
