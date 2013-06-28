@@ -110,6 +110,7 @@
             NSLog(@"***we're done!");
             self.firstLocationResult = nil;
             [self.locationManager stopUpdatingLocation];
+            [self geocodeLocation:self.lastLocation];
             [self.delegate locationUpdateSuccessful:YES];
         }
     }
