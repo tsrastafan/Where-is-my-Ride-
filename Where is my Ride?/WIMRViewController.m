@@ -7,10 +7,13 @@
 //
 
 #import "WIMRViewController.h"
+#import "WIMRVehicle.h"
 
 @interface WIMRViewController ()
 
 @property (strong, nonatomic) WIMRLocationModel *locationManager;
+@property (strong, nonatomic) WIMRVehicle *vehicle;
+
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 
@@ -28,9 +31,8 @@
     
     self.locationManager = [[WIMRLocationModel alloc] init];
     self.locationManager.delegate = self;
+    self.vehicle = [[WIMRVehicle alloc] init];
     self.mapView.delegate = self;
-    
-    //self.mapView.showsUserLocation = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,12 +65,14 @@
         MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
         [self.mapView setRegion:region animated:YES];
         
-        // create an annotation
-        MKPointAnnotation *anAnnotation = [[MKPointAnnotation alloc] init];
-        anAnnotation.coordinate = [self.locationManager.lastLocation coordinate];
+        // remove old annotation
+        [self.mapView removeAnnotation:self.vehicle];
+        
+        // set vehicle coordinate
+        self.vehicle.coordinate = [self.locationManager.lastLocation coordinate];
         
         // add the annotation to the map view
-        [self.mapView addAnnotation:anAnnotation];
+        [self.mapView addAnnotation:self.vehicle];
     }
 }
 
