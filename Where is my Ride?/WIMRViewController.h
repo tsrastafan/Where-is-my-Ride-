@@ -9,8 +9,9 @@
 // github test line
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import "WIMRLocationModel.h"
 
-@interface WIMRViewController : UIViewController <WIMRLocationModelDelegate>
+@interface WIMRViewController : UIViewController <WIMRLocationModelDelegate, MKMapViewDelegate>
 
 @end
