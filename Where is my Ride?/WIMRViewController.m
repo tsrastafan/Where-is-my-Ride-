@@ -28,6 +28,7 @@
     
     self.locationManager = [[WIMRLocationModel alloc] init];
     self.locationManager.delegate = self;
+    self.mapView.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,4 +71,11 @@
     }
 
 }
+
+#pragma mark - MKMapViewDelegate
+
+
+
+
+
 @end
