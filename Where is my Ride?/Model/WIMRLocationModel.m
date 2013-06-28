@@ -88,8 +88,6 @@
     if (self.firstLocationResult == nil) {
         self.firstLocationResult = newLocation;
     }
-    //NSDate *eventDate = newLocation.timestamp;
-    //NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
     
     if ([newLocation.timestamp timeIntervalSinceNow] < -TIME_INTERVAL_BETWEEN_GPS_FIXES) {
         NSLog(@"***TIME INTERVAL EXIT");
