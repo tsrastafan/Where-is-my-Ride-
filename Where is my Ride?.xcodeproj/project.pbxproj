@@ -23,6 +23,7 @@
 		81915159176F3D9700C5E016 /* Where_is_my_Ride_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 81915158176F3D9700C5E016 /* Where_is_my_Ride_Tests.m */; };
 		E22B5AD017736F6F0001203D /* WIMRLocationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E22B5ACD17736F6F0001203D /* WIMRLocationModel.m */; };
 		E22B5AD117736F6F0001203D /* WIMRVehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = E22B5ACF17736F6F0001203D /* WIMRVehicle.m */; };
+		E23CFA0F177DBF7D00D5C3ED /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E23CFA0E177DBF7D00D5C3ED /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		E22B5ACD17736F6F0001203D /* WIMRLocationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRLocationModel.m; sourceTree = "<group>"; };
 		E22B5ACE17736F6F0001203D /* WIMRVehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicle.h; sourceTree = "<group>"; };
 		E22B5ACF17736F6F0001203D /* WIMRVehicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicle.m; sourceTree = "<group>"; };
+		E23CFA0E177DBF7D00D5C3ED /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E23CFA0F177DBF7D00D5C3ED /* MapKit.framework in Frameworks */,
 				81915130176F3D9600C5E016 /* CoreGraphics.framework in Frameworks */,
 				81915132176F3D9600C5E016 /* UIKit.framework in Frameworks */,
 				8191512E176F3D9600C5E016 /* Foundation.framework in Frameworks */,
@@ -107,6 +110,7 @@
 		8191512C176F3D9600C5E016 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E23CFA0E177DBF7D00D5C3ED /* MapKit.framework */,
 				8191512D176F3D9600C5E016 /* Foundation.framework */,
 				8191512F176F3D9600C5E016 /* CoreGraphics.framework */,
 				81915131176F3D9600C5E016 /* UIKit.framework */,

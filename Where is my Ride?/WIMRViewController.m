@@ -7,12 +7,14 @@
 //
 
 #import "WIMRViewController.h"
+#import <MapKit/MapKit.h>
 
 @interface WIMRViewController ()
 
 @property (strong, nonatomic) WIMRLocationModel *locationManager;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet MKMapView *currentLocation;
 
 @end
 
