@@ -9,15 +9,10 @@
 #import "WIMRLocationModel.h"
 
 @interface WIMRLocationModel ()
-{
-    BOOL performingReverseGeocoding;
-}
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLGeocoder *geocoder;
-
-
-
+@property (nonatomic) BOOL performingReverseGeocoding;
 
 @end
 
@@ -28,7 +23,7 @@
 - (WIMRLocationModel *)init
 {
     if (self = [super init]) {
-        performingReverseGeocoding = NO;
+        self.performingReverseGeocoding = NO;
     }
     return self;
 }
@@ -37,14 +32,15 @@
 {
     // Create the location manager if this object does not
     // already have one.
-    if (!self.locationManager)
+    if (!self.locationManager) {
         self.locationManager = [[CLLocationManager alloc] init];
+    }
     
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     
-    // Set a movement threshold for new events.
-    self.locationManager.distanceFilter = 5;
+    // Set a movement threshold for new events. Do we need this at all?
+    // self.locationManager.distanceFilter = 5;
     
     [self.locationManager startUpdatingLocation];
 }
@@ -60,8 +56,9 @@
     if (!self.geocoder) {
         self.geocoder = [[CLGeocoder alloc] init];
     }
-    if (!performingReverseGeocoding) {
-        performingReverseGeocoding = YES;
+    
+    if (!self.performingReverseGeocoding) {
+        self.performingReverseGeocoding = YES;
         [self.geocoder reverseGeocodeLocation:location completionHandler:
          ^(NSArray *placemarks, NSError *error) {
              if (error == nil && [placemarks count] > 0) {
@@ -69,7 +66,7 @@
              } else {
                  self.placemark = nil;
              }
-             performingReverseGeocoding = NO;
+             self.performingReverseGeocoding = NO;
              [self.delegate reverseGeocodingCompleted:YES];
          }];
     }
@@ -78,7 +75,9 @@
 
 #pragma mark - CLLocationManagerDelegate
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+- (void)locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray *)locations
+{
     CLLocation *location = [locations lastObject];
     NSDate *eventDate = location.timestamp;
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
