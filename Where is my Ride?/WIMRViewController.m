@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet MKMapView *currentLocation;
 
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @end
 
 @implementation WIMRViewController
@@ -29,6 +30,9 @@
     
     self.locationManager = [[WIMRLocationModel alloc] init];
     self.locationManager.delegate = self;
+    self.mapView.delegate = self;
+    
+    //self.mapView.showsUserLocation = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,6 +59,9 @@
         self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
                                    self.locationManager.lastLocation.coordinate.latitude,
                                    self.locationManager.lastLocation.coordinate.longitude];
+        MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
+        [self.mapView setRegion:region animated:YES];
+        //[self.mapView setCenterCoordinate:self.locationManager.lastLocation.coordinate animated:YES];
 
     }
 }
@@ -71,4 +78,11 @@
     }
 
 }
+
+#pragma mark - MKMapViewDelegate
+
+
+
+
+
 @end
