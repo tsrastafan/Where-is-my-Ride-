@@ -29,7 +29,8 @@
     self.locationManager = [[WIMRLocationModel alloc] init];
     self.locationManager.delegate = self;
     self.mapView.delegate = self;
-    self.mapView.showsUserLocation = YES;
+    
+    //self.mapView.showsUserLocation = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,6 +57,9 @@
         self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
                                    self.locationManager.lastLocation.coordinate.latitude,
                                    self.locationManager.lastLocation.coordinate.longitude];
+        MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(1, 1));
+        [self.mapView setRegion:region animated:YES];
+        //[self.mapView setCenterCoordinate:self.locationManager.lastLocation.coordinate animated:YES];
 
     }
 }
