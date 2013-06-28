@@ -54,13 +54,21 @@
 -(void)locationUpdateSuccessful:(BOOL)success
 {
     if (success) {
+        // update location label
         self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
                                    self.locationManager.lastLocation.coordinate.latitude,
                                    self.locationManager.lastLocation.coordinate.longitude];
+        
+        // center map around current location and zoom in
         MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
         [self.mapView setRegion:region animated:YES];
-        //[self.mapView setCenterCoordinate:self.locationManager.lastLocation.coordinate animated:YES];
-
+        
+        // create an annotation
+        MKPointAnnotation *anAnnotation = [[MKPointAnnotation alloc] init];
+        anAnnotation.coordinate = [self.locationManager.lastLocation coordinate];
+        
+        // add the annotation to the map view
+        [self.mapView addAnnotation:anAnnotation];
     }
 }
 
@@ -79,8 +87,34 @@
 
 #pragma mark - MKMapViewDelegate
 
-
-
+- (MKAnnotationView *)mapView:(MKMapView *)mapView
+            viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    // If it's the user location, just return nil.
+    if ([annotation isKindOfClass:[MKUserLocation class]])
+        return nil;
+    
+    // Handle any custom annotations.
+    if ([annotation isKindOfClass:[MKPointAnnotation class]])
+    {
+        // Try to dequeue an existing pin view first.
+        MKPinAnnotationView *thePinAnnotationView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Here I am!"];
+        
+        if (!thePinAnnotationView)
+        {
+            // If an existing pin view was not available, create one.
+            thePinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
+                                                                    reuseIdentifier:@"Here I am!"];
+            thePinAnnotationView.animatesDrop = YES;
+        }
+        else
+            thePinAnnotationView.annotation = annotation;
+        
+        return thePinAnnotationView;
+    }
+    
+    return nil;
+}
 
 
 @end
