@@ -37,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8186A108177DCD0900E76A05 /* WIMRAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WIMRAnnotation.h; sourceTree = "<group>"; };
+		8186A109177DCD0900E76A05 /* WIMRAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WIMRAnnotation.m; sourceTree = "<group>"; };
 		8191512A176F3D9600C5E016 /* Where is my Ride?.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Where is my Ride?.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8191512D176F3D9600C5E016 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8191512F176F3D9600C5E016 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -170,6 +172,8 @@
 				E22B5ACD17736F6F0001203D /* WIMRLocationModel.m */,
 				E22B5ACE17736F6F0001203D /* WIMRVehicle.h */,
 				E22B5ACF17736F6F0001203D /* WIMRVehicle.m */,
+				8186A108177DCD0900E76A05 /* WIMRAnnotation.h */,
+				8186A109177DCD0900E76A05 /* WIMRAnnotation.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
