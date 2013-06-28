@@ -40,8 +40,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Lrq-10-Oq3">
-                                <rect key="frame" x="40" y="367" width="240" height="128"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="csv-Cx-wVv">
+                                <rect key="frame" x="0.0" y="227" width="320" height="253"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </mapView>
                         </subviews>
@@ -50,7 +50,6 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="addressLabel" destination="XgC-2e-111" id="Nwx-ZL-4Ia"/>
-                        <outlet property="currentLocation" destination="Lrq-10-Oq3" id="aEt-FJ-Xuh"/>
                         <outlet property="locationLabel" destination="J81-oP-sFE" id="hF8-8f-Hxw"/>
                         <outlet property="mapView" destination="csv-Cx-wVv" id="jr7-Jb-g3K"/>
                     </connections>
@@ -65,8 +64,8 @@
             <relationships>
                 <relationship kind="action" name="getLocation:"/>
                 <relationship kind="outlet" name="addressLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="currentLocation" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="locationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
             </relationships>
         </class>
     </classes>
