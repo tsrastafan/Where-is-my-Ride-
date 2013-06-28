@@ -7,6 +7,7 @@
 //
 
 #import "WIMRViewController.h"
+#import "WIMRAnnotation.h"
 
 @interface WIMRViewController ()
 
@@ -59,6 +60,14 @@
                                    self.locationManager.lastLocation.coordinate.longitude];
         MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
         [self.mapView setRegion:region animated:YES];
+        
+        WIMRAnnotation *annotation = [[WIMRAnnotation alloc] init];
+        annotation.coordinate = self.locationManager.lastLocation.coordinate;
+        
+       // MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"first annotation"];
+        
+        [self.mapView addAnnotation:annotation];
+        
         //[self.mapView setCenterCoordinate:self.locationManager.lastLocation.coordinate animated:YES];
 
     }
