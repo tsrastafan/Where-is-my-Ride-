@@ -82,18 +82,7 @@
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager
-     didUpdateLocations:(NSArray *)locations
-{
-    CLLocation *location = [locations lastObject];
-    NSDate *eventDate = location.timestamp;
-    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-    if (abs(howRecent) < 15.0) {
-        // If it's a relatively recent event, turn off updates to save power
-        [manager stopUpdatingLocation];
-        self.lastLocation = location;
-        [self geocodeLocation:location];
-        [self.delegate locationUpdateSuccessful:YES];
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+     didUpdateLocations:(NSArray *)locations {
     NSLog(@"***did update to location: %@", [locations lastObject]);
     CLLocation *newLocation = [locations lastObject];
     if (self.firstLocationResult == nil) {
