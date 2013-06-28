@@ -82,40 +82,20 @@
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager
-     didUpdateLocations:(NSArray *)locations {
-    NSLog(@"***did update to location: %@", [locations lastObject]);
-    CLLocation *newLocation = [locations lastObject];
-    if (self.firstLocationResult == nil) {
-        self.firstLocationResult = newLocation;
+     didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *location = [locations lastObject];
+    NSDate *eventDate = location.timestamp;
+    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+    if (abs(howRecent) < 15.0) {
+        // If it's a relatively recent event, turn off updates to save power
+        [manager stopUpdatingLocation];
+        self.lastLocation = location;
+        [self geocodeLocation:location];
+        [self.delegate locationUpdateSuccessful:YES];
     }
-    //NSDate *eventDate = newLocation.timestamp;
-    //NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-    
-    if ([newLocation.timestamp timeIntervalSinceNow] < -TIME_INTERVAL_BETWEEN_GPS_FIXES) {
-        NSLog(@"***TIME INTERVAL EXIT");
-        return;
-    }
-    if (newLocation.horizontalAccuracy < 0) {
-        NSLog(@"***Accuracy Exit");
-        return;
-    }
-    
-    if (self.lastLocation == nil || self.lastLocation.horizontalAccuracy >= newLocation.horizontalAccuracy) {
-        self.lastLocation = newLocation;
-        if ([self.firstLocationResult.timestamp timeIntervalSinceNow] < -TIME_FOR_PROBING_FOR_BEST_ACCURACY) {
-            self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-        }
-        NSLog(@"******in last loop");
-        if (newLocation.horizontalAccuracy <= self.locationManager.desiredAccuracy) {
-            NSLog(@"***we're done!");
-            self.firstLocationResult = nil;
-            [self.locationManager stopUpdatingLocation];
-            [self geocodeLocation:self.lastLocation];
-            [self.delegate locationUpdateSuccessful:YES];
-        }
-    }
-    
 }
+
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
