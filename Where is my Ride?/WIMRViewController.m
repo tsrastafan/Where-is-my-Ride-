@@ -29,6 +29,7 @@
     self.locationManager = [[WIMRLocationModel alloc] init];
     self.locationManager.delegate = self;
     self.mapView.delegate = self;
+    self.mapView.showsUserLocation = YES;
 }
 
 - (void)didReceiveMemoryWarning
