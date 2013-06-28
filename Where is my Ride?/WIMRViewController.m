@@ -57,7 +57,7 @@
         self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
                                    self.locationManager.lastLocation.coordinate.latitude,
                                    self.locationManager.lastLocation.coordinate.longitude];
-        MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(1, 1));
+        MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
         [self.mapView setRegion:region animated:YES];
         //[self.mapView setCenterCoordinate:self.locationManager.lastLocation.coordinate animated:YES];
 
