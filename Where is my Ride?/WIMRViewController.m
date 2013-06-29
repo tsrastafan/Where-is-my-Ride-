@@ -7,7 +7,7 @@
 //
 
 #import "WIMRViewController.h"
-#import "WIMRAnnotation.h"
+#import "WIMRVehicle.h"
 
 @interface WIMRViewController ()
 
@@ -66,15 +66,14 @@
         MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
         [self.mapView setRegion:region animated:YES];
         
-        WIMRAnnotation *annotation = [[WIMRAnnotation alloc] init];
-        annotation.coordinate = self.locationManager.lastLocation.coordinate;
+        // remove old annotation
+        [self.mapView removeAnnotation:self.vehicle];
         
-       // MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"first annotation"];
+        // set vehicle coordinate
+        self.vehicle.coordinate = [self.locationManager.lastLocation coordinate];
         
-        [self.mapView addAnnotation:annotation];
-        
-        //[self.mapView setCenterCoordinate:self.locationManager.lastLocation.coordinate animated:YES];
-
+        // add the annotation to the map view
+        [self.mapView addAnnotation:self.vehicle];
     }
 }
 
