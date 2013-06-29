@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 
-@interface WIMRVehicle : NSObject
+@interface WIMRVehicle : NSObject <MKAnnotation>
 
-@property (strong, nonatomic) CLLocation * location;
+@property (nonatomic) CLLocationCoordinate2D coordinate;
+@property (nonatomic, copy) NSString *title;
 
 @end
