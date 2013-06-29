@@ -25,6 +25,10 @@
     [self.locationManager startStandardUpdates];
 }
 
+- (IBAction)shareLocation:(id)sender {
+    [self.vehicle shareAnnotation];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
