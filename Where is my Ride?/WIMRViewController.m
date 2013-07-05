@@ -26,7 +26,26 @@
 }
 
 - (IBAction)shareLocation:(id)sender {
-    [self.vehicle shareAnnotation];
+    // Email Subject
+    NSString *emailTitle = @"Mein Fahrzeug steht hier!";
+    // Email Content
+    NSString *messageBody = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
+                            self.locationManager.placemark.thoroughfare,
+                            self.locationManager.placemark.subThoroughfare,
+                            self.locationManager.placemark.postalCode,
+                            self.locationManager.placemark.locality,
+                            self.locationManager.placemark.administrativeArea];
+    // To address
+    NSArray *toRecipents = [NSArray arrayWithObject:@"steffenheberle@me.com"];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setMessageBody:messageBody isHTML:NO];
+    [mc setToRecipients:toRecipents];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:NULL];
 }
 
 - (void)viewDidLoad
@@ -84,6 +103,7 @@
 - (void)reverseGeocodingCompleted:(BOOL)completed
 {
     if (completed) {
+        self.vehicle.placemark = self.locationManager.placemark;
         self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
                                   self.locationManager.placemark.thoroughfare,
                                   self.locationManager.placemark.subThoroughfare,
@@ -126,5 +146,32 @@
     return nil;
 }
 
+#pragma mark - MFMailComposeViewControllerDelegate
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller
+           didFinishWithResult:(MFMailComposeResult)result
+                         error:(NSError *)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail sent");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+            break;
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 
 @end

@@ -13,6 +13,7 @@
 @interface WIMRVehicle : NSObject <MKAnnotation>
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;
+@property (nonatomic, strong) CLPlacemark *placemark;
 @property (nonatomic, copy) NSString *title;
 
 - (void)shareAnnotation;
