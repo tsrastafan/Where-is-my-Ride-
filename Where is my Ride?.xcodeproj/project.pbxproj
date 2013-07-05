@@ -37,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8147354A1786F2A900949B24 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		8191512A176F3D9600C5E016 /* Where is my Ride?.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Where is my Ride?.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8191512D176F3D9600C5E016 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8191512F176F3D9600C5E016 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -91,6 +92,7 @@
 		81915121176F3D9600C5E016 = {
 			isa = PBXGroup;
 			children = (
+				8147354A1786F2A900949B24 /* README.md */,
 				81915133176F3D9600C5E016 /* Where is my Ride? */,
 				81915152176F3D9700C5E016 /* Where is my Ride?Tests */,
 				8191512C176F3D9600C5E016 /* Frameworks */,

@@ -70,7 +70,7 @@
         [self.mapView removeAnnotation:self.vehicle];
         
         // set vehicle coordinate
-        self.vehicle.coordinate = [self.locationManager.lastLocation coordinate];
+        self.vehicle.coordinate = self.locationManager.lastLocation.coordinate;
         
         // add the annotation to the map view
         [self.mapView addAnnotation:self.vehicle];
