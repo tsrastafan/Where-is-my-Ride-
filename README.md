@@ -27,3 +27,4 @@ Implementierung eines Mehrbenutzersystems, das zugleich die Verwaltung mehrerer 
     * Zielzeit
     * Dauer
     * Fortlaufend
+    * Alarm, basierend auf Fußweg
