@@ -23,6 +23,8 @@
 @implementation WIMRViewController
 - (IBAction)getLocation:(id)sender {
     [self.locationManager startStandardUpdates];
+    self.locationLabel.text = @"Updating ...";
+    self.addressLabel.text = @"Updating ...";
 }
 
 - (IBAction)shareLocation:(id)sender {
@@ -55,7 +57,7 @@
     self.locationManager = [[WIMRLocationModel alloc] init];
     self.locationManager.delegate = self;
     self.vehicle = [[WIMRVehicle alloc] init];
-    self.vehicle.title = @"Mein Fahrzeug";
+    self.vehicle.title = @"My Vehicle";
     self.mapView.delegate = self;
 }
 
@@ -81,7 +83,7 @@
 {
     if (success) {
         // update location label
-        self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
+        self.locationLabel.text = [[NSString alloc] initWithFormat:(@"lat: %+.5f, long: %+.5f"),
                                    self.locationManager.lastLocation.coordinate.latitude,
                                    self.locationManager.lastLocation.coordinate.longitude];
         
@@ -98,6 +100,9 @@
         // add the annotation to the map view
         [self.mapView addAnnotation:self.vehicle];
     }
+    else {
+        self.locationLabel.text = @"Could not get update.";
+    }
 }
 
 - (void)reverseGeocodingCompleted:(BOOL)completed
@@ -110,6 +115,9 @@
                                   self.locationManager.placemark.postalCode,
                                   self.locationManager.placemark.locality,
                                   self.locationManager.placemark.administrativeArea];
+    }
+    else {
+        self.addressLabel.text = @"Could not get corresponding address.";
     }
 
 }
