@@ -83,7 +83,7 @@
 {
     if (success) {
         // update location label
-        self.locationLabel.text = [[NSString alloc] initWithFormat:(@"lat: %+.5f, long: %+.5f"),
+        self.locationLabel.text = [[NSString alloc] initWithFormat:(@"lat: %+.6f, long: %+.6f"),
                                    self.locationManager.lastLocation.coordinate.latitude,
                                    self.locationManager.lastLocation.coordinate.longitude];
         
