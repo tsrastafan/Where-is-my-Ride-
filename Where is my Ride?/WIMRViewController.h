@@ -10,8 +10,9 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <MessageUI/MessageUI.h>
 #import "WIMRLocationModel.h"
 
-@interface WIMRViewController : UIViewController <WIMRLocationModelDelegate, MKMapViewDelegate>
+@interface WIMRViewController : UIViewController <WIMRLocationModelDelegate, MKMapViewDelegate, MFMailComposeViewControllerDelegate>
 
 @end
