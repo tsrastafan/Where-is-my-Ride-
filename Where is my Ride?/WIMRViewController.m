@@ -78,24 +78,16 @@
  * \param success A BOOL that determines wether the location update was successful.
  */
 -(void)locationUpdateWithDesiredAccuracy:(BOOL)accurate{
+    self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
+                               self.locationManager.lastLocation.coordinate.latitude,
+                               self.locationManager.lastLocation.coordinate.longitude];
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
+    [self.mapView removeAnnotation:self.vehicle];
+    [self.mapView setRegion:region animated:YES];
+    self.vehicle.coordinate = self.locationManager.lastLocation.coordinate;
+    [self.mapView addAnnotation:self.vehicle];
     if (accurate) {
-        // update location label
-        self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
-                                   self.locationManager.lastLocation.coordinate.latitude,
-                                   self.locationManager.lastLocation.coordinate.longitude];
-        
-        // center map around current location and zoom in
-        MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
-        [self.mapView setRegion:region animated:YES];
-        
-        // remove old annotation
-        [self.mapView removeAnnotation:self.vehicle];
-        
-        // set vehicle coordinate
-        self.vehicle.coordinate = self.locationManager.lastLocation.coordinate;
-        
-        // add the annotation to the map view
-        [self.mapView addAnnotation:self.vehicle];
+        [self.locationManager stopLocationUpdate];
     }
 }
 

@@ -86,7 +86,6 @@
     if (location.horizontalAccuracy > 0) {
         self.lastLocation = location;
         if (location.horizontalAccuracy <= MINIMAL_ACCURACY) {
-            [self stopLocationUpdate];
             [self.delegate locationUpdateWithDesiredAccuracy:YES];
             [self geocodeLocation:location];
         } else {
