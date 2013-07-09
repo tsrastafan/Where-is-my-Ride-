@@ -13,7 +13,7 @@
 
 // rename methods!
 @required
-- (void)locationUpdateWithDesiredAccuracy:(BOOL)accurate;
+- (void)didUpdateLocationWithDesiredAccuracy:(BOOL)accurate;
 - (void)reverseGeocodingCompleted:(BOOL)completed;
 @end
 

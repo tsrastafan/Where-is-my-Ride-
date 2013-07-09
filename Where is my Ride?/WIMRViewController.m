@@ -81,7 +81,7 @@
  * Called for the delegate.
  * \param success A BOOL that determines wether the location update was successful.
  */
--(void)locationUpdateWithDesiredAccuracy:(BOOL)accurate{
+-(void)didUpdateLocationWithDesiredAccuracy:(BOOL)accurate{
     self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
                                self.locationManager.lastLocation.coordinate.latitude,
                                self.locationManager.lastLocation.coordinate.longitude];
