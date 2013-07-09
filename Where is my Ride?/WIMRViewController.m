@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) MKCircle *accuracyCircle;
 @end
 
 @implementation WIMRViewController
@@ -58,8 +57,8 @@
     self.vehicle = [[WIMRVehicle alloc] init];
     self.vehicle.title = @"Mein Fahrzeug";
     self.mapView.delegate = self;
-    self.mapView.showsUserLocation = YES;
-    self.mapView.userTrackingMode = MKUserTrackingModeFollow;
+//    self.mapView.showsUserLocation = YES;
+//    self.mapView.userTrackingMode = MKUserTrackingModeFollow;
 
 }
 
@@ -93,9 +92,8 @@
     
     NSLog(@"%f", self.locationManager.lastLocation.horizontalAccuracy);
     
-    [self.mapView removeOverlay:self.accuracyCircle];
-    self.accuracyCircle = [MKCircle circleWithCenterCoordinate:self.locationManager.lastLocation.coordinate radius:self.locationManager.lastLocation.horizontalAccuracy];
-    [self.mapView addOverlay:self.accuracyCircle];
+    [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
+    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationManager.lastLocation.coordinate radius:self.locationManager.lastLocation.horizontalAccuracy]];
     
 //    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:self.accuracyCircle];
     
@@ -153,9 +151,10 @@
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
 {
-    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:self.accuracyCircle];
-    circleRenderer.fillColor = [UIColor blueColor];
+    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:[MKCircle circleWithCenterCoordinate:self.locationManager.lastLocation.coordinate radius:self.locationManager.lastLocation.horizontalAccuracy]];
+    //circleRenderer.fillColor = [[UIColor blueColor] colorWithAlphaComponent:.2];
     circleRenderer.strokeColor = [UIColor redColor];
+    circleRenderer.lineWidth = 1;
     return circleRenderer;
 }
 
