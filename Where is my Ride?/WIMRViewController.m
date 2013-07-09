@@ -22,7 +22,7 @@
 
 @implementation WIMRViewController
 - (IBAction)getLocation:(id)sender {
-    [self.locationManager startStandardUpdates];
+    [self.locationManager startLocationUpdate];
 }
 
 - (IBAction)shareLocation:(id)sender {
@@ -77,9 +77,8 @@
  * Called for the delegate.
  * \param success A BOOL that determines wether the location update was successful.
  */
--(void)locationUpdateSuccessful:(BOOL)success
-{
-    if (success) {
+-(void)locationUpdateWithDesiredAccuracy:(BOOL)accurate{
+    if (accurate) {
         // update location label
         self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
                                    self.locationManager.lastLocation.coordinate.latitude,

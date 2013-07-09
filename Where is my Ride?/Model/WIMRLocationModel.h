@@ -13,7 +13,7 @@
 
 // rename methods!
 @required
-- (void)locationUpdateSuccessful:(BOOL)success;
+- (void)locationUpdateWithDesiredAccuracy:(BOOL)accurate;
 - (void)reverseGeocodingCompleted:(BOOL)completed;
 @end
 
@@ -25,8 +25,8 @@
 @property (strong, nonatomic) CLLocation *lastLocation;
 @property (strong, nonatomic) CLPlacemark *placemark;
 
-- (void)startStandardUpdates;
-- (void)stopStandardUpdates;
+- (void)startLocationUpdate;
+- (void)stopLocationUpdate;
 - (void)geocodeLocation:(CLLocation *)location;
 
 @end

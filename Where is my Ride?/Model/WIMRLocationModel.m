@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Tobias Schultz and Steffen Heberle. All rights reserved.
 //
 
+#define MINIMAL_ACCURACY 5
+
 #define TIME_INTERVAL_BETWEEN_GPS_FIXES 5
 #define TIME_FOR_PROBING_FOR_BEST_ACCURACY 5
 
@@ -35,26 +37,19 @@
 /*! Start a standard location update.
  *
  */
-- (void)startStandardUpdates
+- (void)startLocationUpdate
 {
-    // Create the location manager if this object does not
-    // already have one.
     if (!self.locationManager) {
         self.locationManager = [[CLLocationManager alloc] init];
     }
-    
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    
-    // Set a movement threshold for new events. Do we need this at all?
-    // self.locationManager.distanceFilter = 5;
-    // Set a movement threshold for new events.
-    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.distanceFilter = 5;
     
     [self.locationManager startUpdatingLocation];
 }
 
-- (void)stopStandardUpdates
+- (void)stopLocationUpdate
 {
     [self.locationManager stopUpdatingLocation];
 }
@@ -88,17 +83,18 @@
      didUpdateLocations:(NSArray *)locations
 {
     CLLocation *location = [locations lastObject];
-    NSDate *eventDate = location.timestamp;
-    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-    if (abs(howRecent) < 15.0) {
-        // If it's a relatively recent event, turn off updates to save power
-        [manager stopUpdatingLocation];
+    if (location.horizontalAccuracy > 0) {
         self.lastLocation = location;
-        [self geocodeLocation:location];
-        [self.delegate locationUpdateSuccessful:YES];
+        if (location.horizontalAccuracy <= MINIMAL_ACCURACY) {
+            [self stopLocationUpdate];
+            [self.delegate locationUpdateWithDesiredAccuracy:YES];
+            [self geocodeLocation:location];
+        } else {
+            [self.delegate locationUpdateWithDesiredAccuracy:NO];
+        }
     }
-}
 
+}
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
