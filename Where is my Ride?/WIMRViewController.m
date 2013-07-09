@@ -93,6 +93,7 @@
     
     NSLog(@"%f", self.locationManager.lastLocation.horizontalAccuracy);
     
+    [self.mapView removeOverlay:self.accuracyCircle];
     self.accuracyCircle = [MKCircle circleWithCenterCoordinate:self.locationManager.lastLocation.coordinate radius:self.locationManager.lastLocation.horizontalAccuracy];
     [self.mapView addOverlay:self.accuracyCircle];
     

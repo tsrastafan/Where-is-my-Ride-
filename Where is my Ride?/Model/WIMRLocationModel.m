@@ -18,7 +18,6 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLGeocoder *geocoder;
 @property (nonatomic) BOOL performingReverseGeocoding;
-//@property (strong, nonatomic) CLLocation *firstLocationResult;
 
 @end
 
