@@ -10,8 +10,9 @@
 #import <CoreLocation/CoreLocation.h>
 
 @protocol WIMRLocationModelDelegate <NSObject>
-@required
 
+// rename methods!
+@required
 - (void)locationUpdateSuccessful:(BOOL)success;
 - (void)reverseGeocodingCompleted:(BOOL)completed;
 @end
@@ -20,7 +21,7 @@
 @interface WIMRLocationModel : NSObject <CLLocationManagerDelegate>
 
 
-@property (strong) id <WIMRLocationModelDelegate> delegate; // retain ??
+@property (strong) id <WIMRLocationModelDelegate> delegate;
 @property (strong, nonatomic) CLLocation *lastLocation;
 @property (strong, nonatomic) CLPlacemark *placemark;
 

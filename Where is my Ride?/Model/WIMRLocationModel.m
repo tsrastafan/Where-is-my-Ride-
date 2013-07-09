@@ -32,6 +32,9 @@
     return self;
 }
 
+/*! Start a standard location update.
+ *
+ */
 - (void)startStandardUpdates
 {
     // Create the location manager if this object does not
