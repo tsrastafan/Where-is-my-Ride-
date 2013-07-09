@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+//@property (strong, nonatomic) MKCircle *accuracyCircle;
 @end
 
 @implementation WIMRViewController
@@ -57,6 +58,8 @@
     self.vehicle = [[WIMRVehicle alloc] init];
     self.vehicle.title = @"Mein Fahrzeug";
     self.mapView.delegate = self;
+    self.mapView.showsUserLocation = YES;
+    self.mapView.userTrackingMode = MKUserTrackingModeFollow;
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,6 +89,14 @@
     [self.mapView setRegion:region animated:YES];
     self.vehicle.coordinate = self.locationManager.lastLocation.coordinate;
     [self.mapView addAnnotation:self.vehicle];
+    
+    //self.accuracyCircle = [MKCircle circleWithCenterCoordinate:self.locationManager.lastLocation.coordinate radius:self.locationManager.lastLocation.horizontalAccuracy];
+    
+//    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:self.accuracyCircle];
+    
+//    [self.mapView rendererForOverlay:circleRenderer];
+    
+    
     if (accurate) {
         [self.locationManager stopLocationUpdate];
     }
