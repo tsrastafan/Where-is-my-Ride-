@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-//@property (strong, nonatomic) MKCircle *accuracyCircle;
+@property (strong, nonatomic) MKCircle *accuracyCircle;
 @end
 
 @implementation WIMRViewController
@@ -60,6 +60,7 @@
     self.mapView.delegate = self;
     self.mapView.showsUserLocation = YES;
     self.mapView.userTrackingMode = MKUserTrackingModeFollow;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,12 +91,12 @@
     self.vehicle.coordinate = self.locationManager.lastLocation.coordinate;
     [self.mapView addAnnotation:self.vehicle];
     
-    //self.accuracyCircle = [MKCircle circleWithCenterCoordinate:self.locationManager.lastLocation.coordinate radius:self.locationManager.lastLocation.horizontalAccuracy];
+    NSLog(@"%f", self.locationManager.lastLocation.horizontalAccuracy);
+    
+    self.accuracyCircle = [MKCircle circleWithCenterCoordinate:self.locationManager.lastLocation.coordinate radius:self.locationManager.lastLocation.horizontalAccuracy];
+    [self.mapView addOverlay:self.accuracyCircle];
     
 //    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:self.accuracyCircle];
-    
-//    [self.mapView rendererForOverlay:circleRenderer];
-    
     
     if (accurate) {
         [self.locationManager stopLocationUpdate];
@@ -145,8 +146,27 @@
         return thePinAnnotationView;
     }
     
+    
     return nil;
 }
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
+{
+    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:self.accuracyCircle];
+    circleRenderer.fillColor = [UIColor blueColor];
+    circleRenderer.strokeColor = [UIColor redColor];
+    return circleRenderer;
+}
+
+/*
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
+{
+    MKCircleView *circleView = [[MKCircleView alloc] initWithOverlay:overlay];
+    circleView.strokeColor = [UIColor redColor];
+    circleView.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.4];
+    return circleView;
+}
+ */
 
 #pragma mark - MFMailComposeViewControllerDelegate
 
