@@ -11,7 +11,7 @@
 
 @interface WIMRViewController ()
 
-@property (strong, nonatomic) WIMRLocationModel *locationManager;
+@property (strong, nonatomic) WIMRLocationModel *locationModel;
 @property (strong, nonatomic) WIMRVehicle *vehicle;
 
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
@@ -22,7 +22,7 @@
 
 @implementation WIMRViewController
 - (IBAction)getLocation:(id)sender {
-    [self.locationManager startLocationUpdate];
+    [self.locationModel startLocationUpdate];
     self.locationLabel.text = @"Updating ...";
     self.addressLabel.text = @"Updating ...";
 }
@@ -32,11 +32,11 @@
     NSString *emailTitle = @"Mein Fahrzeug steht hier!";
     // Email Content
     NSString *messageBody = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
-                            self.locationManager.placemark.thoroughfare,
-                            self.locationManager.placemark.subThoroughfare,
-                            self.locationManager.placemark.postalCode,
-                            self.locationManager.placemark.locality,
-                            self.locationManager.placemark.administrativeArea];
+                            self.locationModel.placemark.thoroughfare,
+                            self.locationModel.placemark.subThoroughfare,
+                            self.locationModel.placemark.postalCode,
+                            self.locationModel.placemark.locality,
+                            self.locationModel.placemark.administrativeArea];
     // To address
     NSArray *toRecipents = [NSArray arrayWithObject:@"steffenheberle@me.com"];
     
@@ -54,8 +54,8 @@
 {
     [super viewDidLoad];
     
-    self.locationManager = [[WIMRLocationModel alloc] init];
-    self.locationManager.delegate = self;
+    self.locationModel = [[WIMRLocationModel alloc] init];
+    self.locationModel.delegate = self;
     self.vehicle = [[WIMRVehicle alloc] init];
     self.vehicle.title = @"My Vehicle";
     self.mapView.delegate = self;
@@ -83,34 +83,34 @@
 {
     if (success) {
         self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
-                                   self.locationManager.lastLocation.coordinate.latitude,
-                                   self.locationManager.lastLocation.coordinate.longitude];
-        MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
+                                   self.locationModel.lastLocation.coordinate.latitude,
+                                   self.locationModel.lastLocation.coordinate.longitude];
+        MKCoordinateRegion region = MKCoordinateRegionMake(self.locationModel.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
         [self.mapView removeAnnotation:self.vehicle];
         [self.mapView setRegion:region animated:YES];
-        self.vehicle.coordinate = self.locationManager.lastLocation.coordinate;
+        self.vehicle.coordinate = self.locationModel.lastLocation.coordinate;
         [self.mapView addAnnotation:self.vehicle];
     
-        NSLog(@"%f", self.locationManager.lastLocation.horizontalAccuracy);
+        NSLog(@"%f", self.locationModel.lastLocation.horizontalAccuracy);
     
         [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
-        [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationManager.lastLocation.coordinate radius:self.locationManager.lastLocation.horizontalAccuracy]];
+        [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
     } else {
         self.locationLabel.text = @"Could not get update.";
     }
 }
 
 
-- (void)reverseGeocodingCompleted:(BOOL)completed
+- (void)didFinishReverseGeocoding:(BOOL)success
 {
-    if (completed) {
-        self.vehicle.placemark = self.locationManager.placemark;
+    if (success) {
+        self.vehicle.placemark = self.locationModel.placemark;
         self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
-                                  self.locationManager.placemark.thoroughfare,
-                                  self.locationManager.placemark.subThoroughfare,
-                                  self.locationManager.placemark.postalCode,
-                                  self.locationManager.placemark.locality,
-                                  self.locationManager.placemark.administrativeArea];
+                                  self.locationModel.placemark.thoroughfare,
+                                  self.locationModel.placemark.subThoroughfare,
+                                  self.locationModel.placemark.postalCode,
+                                  self.locationModel.placemark.locality,
+                                  self.locationModel.placemark.administrativeArea];
     } else {
         self.addressLabel.text = @"Could not get corresponding address.";
     }
@@ -151,7 +151,7 @@
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
 {
-    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:[MKCircle circleWithCenterCoordinate:self.locationManager.lastLocation.coordinate radius:self.locationManager.lastLocation.horizontalAccuracy]];
+    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
     //circleRenderer.fillColor = [[UIColor blueColor] colorWithAlphaComponent:.2];
     circleRenderer.strokeColor = [UIColor redColor];
     circleRenderer.lineWidth = 1;

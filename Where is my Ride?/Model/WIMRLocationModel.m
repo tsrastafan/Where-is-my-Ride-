@@ -105,7 +105,7 @@
                  self.placemark = nil;
              }
              self.performingReverseGeocoding = NO;
-             [self.delegate reverseGeocodingCompleted:YES];
+             [self.delegate didFinishReverseGeocoding:YES];
          }];
     }
 }

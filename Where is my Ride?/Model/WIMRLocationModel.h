@@ -20,7 +20,7 @@ typedef enum {
 // rename methods!
 @required
 - (void)didUpdateLocation:(BOOL)success withStatus:(LocationUpdateReturnStatus)status;
-- (void)reverseGeocodingCompleted:(BOOL)completed;
+- (void)didFinishReverseGeocoding:(BOOL)success;
 @end
 
 
