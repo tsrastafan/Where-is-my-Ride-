@@ -9,23 +9,34 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@protocol WIMRLocationModelDelegate <NSObject>
-@required
+typedef enum {
+    DESIRED_ACCURACY = 0,
+    SOFT_TIME_LIMIT_EXCEEDED = 1,
+    HARD_TIME_LIMIT_EXCEEDED = 2
+} LocationUpdateReturnStatus;
 
-- (void)locationUpdateSuccessful:(BOOL)success;
+@protocol WIMRLocationModelDelegate <NSObject>
+
+// rename methods!
+@required
+- (void)didUpdateLocation:(BOOL)success withStatus:(LocationUpdateReturnStatus)status;
+
+
+
 - (void)reverseGeocodingCompleted:(BOOL)completed;
+
+
 @end
 
 
 @interface WIMRLocationModel : NSObject <CLLocationManagerDelegate>
 
 
-@property (strong) id <WIMRLocationModelDelegate> delegate; // retain ??
+@property (strong) id <WIMRLocationModelDelegate> delegate;
 @property (strong, nonatomic) CLLocation *lastLocation;
 @property (strong, nonatomic) CLPlacemark *placemark;
 
-- (void)startStandardUpdates;
-- (void)stopStandardUpdates;
-- (void)geocodeLocation:(CLLocation *)location;
+- (void)startLocationUpdate;
+- (void)stopLocationUpdate;
 
 @end

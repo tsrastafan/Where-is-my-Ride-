@@ -59,6 +59,9 @@
     self.vehicle = [[WIMRVehicle alloc] init];
     self.vehicle.title = @"My Vehicle";
     self.mapView.delegate = self;
+//    self.mapView.showsUserLocation = YES;
+//    self.mapView.userTrackingMode = MKUserTrackingModeFollow;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,7 +82,7 @@
  * Called for the delegate.
  * \param success A BOOL that determines wether the location update was successful.
  */
--(void)locationUpdateSuccessful:(BOOL)success
+- (void)didUpdateLocation:(BOOL)success withStatus:(LocationUpdateReturnStatus)status
 {
     if (success) {
         // update location label
@@ -151,8 +154,28 @@
         return thePinAnnotationView;
     }
     
+    
     return nil;
 }
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
+{
+    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:[MKCircle circleWithCenterCoordinate:self.locationManager.lastLocation.coordinate radius:self.locationManager.lastLocation.horizontalAccuracy]];
+    //circleRenderer.fillColor = [[UIColor blueColor] colorWithAlphaComponent:.2];
+    circleRenderer.strokeColor = [UIColor redColor];
+    circleRenderer.lineWidth = 1;
+    return circleRenderer;
+}
+
+/*
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
+{
+    MKCircleView *circleView = [[MKCircleView alloc] initWithOverlay:overlay];
+    circleView.strokeColor = [UIColor redColor];
+    circleView.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.4];
+    return circleView;
+}
+ */
 
 #pragma mark - MFMailComposeViewControllerDelegate
 
