@@ -6,11 +6,6 @@
 //  Copyright (c) 2013 Tobias Schultz and Steffen Heberle. All rights reserved.
 //
 
-#define LOCATION_MANAGHER_MINIMAL_ACCURACY 5
-#define LOCATION_MANAGER_DESIRED_ACCURACY kCLLocationAccuracyBest
-
-
-
 #define TIME_INTERVAL_BETWEEN_GPS_FIXES 5
 #define TIME_FOR_PROBING_FOR_BEST_ACCURACY 5
 
@@ -50,7 +45,6 @@
         self.softTimeLimitForLocationFix = 3;
         self.hardTimeLimitForLocationFix = 20;
         self.performingReverseGeocoding = NO;
-        
     }
     return self;
 }
@@ -78,7 +72,7 @@
         self.locationManager = [[CLLocationManager alloc] init];
     }
     self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy = self.desiredAccuracy;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     //self.locationManager.distanceFilter = LOCATION_MANAGER_DISTANCE_FILTER;
     
     self.softTimeLimitForLocationFixExceeded = NO;

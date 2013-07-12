@@ -22,7 +22,7 @@
 
 @implementation WIMRViewController
 - (IBAction)getLocation:(id)sender {
-    [self.locationManager startStandardUpdates];
+    [self.locationManager startLocationUpdate];
     self.locationLabel.text = @"Updating ...";
     self.addressLabel.text = @"Updating ...";
 }
@@ -59,9 +59,6 @@
     self.vehicle = [[WIMRVehicle alloc] init];
     self.vehicle.title = @"My Vehicle";
     self.mapView.delegate = self;
-//    self.mapView.showsUserLocation = YES;
-//    self.mapView.userTrackingMode = MKUserTrackingModeFollow;
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,24 +81,43 @@
  */
 - (void)didUpdateLocation:(BOOL)success withStatus:(LocationUpdateReturnStatus)status
 {
-    if (success) {
-        // update location label
-        self.locationLabel.text = [[NSString alloc] initWithFormat:(@"lat: %+.6f, long: %+.6f"),
-                                   self.locationManager.lastLocation.coordinate.latitude,
-                                   self.locationManager.lastLocation.coordinate.longitude];
-        
-        // center map around current location and zoom in
-        MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
-        [self.mapView setRegion:region animated:YES];
-        
-        // remove old annotation
-        [self.mapView removeAnnotation:self.vehicle];
-        
-        // set vehicle coordinate
-        self.vehicle.coordinate = self.locationManager.lastLocation.coordinate;
-        
-        // add the annotation to the map view
-        [self.mapView addAnnotation:self.vehicle];
+    self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
+                               self.locationManager.lastLocation.coordinate.latitude,
+                               self.locationManager.lastLocation.coordinate.longitude];
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
+    [self.mapView removeAnnotation:self.vehicle];
+    [self.mapView setRegion:region animated:YES];
+    self.vehicle.coordinate = self.locationManager.lastLocation.coordinate;
+    [self.mapView addAnnotation:self.vehicle];
+    
+    NSLog(@"%f", self.locationManager.lastLocation.horizontalAccuracy);
+    
+    [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
+    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationManager.lastLocation.coordinate radius:self.locationManager.lastLocation.horizontalAccuracy]];
+}
+
+
+
+
+-(void)didUpdateLocationWithBestAccuracy:(BOOL)accurate{
+    self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
+                               self.locationManager.lastLocation.coordinate.latitude,
+                               self.locationManager.lastLocation.coordinate.longitude];
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
+    [self.mapView removeAnnotation:self.vehicle];
+    [self.mapView setRegion:region animated:YES];
+    self.vehicle.coordinate = self.locationManager.lastLocation.coordinate;
+    [self.mapView addAnnotation:self.vehicle];
+    
+    NSLog(@"%f", self.locationManager.lastLocation.horizontalAccuracy);
+    
+    [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
+    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationManager.lastLocation.coordinate radius:self.locationManager.lastLocation.horizontalAccuracy]];
+    
+//    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:self.accuracyCircle];
+    
+    if (accurate) {
+        [self.locationManager stopLocationUpdate];
     }
     else {
         self.locationLabel.text = @"Could not get update.";
@@ -153,7 +169,6 @@
         
         return thePinAnnotationView;
     }
-    
     
     return nil;
 }
