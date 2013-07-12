@@ -111,8 +111,7 @@
                                   self.locationManager.placemark.postalCode,
                                   self.locationManager.placemark.locality,
                                   self.locationManager.placemark.administrativeArea];
-    }
-    else {
+    } else {
         self.addressLabel.text = @"Could not get corresponding address.";
     }
 

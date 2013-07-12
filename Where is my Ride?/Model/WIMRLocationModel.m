@@ -125,15 +125,15 @@
     }
     
     if (location.horizontalAccuracy <= self.desiredAccuracy) {
-        [self.delegate didUpdateLocation:YES withStatus:DESIRED_ACCURACY];
         [self.locationManager stopUpdatingLocation];
-        //[self geocodeLocation:location];
+        [self.delegate didUpdateLocation:YES withStatus:DESIRED_ACCURACY];
+        [self geocodeLocation:location];
     } else {
         if (self.softTimeLimitForLocationFixExceeded) {
             if (self.hardTimeLimitForLocationFixExceeded) {
-                [self.delegate didUpdateLocation:YES withStatus:HARD_TIME_LIMIT_EXCEEDED];
                 [self.locationManager stopUpdatingLocation];
-                //[self geocodeLocation:location];
+                [self.delegate didUpdateLocation:YES withStatus:HARD_TIME_LIMIT_EXCEEDED];
+                [self geocodeLocation:location];
             } else {
                 [self.delegate didUpdateLocation:YES withStatus:SOFT_TIME_LIMIT_EXCEEDED];
                 //[self geocodeLocation:location];
