@@ -6,7 +6,10 @@
 //  Copyright (c) 2013 Tobias Schultz and Steffen Heberle. All rights reserved.
 //
 
-#define MINIMAL_ACCURACY 5
+#define LOCATION_MANAGHER_MINIMAL_ACCURACY 5
+#define LOCATION_MANAGER_DESIRED_ACCURACY kCLLocationAccuracyBest
+
+
 
 #define TIME_INTERVAL_BETWEEN_GPS_FIXES 5
 #define TIME_FOR_PROBING_FOR_BEST_ACCURACY 5
@@ -17,6 +20,19 @@
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLGeocoder *geocoder;
+@property (strong, nonatomic) NSTimer *softTimer;
+@property (strong, nonatomic) NSTimer *hardTimer;
+
+
+@property (nonatomic) CLLocationAccuracy desiredAccuracy;
+@property (nonatomic) NSUInteger softTimeLimitForLocationFix;
+@property (nonatomic) NSUInteger hardTimeLimitForLocationFix;
+
+
+@property (nonatomic) BOOL softTimeLimitForLocationFixExceeded;
+@property (nonatomic) BOOL hardTimeLimitForLocationFixExceeded;
+
+
 @property (nonatomic) BOOL performingReverseGeocoding;
 
 @end
@@ -24,14 +40,34 @@
 
 @implementation WIMRLocationModel
 
-// designated initializer
+/*! Designated initializer
+ *
+ */
 - (WIMRLocationModel *)init
 {
     if (self = [super init]) {
+        self.desiredAccuracy = 5;
+        self.softTimeLimitForLocationFix = 3;
+        self.hardTimeLimitForLocationFix = 20;
         self.performingReverseGeocoding = NO;
+        
     }
     return self;
 }
+
+/*! Set a time limit for fixing the location.
+ *
+ * \params timeStatus Status code for the exceeded time limit.
+ * 1 means soft time limit exceeded, 2 means hard time limit exceeded.
+ */
+- (void)setSoftTimeLimitForLocationFixExceededYES:(NSTimer *)timer {
+    self.softTimeLimitForLocationFixExceeded = YES;
+}
+
+- (void)setHardTimeLimitForLocationFixExceededYES:(NSTimer *)timer {
+    self.hardTimeLimitForLocationFixExceeded = YES;
+}
+
 
 /*! Start a standard location update.
  *
@@ -42,9 +78,14 @@
         self.locationManager = [[CLLocationManager alloc] init];
     }
     self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    self.locationManager.distanceFilter = 5;
+    self.locationManager.desiredAccuracy = self.desiredAccuracy;
+    //self.locationManager.distanceFilter = LOCATION_MANAGER_DISTANCE_FILTER;
     
+    self.softTimeLimitForLocationFixExceeded = NO;
+    self.hardTimeLimitForLocationFixExceeded = NO;
+
+    self.softTimer = [NSTimer scheduledTimerWithTimeInterval:self.softTimeLimitForLocationFix target:self selector:@selector(setSoftTimeLimitForLocationFixExceededYES:) userInfo:nil repeats:NO];
+    self.hardTimer = [NSTimer scheduledTimerWithTimeInterval:self.hardTimeLimitForLocationFix target:self selector:@selector(setHardTimeLimitForLocationFixExceededYES:) userInfo:nil repeats:NO];
     [self.locationManager startUpdatingLocation];
 }
 
@@ -82,16 +123,29 @@
      didUpdateLocations:(NSArray *)locations
 {
     CLLocation *location = [locations lastObject];
-    if (location.horizontalAccuracy > 0) {
-        self.lastLocation = location;
-        if (location.horizontalAccuracy <= MINIMAL_ACCURACY) {
-            [self.delegate didUpdateLocationWithDesiredAccuracy:YES];
-            [self geocodeLocation:location];
-        } else {
-            [self.delegate didUpdateLocationWithDesiredAccuracy:NO];
+    
+    self.lastLocation = location;
+    
+    if (location.horizontalAccuracy < self.lastLocation.horizontalAccuracy) { //danger -> last location not set
+       // self.lastLocation = location;
+    }
+    
+    if (location.horizontalAccuracy <= self.desiredAccuracy) {
+        [self.delegate didUpdateLocation:YES withStatus:DESIRED_ACCURACY];
+        [self.locationManager stopUpdatingLocation];
+        //[self geocodeLocation:location];
+    } else {
+        if (self.softTimeLimitForLocationFixExceeded) {
+            if (self.hardTimeLimitForLocationFixExceeded) {
+                [self.delegate didUpdateLocation:YES withStatus:HARD_TIME_LIMIT_EXCEEDED];
+                [self.locationManager stopUpdatingLocation];
+                //[self geocodeLocation:location];
+            } else {
+                [self.delegate didUpdateLocation:YES withStatus:SOFT_TIME_LIMIT_EXCEEDED];
+                //[self geocodeLocation:location];
+            }
         }
     }
-
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error

@@ -224,6 +224,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Tobias Schultz and Steffen Heberle";
 				TargetAttributes = {
+					81915129176F3D9600C5E016 = {
+						DevelopmentTeam = 7UVDDYR6PZ;
+					};
 					8191514A176F3D9700C5E016 = {
 						TestTargetID = 81915129176F3D9600C5E016;
 					};
@@ -401,6 +404,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Where is my Ride?/Where is my Ride?-Prefix.pch";
 				INFOPLIST_FILE = "Where is my Ride?/Where is my Ride?-Info.plist";
@@ -414,6 +418,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Where is my Ride?/Where is my Ride?-Prefix.pch";
 				INFOPLIST_FILE = "Where is my Ride?/Where is my Ride?-Info.plist";

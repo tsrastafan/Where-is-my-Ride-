@@ -80,7 +80,27 @@
  * Called for the delegate.
  * \param success A BOOL that determines wether the location update was successful.
  */
--(void)didUpdateLocationWithDesiredAccuracy:(BOOL)accurate{
+- (void)didUpdateLocation:(BOOL)success withStatus:(LocationUpdateReturnStatus)status
+{
+    self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
+                               self.locationManager.lastLocation.coordinate.latitude,
+                               self.locationManager.lastLocation.coordinate.longitude];
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.locationManager.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
+    [self.mapView removeAnnotation:self.vehicle];
+    [self.mapView setRegion:region animated:YES];
+    self.vehicle.coordinate = self.locationManager.lastLocation.coordinate;
+    [self.mapView addAnnotation:self.vehicle];
+    
+    NSLog(@"%f", self.locationManager.lastLocation.horizontalAccuracy);
+    
+    [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
+    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationManager.lastLocation.coordinate radius:self.locationManager.lastLocation.horizontalAccuracy]];
+}
+
+
+
+
+-(void)didUpdateLocationWithBestAccuracy:(BOOL)accurate{
     self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
                                self.locationManager.lastLocation.coordinate.latitude,
                                self.locationManager.lastLocation.coordinate.longitude];
