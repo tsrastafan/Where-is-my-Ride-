@@ -77,7 +77,7 @@
 /*! Inform the delegate that the location process has finished.
  *
  * Called for the delegate.
- * \param success A BOOL that determines wether the location update was successful.
+ * \param success A BOOL that determines whether the location update was successful.
  */
 - (void)didUpdateLocation:(BOOL)success withStatus:(LocationUpdateReturnStatus)status
 {

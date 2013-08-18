@@ -33,7 +33,9 @@
 @end
 
 
-@implementation WIMRLocationModel
+@implementation WIMRLocationModel {
+    
+}
 
 /*! Designated initializer
  *
