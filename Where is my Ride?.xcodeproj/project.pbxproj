@@ -38,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		8147354A1786F2A900949B24 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		8175E6C217C0B3BF004E36E9 /* WIMRDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WIMRDataModel.xcdatamodel; sourceTree = "<group>"; };
 		8191512A176F3D9600C5E016 /* Where is my Ride?.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Where is my Ride?.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8191512D176F3D9600C5E016 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8191512F176F3D9600C5E016 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -143,6 +144,7 @@
 				81915136176F3D9600C5E016 /* InfoPlist.strings */,
 				81915139176F3D9600C5E016 /* main.m */,
 				8191513B176F3D9600C5E016 /* Where is my Ride?-Prefix.pch */,
+				8175E6C117C0B3BF004E36E9 /* WIMRDataModel.xcdatamodeld */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -493,6 +495,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8175E6C117C0B3BF004E36E9 /* WIMRDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8175E6C217C0B3BF004E36E9 /* WIMRDataModel.xcdatamodel */,
+			);
+			currentVersion = 8175E6C217C0B3BF004E36E9 /* WIMRDataModel.xcdatamodel */;
+			path = WIMRDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 81915122176F3D9600C5E016 /* Project object */;
 }
