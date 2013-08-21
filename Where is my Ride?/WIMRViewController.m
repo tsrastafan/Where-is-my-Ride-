@@ -8,6 +8,9 @@
 
 #import "WIMRViewController.h"
 #import "WIMRVehicle.h"
+#import "WIMRVehicleDataModel.h"
+
+
 
 @interface WIMRViewController ()
 
@@ -21,9 +24,35 @@
 
 
 
+
 @end
 
 @implementation WIMRViewController
+
+
+- (IBAction)saveLocation:(id)sender {
+    
+    }
+    
+    //NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"WIMRVehicleDataModel" inManagedObjectContext:self.managedObjectContext];
+    
+    //NSManagedObject *newVehicle = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.managedObjectContext];
+    
+    //[newVehicle setValue:@"FOX" forKey:@"name"];
+    
+    //NSError *error;
+    //[self.managedObjectContext save:&error];
+    
+
+
+
+
+
+
+
+
+
+
 - (IBAction)getLocation:(id)sender {
     [self.locationModel startLocationUpdate];
     self.locationLabel.text = @"Updating ...";
@@ -62,6 +91,7 @@
     self.vehicle = [[WIMRVehicle alloc] init];
     self.vehicle.title = @"My Vehicle";
     self.mapView.delegate = self;
+
 }
 
 - (void)didReceiveMemoryWarning
