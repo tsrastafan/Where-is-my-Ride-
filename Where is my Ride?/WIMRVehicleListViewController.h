@@ -13,6 +13,7 @@
 @interface WIMRVehicleListViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 
+
 @property (strong, nonatomic) WIMRVehicleDetailViewController *vehicleDetailViewController;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;

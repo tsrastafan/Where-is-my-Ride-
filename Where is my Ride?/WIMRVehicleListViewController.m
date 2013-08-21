@@ -12,6 +12,8 @@
 
 @interface WIMRVehicleListViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+
 @end
 
 @implementation WIMRVehicleListViewController
@@ -112,7 +114,10 @@
     {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [segue.destinationViewController setDetailItem:object];
+        [segue.destinationViewController setObject:object];
+       // [segue.destinationViewController setFetchedResultsController:self.fetchedResultsController];
+        [segue.destinationViewController setContext:self.managedObjectContext];
+        
     }
 }
 
@@ -202,7 +207,5 @@
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = [[object valueForKey:@"name"] description];
 }
-
-
 
 @end

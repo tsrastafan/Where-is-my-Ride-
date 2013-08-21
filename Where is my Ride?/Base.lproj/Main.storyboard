@@ -19,18 +19,9 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="Yei-KT-nKc" id="IKu-9a-qh0">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RPN-SN-q52">
-                                            <rect key="frame" x="8" y="7" width="97" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <nil key="textColor"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
-                                    </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="40c-hw-5Ny" kind="push" identifier="showDetail" id="esk-Es-enf"/>
+                                    <segue destination="vXZ-lx-hvc" kind="push" identifier="showDetail" id="zne-UX-9n5"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -46,34 +37,15 @@
             <point key="canvasLocation" x="711" y="349"/>
         </scene>
         <!--Vehicle Detail View Controller-->
-        <scene sceneID="ilN-Ef-C8k">
-            <objects>
-                <viewController id="40c-hw-5Ny" customClass="WIMRVehicleDetailViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="WYt-Cd-zEk"/>
-                        <viewControllerLayoutGuide type="bottom" id="atE-es-aJ1"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="erK-o9-p5B">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="gQk-pm-YIf"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nOf-bs-DVp" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1078" y="349"/>
-        </scene>
-        <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="WIMRViewController" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="WIMRVehicleDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="z9j-MZ-eDW"/>
                         <viewControllerLayoutGuide type="bottom" id="6cB-Kv-08N"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u7w-Lr-PLd">
@@ -92,7 +64,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OcB-e6-CXk">
-                                <rect key="frame" x="20" y="188" width="280" height="32"/>
+                                <rect key="frame" x="5" y="188" width="275" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Share my position">
@@ -120,33 +92,30 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="csv-Cx-wVv">
-                                <rect key="frame" x="0.0" y="227" width="320" height="253"/>
+                                <rect key="frame" x="0.0" y="271" width="320" height="145"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hI-E7-vNw">
-                                <rect key="frame" x="20" y="23" width="34" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lqx-fv-EXb">
+                                <rect key="frame" x="5" y="11" width="97" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Save">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="saveLocation:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="82G-bZ-EB2"/>
-                                </connections>
-                            </button>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="1So-oP-5Iq"/>
                     <connections>
                         <outlet property="addressLabel" destination="XgC-2e-111" id="Nwx-ZL-4Ia"/>
                         <outlet property="locationLabel" destination="J81-oP-sFE" id="hF8-8f-Hxw"/>
                         <outlet property="mapView" destination="csv-Cx-wVv" id="jr7-Jb-g3K"/>
+                        <outlet property="textField" destination="Lqx-fv-EXb" id="Q2K-vA-5Vg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="21" y="-274"/>
+            <point key="canvasLocation" x="1131" y="349"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hLI-II-1dI">
