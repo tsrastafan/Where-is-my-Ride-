@@ -37,6 +37,14 @@
     self.navigationItem.rightBarButtonItem = addButton;
     self.vehicleDetailViewController = (WIMRVehicleDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	// Do any additional setup after loading the view.
+    
+    
+    
+    
+    //Toolbar Buttons
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    UIBarButtonItem *toolbarButton = [[UIBarButtonItem alloc] initWithTitle:@"WAI" style:UIBarButtonItemStyleBordered target:self action:nil];
+    [self setToolbarItems:[[NSArray alloc] initWithObjects:toolbarButton, nil] animated:YES];
 }
 
 - (void)insertNewVehicle:(id)sender
