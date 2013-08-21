@@ -9,6 +9,7 @@
 #define CELL_IDENTIFIER @"Vehicle"
 
 #import "WIMRVehicleListViewController.h"
+#import "WIMRVehicleDataModel.h"
 
 @interface WIMRVehicleListViewController ()
 
@@ -113,7 +114,7 @@
     if ([[segue identifier] isEqualToString:@"showDetail"])
     {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [segue.destinationViewController setObject:object];
        // [segue.destinationViewController setFetchedResultsController:self.fetchedResultsController];
         [segue.destinationViewController setContext:self.managedObjectContext];
@@ -204,8 +205,9 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"name"] description];
+    WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = object.name;
+//    cell.textLabel.text = [[object valueForKey:@"name"] description];
 }
 
 @end

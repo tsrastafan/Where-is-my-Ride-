@@ -50,7 +50,6 @@
 
 
 
-
 - (IBAction)getLocation:(id)sender {
     [self.locationModel startLocationUpdate];
     self.locationLabel.text = @"Updating ...";
@@ -128,6 +127,22 @@
     
         [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
         [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
+        
+        
+        //Save lastLocation to CoreData
+        
+        
+        
+       // [self.context setValue:self.locationModel.lastLocation forKey:@"location"];
+        
+      //  NSError *error;
+      //  if (![self.context save:&error]) {
+      //      NSLog(@"Error while saving...");
+      //  }
+        
+        
+        
+        
     } else {
         self.locationLabel.text = @"Could not get update.";
     }
