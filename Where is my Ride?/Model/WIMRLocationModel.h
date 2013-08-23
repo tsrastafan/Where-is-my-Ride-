@@ -17,6 +17,7 @@ typedef enum {
 
 @protocol WIMRLocationModelDelegate <NSObject>
 
+
 // rename methods!
 @required
 - (void)didUpdateLocation:(BOOL)success withStatus:(LocationUpdateReturnStatus)status;
@@ -28,10 +29,12 @@ typedef enum {
 
 
 @property (strong) id <WIMRLocationModelDelegate> delegate;
-@property (strong, nonatomic) CLLocation *lastLocation;
+@property (strong, nonatomic, readonly) CLLocation *lastLocation;
 @property (strong, nonatomic) CLPlacemark *placemark;
 
 - (void)startLocationUpdate;
 - (void)stopLocationUpdate;
+
+- (void)setLastLocationLatitude:(NSNumber *)latitude longitude:(NSNumber *)longitude altitude:(NSNumber *)altitude horizontalAccuracy:(NSNumber *)hAccuracy verticalAccuracy:(NSNumber *)vAccuracy course:(NSNumber *)course speed:(NSNumber *)speed timestamp:(NSDate *)timestamp;
 
 @end

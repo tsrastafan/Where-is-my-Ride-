@@ -8,7 +8,6 @@
 
 #import "WIMRVehicleDetailViewController.h"
 #import "WIMRVehicle.h"
-#import "WIMRVehicleDataModel.h"
 
 
 
@@ -45,7 +44,36 @@
 
 
 
+- (BOOL)saveVehicleState
+{
+    self.managedObject.longitude = [NSNumber numberWithDouble:self.locationModel.lastLocation.coordinate.longitude];
 
+    
+    //Umschreiben!!
+//    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.coordinate.longitude] forKey:@"longitude"];
+    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.coordinate.latitude] forKey:@"latitude"];
+    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.altitude] forKey:@"altitude"];
+    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.horizontalAccuracy] forKey:@"horizontalAccuracy"];
+    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.verticalAccuracy] forKey:@"verticalAccuracy"];
+    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.course] forKey:@"course"];
+    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.speed] forKey:@"speed"];
+    [self.managedObject setValue:self.locationModel.lastLocation.timestamp forKey:@"timestamp"];
+    
+    
+    [self.managedObject setValue:self.textField.text forKey:@"name"];
+    
+    
+    
+    
+    NSError *error = nil;
+    
+    if (![self.context save:&error]) {
+        NSLog(@"Error");
+    }
+    
+    return !error;
+    
+}
 
 
 
@@ -89,8 +117,12 @@
     self.vehicle.title = @"My Vehicle";
     self.mapView.delegate = self;
     self.textField.delegate = self;
-    self.textField.text = [[self.object valueForKey:@"name"] description];
+    self.textField.text = [[self.managedObject valueForKey:@"name"] description];
     
+    
+    //load last location from CoreData
+    
+    [self.locationModel setLastLocationLatitude:self.managedObject.latitude longitude:self.managedObject.longitude altitude:self.managedObject.altitude horizontalAccuracy:self.managedObject.horizontalAccuracy verticalAccuracy:self.managedObject.verticalAccuracy course:self.managedObject.course speed:self.managedObject.speed timestamp:self.managedObject.timestamp];
     
     
     //Toolbar Buttons
@@ -107,6 +139,27 @@
     
     
     [self setToolbarItems:[[NSArray alloc] initWithObjects:getLocationButton, flexibleSpaceButton, takePhotoButton, flexibleSpaceButton, takeNoteButton, flexibleSpaceButton, setParkTimeButton, flexibleSpaceButton,systemActionButton, nil] animated:YES];
+    
+    
+    
+    
+    
+    
+    //Show last position !!! Duplicate Code !!!
+    self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
+                               self.locationModel.lastLocation.coordinate.latitude,
+                               self.locationModel.lastLocation.coordinate.longitude];
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.locationModel.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
+    [self.mapView removeAnnotation:self.vehicle];
+    [self.mapView setRegion:region animated:YES];
+    self.vehicle.coordinate = self.locationModel.lastLocation.coordinate;
+    [self.mapView addAnnotation:self.vehicle];
+    
+    NSLog(@"%f", self.locationModel.lastLocation.horizontalAccuracy);
+    
+    [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
+    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
+
 
 }
 
@@ -151,11 +204,7 @@
         
         
        // [self.context setValue:self.locationModel.lastLocation forKey:@"location"];
-        
-      //  NSError *error;
-      //  if (![self.context save:&error]) {
-      //      NSLog(@"Error while saving...");
-      //  }
+        [self saveVehicleState];
         
         
         
@@ -266,13 +315,13 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self.object setValue:self.textField.text forKey:@"name"];
+  /*  [self.managedObject setValue:self.textField.text forKey:@"name"];
     NSError *error;
     
     if (![self.context save:&error]) {
         NSLog(@"Error");
     }
-    
+*/    
     return [textField resignFirstResponder];
 }
 

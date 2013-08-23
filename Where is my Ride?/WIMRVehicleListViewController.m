@@ -123,7 +123,7 @@
     {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [segue.destinationViewController setObject:object];
+        [segue.destinationViewController setManagedObject:object];
        // [segue.destinationViewController setFetchedResultsController:self.fetchedResultsController];
         [segue.destinationViewController setContext:self.managedObjectContext];
         
