@@ -14,7 +14,7 @@
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) CLPlacemark *placemark;
-@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *name;
 
 - (void)shareAnnotation;
 

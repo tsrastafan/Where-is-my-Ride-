@@ -12,27 +12,19 @@
 
 @implementation WIMRAppDelegate
 
-@synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize managedObjectContext = _managedObjectContext;
+
+
+
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-   /* if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-        UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-        splitViewController.delegate = (id)navigationController.topViewController;
-        
-        UINavigationController *masterNavigationController = splitViewController.viewControllers[0];
-        CDTMasterViewController *controller = (CDTMasterViewController *)masterNavigationController.topViewController;
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    WIMRVehicleListViewController *controller = (WIMRVehicleListViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
-    } else {  */
-        UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-        WIMRVehicleListViewController *controller = (WIMRVehicleListViewController *)navigationController.topViewController;
-        controller.managedObjectContext = self.managedObjectContext;
-   // }
     return YES;
 }
 							
@@ -79,26 +71,9 @@
 
 #pragma mark - Core Data stack
 
-// Returns the managed object context for the application.
-// If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
-- (NSManagedObjectContext *)managedObjectContext
-{
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
-
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = self.persistentStoreCoordinator;
-    if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-
-    return _managedObjectContext;
-}
-
 // Returns the managed object model for the application.
 // If the model doesn't already exist, it is created from the application's model.
+
 - (NSManagedObjectModel *)managedObjectModel
 {
     if (_managedObjectModel != nil) {
@@ -151,6 +126,32 @@
     
     return _persistentStoreCoordinator;
 }
+
+
+
+
+// Returns the managed object context for the application.
+// If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
+- (NSManagedObjectContext *)managedObjectContext
+{
+    if (_managedObjectContext != nil) {
+        return _managedObjectContext;
+
+    }
+    
+    NSPersistentStoreCoordinator *coordinator = self.persistentStoreCoordinator;
+    if (coordinator != nil) {
+        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    }
+
+    return _managedObjectContext;
+}
+
+
+
+
+
 
 #pragma mark - Application's Documents directory
 

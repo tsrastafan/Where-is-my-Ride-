@@ -114,7 +114,7 @@
     self.locationModel = [[WIMRLocationModel alloc] init];
     self.locationModel.delegate = self;
     self.vehicle = [[WIMRVehicle alloc] init];
-    self.vehicle.title = @"My Vehicle";
+    self.vehicle.name = @"My Vehicle";
     self.mapView.delegate = self;
     self.textField.delegate = self;
     self.textField.text = [[self.managedObject valueForKey:@"name"] description];

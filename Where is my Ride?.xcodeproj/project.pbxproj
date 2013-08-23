@@ -143,9 +143,9 @@
 				81915142176F3D9600C5E016 /* WIMRVehicleDetailViewController.h */,
 				81915143176F3D9600C5E016 /* WIMRVehicleDetailViewController.m */,
 				81915145176F3D9600C5E016 /* Images.xcassets */,
-				81915134176F3D9600C5E016 /* Supporting Files */,
 				81BE302E17C3BDA200389DF8 /* WIMRVehicleListViewController.h */,
 				81BE302F17C3BDA200389DF8 /* WIMRVehicleListViewController.m */,
+				81915134176F3D9600C5E016 /* Supporting Files */,
 			);
 			path = "Where is my Ride?";
 			sourceTree = "<group>";
