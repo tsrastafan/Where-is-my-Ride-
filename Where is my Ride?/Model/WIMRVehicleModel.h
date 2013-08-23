@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
-@interface WIMRVehicle : NSObject <MKAnnotation>
+@interface WIMRVehicleModel : NSObject <MKAnnotation>
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) CLPlacemark *placemark;

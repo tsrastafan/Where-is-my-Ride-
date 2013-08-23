@@ -7,14 +7,14 @@
 //
 
 #import "WIMRVehicleDetailViewController.h"
-#import "WIMRVehicle.h"
+#import "WIMRVehicleModel.h"
 
 
 
 @interface WIMRVehicleDetailViewController ()
 
 @property (strong, nonatomic) WIMRLocationModel *locationModel;
-@property (strong, nonatomic) WIMRVehicle *vehicle;
+@property (strong, nonatomic) WIMRVehicleModel *vehicle;
 
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
@@ -113,7 +113,7 @@
     
     self.locationModel = [[WIMRLocationModel alloc] init];
     self.locationModel.delegate = self;
-    self.vehicle = [[WIMRVehicle alloc] init];
+    self.vehicle = [[WIMRVehicleModel alloc] init];
     self.vehicle.name = @"My Vehicle";
     self.mapView.delegate = self;
     self.textField.delegate = self;

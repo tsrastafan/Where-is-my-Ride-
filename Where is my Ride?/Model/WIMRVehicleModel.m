@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 Tobias Schultz and Steffen Heberle. All rights reserved.
 //
 
-#import "WIMRVehicle.h"
+#import "WIMRVehicleModel.h"
 
-@interface WIMRVehicle ()
+@interface WIMRVehicleModel ()
 
 @end
 
 
-@implementation WIMRVehicle
+@implementation WIMRVehicleModel
 
 - (void)shareAnnotation
 {
