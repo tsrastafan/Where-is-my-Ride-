@@ -23,7 +23,6 @@
 		8191514F176F3D9700C5E016 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81915131176F3D9600C5E016 /* UIKit.framework */; };
 		81915157176F3D9700C5E016 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81915155176F3D9700C5E016 /* InfoPlist.strings */; };
 		81915159176F3D9700C5E016 /* Where_is_my_Ride_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 81915158176F3D9700C5E016 /* Where_is_my_Ride_Tests.m */; };
-		81BAE3C017C7833800BA9584 /* WIMRVehicelDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BAE3BF17C7833800BA9584 /* WIMRVehicelDataModel.m */; };
 		81BE303017C3BDA200389DF8 /* WIMRVehicleListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BE302F17C3BDA200389DF8 /* WIMRVehicleListViewController.m */; };
 		81BE303B17C3D95800389DF8 /* WIMRDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81BE303417C3CD8F00389DF8 /* WIMRDataModel.xcdatamodeld */; };
 		81C676D6177DBF8C00ACD875 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81C676D5177DBF8C00ACD875 /* MapKit.framework */; };
@@ -65,8 +64,6 @@
 		81915154176F3D9700C5E016 /* Where is my Ride?Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Where is my Ride?Tests-Info.plist"; sourceTree = "<group>"; };
 		81915156176F3D9700C5E016 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		81915158176F3D9700C5E016 /* Where_is_my_Ride_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Where_is_my_Ride_Tests.m; sourceTree = "<group>"; };
-		81BAE3BE17C7833800BA9584 /* WIMRVehicelDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicelDataModel.h; sourceTree = "<group>"; };
-		81BAE3BF17C7833800BA9584 /* WIMRVehicelDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicelDataModel.m; sourceTree = "<group>"; };
 		81BE302E17C3BDA200389DF8 /* WIMRVehicleListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicleListViewController.h; sourceTree = "<group>"; };
 		81BE302F17C3BDA200389DF8 /* WIMRVehicleListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicleListViewController.m; sourceTree = "<group>"; };
 		81BE303517C3CD8F00389DF8 /* WIMRDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WIMRDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -192,8 +189,6 @@
 				81BE303417C3CD8F00389DF8 /* WIMRDataModel.xcdatamodeld */,
 				815E089D17C78E670023C3F6 /* WIMRVehicleDataModel.h */,
 				815E089E17C78E670023C3F6 /* WIMRVehicleDataModel.m */,
-				81BAE3BE17C7833800BA9584 /* WIMRVehicelDataModel.h */,
-				81BAE3BF17C7833800BA9584 /* WIMRVehicelDataModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -302,7 +297,6 @@
 				815E089F17C78E670023C3F6 /* WIMRVehicleDataModel.m in Sources */,
 				8191513A176F3D9600C5E016 /* main.m in Sources */,
 				81BE303B17C3D95800389DF8 /* WIMRDataModel.xcdatamodeld in Sources */,
-				81BAE3C017C7833800BA9584 /* WIMRVehicelDataModel.m in Sources */,
 				8191513E176F3D9600C5E016 /* WIMRAppDelegate.m in Sources */,
 				81915144176F3D9600C5E016 /* WIMRVehicleDetailViewController.m in Sources */,
 				81BE303017C3BDA200389DF8 /* WIMRVehicleListViewController.m in Sources */,
