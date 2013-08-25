@@ -1,5 +1,5 @@
 //
-//  WIMRVehicleDataModel.h
+//  WIMRVehicelDataModel.h
 //  Where is my Ride?
 //
 //  Created by Tobias Schultz on 8/23/13.
@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface WIMRVehicleDataModel : NSManagedObject
+@interface WIMRVehicelDataModel : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * altitude;
 @property (nonatomic, retain) NSNumber * course;

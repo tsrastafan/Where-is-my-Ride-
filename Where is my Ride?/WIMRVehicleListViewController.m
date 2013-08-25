@@ -47,6 +47,11 @@
     [self setToolbarItems:[[NSArray alloc] initWithObjects:toolbarButton, nil] animated:YES];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [NSFetchedResultsController deleteCacheWithName:@"master"];
+}
+
 - (void)insertNewVehicle:(id)sender
 {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
@@ -70,6 +75,12 @@
 
 
 # pragma mark - Table View Data Source
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo name];
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -144,11 +155,12 @@
     [fetchRequest setFetchBatchSize:20];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
+    NSArray *sortDescriptors = @[sortDescriptor2, sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"type" cacheName:@"master"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     

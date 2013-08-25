@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 
 
 
@@ -47,6 +48,7 @@
 - (BOOL)saveVehicleState
 {
     self.managedObject.longitude = [NSNumber numberWithDouble:self.locationModel.lastLocation.coordinate.longitude];
+    self.managedObject.type = (NSDecimalNumber *)[NSDecimalNumber numberWithInt:[self.typeTextField.text intValue]];
 
     
     //Umschreiben!!
@@ -118,6 +120,8 @@
     self.mapView.delegate = self;
     self.textField.delegate = self;
     self.textField.text = [[self.managedObject valueForKey:@"name"] description];
+    self.typeTextField.delegate = self;
+    self.typeTextField.text = [self.managedObject.type description];
     
     
     //load last location from CoreData
