@@ -42,7 +42,9 @@
     
     //NSError *error;
     //[self.managedObjectContext save:&error];
-    
+
+
+
 - (NSManagedObjectContext *)context
 {
     if (!_context) _context = self.managedObject.managedObjectContext;
@@ -123,8 +125,6 @@
     
     self.locationModel = [[WIMRLocationModel alloc] init];
     self.locationModel.delegate = self;
-    self.vehicle = [[WIMRVehicleModel alloc] init];
-    //self.vehicle.name = @"My Vehicle";
     self.mapView.delegate = self;
     self.textField.delegate = self;
     self.textField.text = [[self.managedObject valueForKey:@"name"] description];
