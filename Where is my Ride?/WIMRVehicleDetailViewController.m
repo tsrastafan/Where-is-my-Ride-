@@ -142,27 +142,6 @@
     
     [self updateUI];
     
-    
-    
-    
-    
-    
-    //Show last position !!! Duplicate Code !!!
-  /*  self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
-                               self.locationModel.lastLocation.coordinate.latitude,
-                               self.locationModel.lastLocation.coordinate.longitude];
-    MKCoordinateRegion region = MKCoordinateRegionMake(self.locationModel.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
-    [self.mapView removeAnnotation:self.vehicle];
-    [self.mapView setRegion:region animated:YES];
-    self.vehicle.coordinate = self.locationModel.lastLocation.coordinate;
-    [self.mapView addAnnotation:self.vehicle];
-    
-    NSLog(@"%f", self.locationModel.lastLocation.horizontalAccuracy);
-    
-    [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
-    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
-
-*/
 }
 
 
@@ -171,7 +150,6 @@
     MKCoordinateRegion region = MKCoordinateRegionMake(self.locationModel.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
     [self.mapView removeAnnotation:self.vehicle];
     [self.mapView setRegion:region animated:YES];
-    self.vehicle.coordinate = self.locationModel.lastLocation.coordinate;
     [self.mapView addAnnotation:self.vehicle];
     [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
     [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
@@ -260,18 +238,19 @@
     if ([annotation isKindOfClass:[MKPointAnnotation class]])
     {
         // Try to dequeue an existing pin view first.
-        MKPinAnnotationView *thePinAnnotationView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Here I am!"];
+        MKPinAnnotationView *thePinAnnotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Vehicle"];
         
         if (!thePinAnnotationView)
         {
             // If an existing pin view was not available, create one.
-            thePinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
-                                                                    reuseIdentifier:@"Here I am!"];
+            thePinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Vehicle"];
             thePinAnnotationView.animatesDrop = YES;
             thePinAnnotationView.canShowCallout = YES;
+        
         }
-        else
+        else {
             thePinAnnotationView.annotation = annotation;
+        }
         
         return thePinAnnotationView;
     }
