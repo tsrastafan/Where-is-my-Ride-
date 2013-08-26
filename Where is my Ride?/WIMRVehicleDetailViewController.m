@@ -24,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 
+@property (strong, nonatomic) NSManagedObjectContext *context;
+
 
 
 @end
@@ -41,21 +43,21 @@
     //NSError *error;
     //[self.managedObjectContext save:&error];
     
-
-
+- (NSManagedObjectContext *)context
+{
+    if (!_context) _context = self.managedObject.managedObjectContext;
+    return _context;
+}
 
 
 - (BOOL)saveVehicleState
 {
     self.managedObject.longitude = [NSNumber numberWithDouble:self.locationModel.lastLocation.coordinate.longitude];
     self.managedObject.type = (NSDecimalNumber *)[NSDecimalNumber numberWithInt:[self.typeTextField.text intValue]];
-
+    self.managedObject.latitude = [NSNumber numberWithDouble:self.locationModel.lastLocation.coordinate.latitude];
+    self.managedObject.altitude = [NSNumber numberWithDouble:self.locationModel.lastLocation.altitude];
+    self.managedObject.horizontalAccuracy = [NSNumber numberWithDouble:self.locationModel.lastLocation.horizontalAccuracy];
     
-    //Umschreiben!!
-//    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.coordinate.longitude] forKey:@"longitude"];
-    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.coordinate.latitude] forKey:@"latitude"];
-    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.altitude] forKey:@"altitude"];
-    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.horizontalAccuracy] forKey:@"horizontalAccuracy"];
     [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.verticalAccuracy] forKey:@"verticalAccuracy"];
     [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.course] forKey:@"course"];
     [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.speed] forKey:@"speed"];
@@ -86,6 +88,12 @@
     self.addressLabel.text = @"Updating ...";
 }
 
+
+
+/*! Shares the Location.
+ *
+ *  The location is shared, at the moment only via email.
+ */
 - (IBAction)shareLocation:(id)sender {
     // Email Subject
     NSString *emailTitle = @"Mein Fahrzeug steht hier!";
@@ -116,7 +124,7 @@
     self.locationModel = [[WIMRLocationModel alloc] init];
     self.locationModel.delegate = self;
     self.vehicle = [[WIMRVehicleModel alloc] init];
-    self.vehicle.name = @"My Vehicle";
+    //self.vehicle.name = @"My Vehicle";
     self.mapView.delegate = self;
     self.textField.delegate = self;
     self.textField.text = [[self.managedObject valueForKey:@"name"] description];

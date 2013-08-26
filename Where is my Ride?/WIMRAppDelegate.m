@@ -55,6 +55,8 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+/*
+
 - (void)saveContext
 {
     NSError *error = nil;
@@ -69,6 +71,9 @@
     }
 }
 
+ 
+*/ 
+ 
 #pragma mark - Core Data stack
 
 // Returns the managed object model for the application.
@@ -86,6 +91,11 @@
 
 // Returns the persistent store coordinator for the application.
 // If the coordinator doesn't already exist, it is created and the application's store added to it.
+
+/*! Returns the Application's Document Directory.
+ *
+ *  \return Application's Document Directory
+ */
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
     if (_persistentStoreCoordinator != nil) {
@@ -130,8 +140,11 @@
 
 
 
-// Returns the managed object context for the application.
-// If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
+/*! Returns the managed object context for the application.
+ *
+ * If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
+ * \return Managed object context for the application
+ */
 - (NSManagedObjectContext *)managedObjectContext
 {
     if (_managedObjectContext != nil) {
@@ -157,9 +170,9 @@
 
 
 
-/*! Returns the Application's Documents Directory
+/*! Returns the Application's Document Directory.
  *
- * returns Application Document Directory
+ *  \return Application's Document Directory
  */
 - (NSURL *)applicationDocumentsDirectory
 {

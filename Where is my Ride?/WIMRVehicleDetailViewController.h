@@ -17,7 +17,7 @@
 @interface WIMRVehicleDetailViewController : UIViewController <WIMRLocationModelDelegate, MKMapViewDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) WIMRVehicleDataModel *managedObject;
-@property (nonatomic, strong) NSManagedObjectContext *context;
+//@property (nonatomic, strong) NSManagedObjectContext *context;
 //@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 

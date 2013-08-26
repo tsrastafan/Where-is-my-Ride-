@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class WIMRVehicleDetailViewController;
+//@class WIMRVehicleDetailViewController;
 #import "WIMRVehicleDetailViewController.h"
 
 @interface WIMRVehicleListViewController : UITableViewController <NSFetchedResultsControllerDelegate>

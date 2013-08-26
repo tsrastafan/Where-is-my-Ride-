@@ -33,7 +33,7 @@
 {
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewVehicle:)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addVehicle:)];
     self.navigationItem.rightBarButtonItem = addButton;
     self.vehicleDetailViewController = (WIMRVehicleDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	// Do any additional setup after loading the view.
@@ -52,7 +52,7 @@
     [NSFetchedResultsController deleteCacheWithName:@"master"];
 }
 
-- (void)insertNewVehicle:(id)sender
+- (void)addVehicle:(id)sender
 {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
@@ -136,12 +136,12 @@
         WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [segue.destinationViewController setManagedObject:object];
        // [segue.destinationViewController setFetchedResultsController:self.fetchedResultsController];
-        [segue.destinationViewController setContext:self.managedObjectContext];
+        //[segue.destinationViewController setContext:self.managedObjectContext];
         
     }
 }
 
-#pragma mark - Fetched results controller
+#pragma mark - Fetched Results Controller
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
@@ -217,6 +217,8 @@
             break;
     }
 }
+
+
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
