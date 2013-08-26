@@ -33,18 +33,6 @@
 @implementation WIMRVehicleDetailViewController
 
 
-    
-    //NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"WIMRVehicleDataModel" inManagedObjectContext:self.managedObjectContext];
-    
-    //NSManagedObject *newVehicle = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.managedObjectContext];
-    
-    //[newVehicle setValue:@"FOX" forKey:@"name"];
-    
-    //NSError *error;
-    //[self.managedObjectContext save:&error];
-
-
-
 - (NSManagedObjectContext *)context
 {
     if (!_context) _context = self.managedObject.managedObjectContext;
@@ -127,12 +115,14 @@
     self.locationModel.delegate = self;
     self.mapView.delegate = self;
     self.textField.delegate = self;
-    self.textField.text = [[self.managedObject valueForKey:@"name"] description];
+    self.textField.text = [self.managedObject.name description];
     self.typeTextField.delegate = self;
     self.typeTextField.text = [self.managedObject.type description];
     
     
     //load last location from CoreData
+    // this mehtod should be discussed!
+#warning Model design, shoud this method be changed
     
     [self.locationModel setLastLocationLatitude:self.managedObject.latitude longitude:self.managedObject.longitude altitude:self.managedObject.altitude horizontalAccuracy:self.managedObject.horizontalAccuracy verticalAccuracy:self.managedObject.verticalAccuracy course:self.managedObject.course speed:self.managedObject.speed timestamp:self.managedObject.timestamp];
     
@@ -148,9 +138,9 @@
     UIBarButtonItem *flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
     
+    [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, takePhotoButton, flexibleSpaceButton, takeNoteButton, flexibleSpaceButton, setParkTimeButton, flexibleSpaceButton,systemActionButton] animated:YES];
     
-    
-    [self setToolbarItems:[[NSArray alloc] initWithObjects:getLocationButton, flexibleSpaceButton, takePhotoButton, flexibleSpaceButton, takeNoteButton, flexibleSpaceButton, setParkTimeButton, flexibleSpaceButton,systemActionButton, nil] animated:YES];
+    [self updateUI];
     
     
     
@@ -158,7 +148,7 @@
     
     
     //Show last position !!! Duplicate Code !!!
-    self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
+  /*  self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
                                self.locationModel.lastLocation.coordinate.latitude,
                                self.locationModel.lastLocation.coordinate.longitude];
     MKCoordinateRegion region = MKCoordinateRegionMake(self.locationModel.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
@@ -172,7 +162,19 @@
     [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
     [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
 
+*/
+}
 
+
+- (void)updateUI
+{
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.locationModel.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
+    [self.mapView removeAnnotation:self.vehicle];
+    [self.mapView setRegion:region animated:YES];
+    self.vehicle.coordinate = self.locationModel.lastLocation.coordinate;
+    [self.mapView addAnnotation:self.vehicle];
+    [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
+    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -196,7 +198,7 @@
 - (void)didUpdateLocation:(BOOL)success withStatus:(LocationUpdateReturnStatus)status
 {
     if (success) {
-        self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
+        /*self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
                                    self.locationModel.lastLocation.coordinate.latitude,
                                    self.locationModel.lastLocation.coordinate.longitude];
         MKCoordinateRegion region = MKCoordinateRegionMake(self.locationModel.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
@@ -209,7 +211,9 @@
     
         [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
         [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
+        */
         
+        [self updateUI];
         
         //Save lastLocation to CoreData
         
