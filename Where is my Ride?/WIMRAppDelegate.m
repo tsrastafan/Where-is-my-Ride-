@@ -19,6 +19,11 @@
 
 
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return YES;
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

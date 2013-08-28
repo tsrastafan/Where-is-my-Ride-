@@ -33,6 +33,12 @@
 @implementation WIMRVehicleDetailViewController
 
 
+- (WIMRVehicleModel *)vehicle
+{
+    if (!_vehicle) _vehicle = [[WIMRVehicleModel alloc] init];
+    return _vehicle;
+}
+
 - (NSManagedObjectContext *)context
 {
     if (!_context) _context = self.managedObject.managedObjectContext;
@@ -122,6 +128,7 @@
     
     //load last location from CoreData
     // this mehtod should be discussed!
+    
 #warning Model design, shoud this method be changed
     
     [self.locationModel setLastLocationLatitude:self.managedObject.latitude longitude:self.managedObject.longitude altitude:self.managedObject.altitude horizontalAccuracy:self.managedObject.horizontalAccuracy verticalAccuracy:self.managedObject.verticalAccuracy course:self.managedObject.course speed:self.managedObject.speed timestamp:self.managedObject.timestamp];
@@ -147,6 +154,7 @@
 
 - (void)updateUI
 {
+    self.vehicle.coordinate = self.locationModel.lastLocation.coordinate;
     MKCoordinateRegion region = MKCoordinateRegionMake(self.locationModel.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
     [self.mapView removeAnnotation:self.vehicle];
     [self.mapView setRegion:region animated:YES];
@@ -161,10 +169,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)updateView
-{
-    
-}
 
 #pragma mark - WIMRLocationModelDelegate
 
@@ -176,32 +180,9 @@
 - (void)didUpdateLocation:(BOOL)success withStatus:(LocationUpdateReturnStatus)status
 {
     if (success) {
-        /*self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
-                                   self.locationModel.lastLocation.coordinate.latitude,
-                                   self.locationModel.lastLocation.coordinate.longitude];
-        MKCoordinateRegion region = MKCoordinateRegionMake(self.locationModel.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
-        [self.mapView removeAnnotation:self.vehicle];
-        [self.mapView setRegion:region animated:YES];
-        self.vehicle.coordinate = self.locationModel.lastLocation.coordinate;
-        [self.mapView addAnnotation:self.vehicle];
-    
-        NSLog(@"%f", self.locationModel.lastLocation.horizontalAccuracy);
-    
-        [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
-        [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
-        */
-        
         [self updateUI];
         
-        //Save lastLocation to CoreData
-        
-        
-        
-       // [self.context setValue:self.locationModel.lastLocation forKey:@"location"];
         [self saveVehicleState];
-        
-        
-        
         
     } else {
         self.locationLabel.text = @"Could not get update.";
