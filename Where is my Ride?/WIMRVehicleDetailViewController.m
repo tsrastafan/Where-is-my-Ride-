@@ -8,7 +8,7 @@
 
 #import "WIMRVehicleDetailViewController.h"
 #import "WIMRVehicleModel.h"
-
+#import "TSSHPlacemark.h"
 
 
 @interface WIMRVehicleDetailViewController ()
@@ -130,13 +130,18 @@
     
     self.locationManager = [[TSSHLocationManager alloc] init];
     self.locationManager.delegate = self;
+
     self.mapView.delegate = self;
+
     self.textField.delegate = self;
-    self.textField.text = [self.managedObject.name description];
+    self.textField.text = self.vehicle.title;
+//    self.textField.text = [self.managedObject.name description];
+
     self.typeTextField.delegate = self;
     self.typeTextField.text = [self.managedObject.type description];
     
-    
+    TSSHPlacemark *tsshplacemark = [[TSSHPlacemark  alloc] initWithAddressDictionary:nil administrativeArea:nil areasOfInterest:nil country:nil inlandWater:nil ISOcountryCode:nil location:nil name:nil ocean:nil postalCode:nil region:nil subAdministrativeArea:nil subLocality:nil subThoroughfare:nil thoroughfare:nil];
+
 //    //load last location from CoreData
 //    // this mehtod should be discussed!
 //    
@@ -144,8 +149,14 @@
 //    
 ////    [self.locationModel setLastLocationLatitude:self.managedObject.latitude longitude:self.managedObject.longitude altitude:self.managedObject.altitude horizontalAccuracy:self.managedObject.horizontalAccuracy verticalAccuracy:self.managedObject.verticalAccuracy course:self.managedObject.course speed:self.managedObject.speed timestamp:self.managedObject.timestamp];
     
+    [self createToolbarButtons];
     
-    // Toolbar Buttons
+    [self updateUI];
+    
+}
+
+- (void)createToolbarButtons
+{
     [self.navigationController setToolbarHidden:NO animated:YES];
     UIBarButtonItem *getLocationButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getLocation:)];
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:nil];
@@ -156,9 +167,6 @@
     
     
     [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, takePhotoButton, flexibleSpaceButton, takeNoteButton, flexibleSpaceButton, setParkTimeButton, flexibleSpaceButton,systemActionButton] animated:YES];
-    
-    [self updateUI];
-    
 }
 
 
