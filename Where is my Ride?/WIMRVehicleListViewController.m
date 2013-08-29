@@ -152,7 +152,7 @@
     
     [fetchRequest setFetchBatchSize:20];
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
     NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor2, sortDescriptor];
     
@@ -227,7 +227,6 @@
 {
     WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = object.title;
-//    cell.textLabel.text = [[object valueForKey:@"name"] description];
 }
 
 @end

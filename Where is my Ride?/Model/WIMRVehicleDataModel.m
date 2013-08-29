@@ -11,18 +11,9 @@
 
 @implementation WIMRVehicleDataModel
 
-@dynamic altitude;
-@dynamic course;
-@dynamic horizontalAccuracy;
-@dynamic latitude;
 @dynamic location;
-@dynamic longitude;
-@dynamic name;
-@dynamic speed;
-@dynamic timestamp;
-@dynamic type;
-@dynamic verticalAccuracy;
 @dynamic placemark;
 @dynamic title;
+@dynamic type;
 
 @end

@@ -49,20 +49,20 @@
     self.managedObject.location = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.location];
     self.managedObject.placemark = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.placemark];
     self.managedObject.title = self.textField.text;
-    
-    self.managedObject.longitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.coordinate.longitude];
     self.managedObject.type = (NSDecimalNumber *)[NSDecimalNumber numberWithInt:[self.typeTextField.text intValue]];
-    self.managedObject.latitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.coordinate.latitude];
-    self.managedObject.altitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.altitude];
-    self.managedObject.horizontalAccuracy = [NSNumber numberWithDouble:self.locationManager.lastLocation.horizontalAccuracy];
     
-    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationManager.lastLocation.verticalAccuracy] forKey:@"verticalAccuracy"];
-    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationManager.lastLocation.course] forKey:@"course"];
-    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationManager.lastLocation.speed] forKey:@"speed"];
-    [self.managedObject setValue:self.locationManager.lastLocation.timestamp forKey:@"timestamp"];
+//    self.managedObject.longitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.coordinate.longitude];
+//    self.managedObject.latitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.coordinate.latitude];
+//    self.managedObject.altitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.altitude];
+//    self.managedObject.horizontalAccuracy = [NSNumber numberWithDouble:self.locationManager.lastLocation.horizontalAccuracy];
+    
+//    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationManager.lastLocation.verticalAccuracy] forKey:@"verticalAccuracy"];
+//    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationManager.lastLocation.course] forKey:@"course"];
+//    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationManager.lastLocation.speed] forKey:@"speed"];
+//    [self.managedObject setValue:self.locationManager.lastLocation.timestamp forKey:@"timestamp"];
     
     
-    [self.managedObject setValue:self.textField.text forKey:@"name"];
+//    [self.managedObject setValue:self.textField.text forKey:@"name"];
     
     
     
@@ -134,6 +134,7 @@
     
     self.vehicle.location = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.location];
     self.vehicle.placemark = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.placemark];
+    self.vehicle.title = self.managedObject.title;
     
     self.locationManager = [[TSSHLocationManager alloc] init];
     self.locationManager.delegate = self;
