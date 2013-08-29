@@ -8,7 +8,6 @@
 
 #import "WIMRVehicleDetailViewController.h"
 #import "WIMRVehicleModel.h"
-#import "TSSHPlacemark.h"
 
 
 @interface WIMRVehicleDetailViewController ()
