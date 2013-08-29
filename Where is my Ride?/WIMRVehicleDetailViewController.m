@@ -14,26 +14,28 @@
 
 @property (strong, nonatomic) TSSHLocationManager *locationManager;
 @property (strong, nonatomic) WIMRVehicleModel *vehicle;
+@property (strong, nonatomic) NSManagedObjectContext *context;
 
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
-
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
-
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
-
-@property (strong, nonatomic) NSManagedObjectContext *context;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end
 
 
 @implementation WIMRVehicleDetailViewController
 
+- (TSSHLocationManager *)locationManager
+{
+    if (!_locationManager) _locationManager = [[TSSHLocationManager alloc] init];
+    return _locationManager;
+}
+
 - (WIMRVehicleModel *)vehicle
 {
     if (!_vehicle) _vehicle = [[WIMRVehicleModel alloc] init];
-    _vehicle.title = @"Here I am Again!";
     return _vehicle;
 }
 
@@ -135,26 +137,10 @@
     self.vehicle.placemark = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.placemark];
     self.vehicle.title = self.managedObject.title;
     
-    self.locationManager = [[TSSHLocationManager alloc] init];
     self.locationManager.delegate = self;
-
     self.mapView.delegate = self;
-
     self.textField.delegate = self;
-    self.textField.text = self.vehicle.title;
-//    self.textField.text = [self.managedObject.name description];
-
     self.typeTextField.delegate = self;
-    self.typeTextField.text = [self.managedObject.type description];
-    
-//    TSSHPlacemark *tsshplacemark = [[TSSHPlacemark  alloc] init];
-
-//    //load last location from CoreData
-//    // this mehtod should be discussed!
-//    
-//#warning Model design, shoud this method be changed
-//    
-////    [self.locationModel setLastLocationLatitude:self.managedObject.latitude longitude:self.managedObject.longitude altitude:self.managedObject.altitude horizontalAccuracy:self.managedObject.horizontalAccuracy verticalAccuracy:self.managedObject.verticalAccuracy course:self.managedObject.course speed:self.managedObject.speed timestamp:self.managedObject.timestamp];
     
     [self createToolbarButtons];
     
@@ -179,13 +165,19 @@
 
 - (void)updateUI
 {
+    self.locationLabel.text = [[NSString alloc] initWithFormat:(@"long.: %g lat.: %g"),
+                               self.vehicle.coordinate.longitude,
+                               self.vehicle.coordinate.latitude];
     self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
                                self.vehicle.placemark.thoroughfare,
                                self.vehicle.placemark.subThoroughfare,
                                self.vehicle.placemark.postalCode,
                                self.vehicle.placemark.locality,
                                self.vehicle.placemark.administrativeArea];
-     
+    
+    self.textField.text = self.vehicle.title;
+    self.typeTextField.text = [self.managedObject.type description];
+    
     MKCoordinateRegion region = MKCoordinateRegionMake(self.vehicle.coordinate, MKCoordinateSpanMake(0.005, 0.005));
     [self.mapView removeAnnotation:self.vehicle];
     [self.mapView setRegion:region animated:YES];
