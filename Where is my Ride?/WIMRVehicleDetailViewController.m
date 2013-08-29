@@ -46,6 +46,8 @@
 
 - (BOOL)saveVehicleStatus
 {
+    self.managedObject.location = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.location];
+    
     self.managedObject.longitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.coordinate.longitude];
     self.managedObject.type = (NSDecimalNumber *)[NSDecimalNumber numberWithInt:[self.typeTextField.text intValue]];
     self.managedObject.latitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.coordinate.latitude];
@@ -127,6 +129,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.vehicle.location = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.location];
     
     self.locationManager = [[TSSHLocationManager alloc] init];
     self.locationManager.delegate = self;
