@@ -13,7 +13,7 @@
 
 @interface WIMRVehicleDetailViewController ()
 
-@property (strong, nonatomic) TSSHLocationManager *locationModel;
+@property (strong, nonatomic) TSSHLocationManager *locationManager;
 @property (strong, nonatomic) WIMRVehicleModel *vehicle;
 
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
@@ -26,12 +26,10 @@
 
 @property (strong, nonatomic) NSManagedObjectContext *context;
 
-
-
 @end
 
-@implementation WIMRVehicleDetailViewController
 
+@implementation WIMRVehicleDetailViewController
 
 - (WIMRVehicleModel *)vehicle
 {
@@ -46,19 +44,18 @@
     return _context;
 }
 
-
-- (BOOL)saveVehicleState
+- (BOOL)saveVehicleStatus
 {
-    self.managedObject.longitude = [NSNumber numberWithDouble:self.locationModel.lastLocation.coordinate.longitude];
+    self.managedObject.longitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.coordinate.longitude];
     self.managedObject.type = (NSDecimalNumber *)[NSDecimalNumber numberWithInt:[self.typeTextField.text intValue]];
-    self.managedObject.latitude = [NSNumber numberWithDouble:self.locationModel.lastLocation.coordinate.latitude];
-    self.managedObject.altitude = [NSNumber numberWithDouble:self.locationModel.lastLocation.altitude];
-    self.managedObject.horizontalAccuracy = [NSNumber numberWithDouble:self.locationModel.lastLocation.horizontalAccuracy];
+    self.managedObject.latitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.coordinate.latitude];
+    self.managedObject.altitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.altitude];
+    self.managedObject.horizontalAccuracy = [NSNumber numberWithDouble:self.locationManager.lastLocation.horizontalAccuracy];
     
-    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.verticalAccuracy] forKey:@"verticalAccuracy"];
-    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.course] forKey:@"course"];
-    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.speed] forKey:@"speed"];
-    [self.managedObject setValue:self.locationModel.lastLocation.timestamp forKey:@"timestamp"];
+    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationManager.lastLocation.verticalAccuracy] forKey:@"verticalAccuracy"];
+    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationManager.lastLocation.course] forKey:@"course"];
+    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationManager.lastLocation.speed] forKey:@"speed"];
+    [self.managedObject setValue:self.locationManager.lastLocation.timestamp forKey:@"timestamp"];
     
     
     [self.managedObject setValue:self.textField.text forKey:@"name"];
@@ -93,7 +90,7 @@
 
 
 - (IBAction)getLocation:(id)sender {
-    [self.locationModel startLocationUpdate];
+    [self.locationManager startLocationUpdate];
     self.locationLabel.text = @"Updating ...";
     self.addressLabel.text = @"Updating ...";
 }
@@ -109,11 +106,11 @@
     NSString *emailTitle = @"Mein Fahrzeug steht hier!";
     // Email Content
     NSString *messageBody = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
-                            self.locationModel.placemark.thoroughfare,
-                            self.locationModel.placemark.subThoroughfare,
-                            self.locationModel.placemark.postalCode,
-                            self.locationModel.placemark.locality,
-                            self.locationModel.placemark.administrativeArea];
+                            self.vehicle.placemark.thoroughfare,
+                            self.vehicle.placemark.subThoroughfare,
+                            self.vehicle.placemark.postalCode,
+                            self.vehicle.placemark.locality,
+                            self.vehicle.placemark.administrativeArea];
     // To address
     NSArray *toRecipents = [NSArray arrayWithObject:@"steffenheberle@me.com"];
     
@@ -131,8 +128,8 @@
 {
     [super viewDidLoad];
     
-    self.locationModel = [[TSSHLocationManager alloc] init];
-    self.locationModel.delegate = self;
+    self.locationManager = [[TSSHLocationManager alloc] init];
+    self.locationManager.delegate = self;
     self.mapView.delegate = self;
     self.textField.delegate = self;
     self.textField.text = [self.managedObject.name description];
@@ -140,16 +137,15 @@
     self.typeTextField.text = [self.managedObject.type description];
     
     
-    //load last location from CoreData
-    // this mehtod should be discussed!
+//    //load last location from CoreData
+//    // this mehtod should be discussed!
+//    
+//#warning Model design, shoud this method be changed
+//    
+////    [self.locationModel setLastLocationLatitude:self.managedObject.latitude longitude:self.managedObject.longitude altitude:self.managedObject.altitude horizontalAccuracy:self.managedObject.horizontalAccuracy verticalAccuracy:self.managedObject.verticalAccuracy course:self.managedObject.course speed:self.managedObject.speed timestamp:self.managedObject.timestamp];
     
-#warning Model design, shoud this method be changed
     
-//    [self.locationModel setLastLocationLatitude:self.managedObject.latitude longitude:self.managedObject.longitude altitude:self.managedObject.altitude horizontalAccuracy:self.managedObject.horizontalAccuracy verticalAccuracy:self.managedObject.verticalAccuracy course:self.managedObject.course speed:self.managedObject.speed timestamp:self.managedObject.timestamp];
-    
-    
-    //Toolbar Buttons
-    
+    // Toolbar Buttons
     [self.navigationController setToolbarHidden:NO animated:YES];
     UIBarButtonItem *getLocationButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getLocation:)];
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:nil];
@@ -168,13 +164,12 @@
 
 - (void)updateUI
 {
-    self.vehicle.coordinate = self.locationModel.lastLocation.coordinate;
-    MKCoordinateRegion region = MKCoordinateRegionMake(self.locationModel.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.vehicle.coordinate, MKCoordinateSpanMake(0.005, 0.005));
     [self.mapView removeAnnotation:self.vehicle];
     [self.mapView setRegion:region animated:YES];
     [self.mapView addAnnotation:self.vehicle];
     [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
-    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
+    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.vehicle.coordinate radius:self.vehicle.location.horizontalAccuracy]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -194,10 +189,9 @@
 - (void)didUpdateLocation:(BOOL)success withStatus:(TSSHLocationUpdateReturnStatus)status
 {
     if (success) {
+        self.vehicle.location = [self.locationManager.lastLocation copy];
         [self updateUI];
-        
-        [self saveVehicleState];
-        
+        [self saveVehicleStatus];
     } else {
         self.locationLabel.text = @"Could not get update.";
     }
@@ -207,13 +201,13 @@
 - (void)didUpdateGeocode:(BOOL)success
 {
     if (success) {
-        self.vehicle.placemark = self.locationModel.placemark;
+        self.vehicle.placemark = [self.locationManager.lastPlacemark copy];
         self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
-                                  self.locationModel.placemark.thoroughfare,
-                                  self.locationModel.placemark.subThoroughfare,
-                                  self.locationModel.placemark.postalCode,
-                                  self.locationModel.placemark.locality,
-                                  self.locationModel.placemark.administrativeArea];
+                                  self.locationManager.lastPlacemark.thoroughfare,
+                                  self.locationManager.lastPlacemark.subThoroughfare,
+                                  self.locationManager.lastPlacemark.postalCode,
+                                  self.locationManager.lastPlacemark.locality,
+                                  self.locationManager.lastPlacemark.administrativeArea];
     } else {
         self.addressLabel.text = @"Could not get corresponding address.";
     }
@@ -255,14 +249,14 @@
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
 {
-    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
-    //circleRenderer.fillColor = [[UIColor blueColor] colorWithAlphaComponent:.2];
+    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:[MKCircle circleWithCenterCoordinate:self.vehicle.coordinate radius:self.vehicle.location.horizontalAccuracy]];
+    circleRenderer.fillColor = [[UIColor blueColor] colorWithAlphaComponent:.2];
     circleRenderer.strokeColor = [UIColor redColor];
     circleRenderer.lineWidth = 1;
     return circleRenderer;
 }
 
-/*
+    /*
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
 {
     MKCircleView *circleView = [[MKCircleView alloc] initWithOverlay:overlay];

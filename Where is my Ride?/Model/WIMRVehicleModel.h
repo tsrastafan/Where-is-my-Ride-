@@ -21,7 +21,7 @@ typedef enum {
 #pragma mark - Properties used by MKAnnotation protocol
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;
-@property (nonatomic) CLLocationCoordinate2D coordinate;
+@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
 #pragma mark - Other properties
 @property (nonatomic) VehicleType type;

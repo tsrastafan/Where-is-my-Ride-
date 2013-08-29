@@ -10,10 +10,18 @@
 
 @interface WIMRVehicleModel ()
 
+
 @end
 
 
 @implementation WIMRVehicleModel
+
+@dynamic coordinate;
+
+- (CLLocationCoordinate2D)coordinate
+{
+    return self.location.coordinate;
+}
 
 //- (void)shareAnnotation
 //{
