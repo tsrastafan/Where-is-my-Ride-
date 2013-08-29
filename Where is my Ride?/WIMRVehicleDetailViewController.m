@@ -125,6 +125,7 @@
     [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, takePhotoButton, flexibleSpaceButton, takeNoteButton, flexibleSpaceButton, setParkTimeButton, flexibleSpaceButton,systemActionButton] animated:YES];
 }
 
+
 #pragma mark - Actions
 
 - (IBAction)showActionSheet:(id)sender {
@@ -132,24 +133,11 @@
     [shareSheet showFromBarButtonItem:sender animated:YES];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:
-            [self shareLocation:nil];
-            break;
-        case 1:
-            break;
-    }
-}
-
-
 - (IBAction)getLocation:(id)sender {
     [self.locationManager startLocationUpdate];
     self.locationLabel.text = @"Updating ...";
     self.addressLabel.text = @"Updating ...";
 }
-
-
 
 /*! Shares the Location.
  *
@@ -261,6 +249,18 @@
     return circleView;
 }
 */
+
+
+#pragma mark - UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            [self shareLocation:nil];
+            break;
+        case 1:
+            break;
+    }
+}
 
 
 #pragma mark - MFMailComposeViewControllerDelegate
