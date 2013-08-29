@@ -225,7 +225,7 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = object.name;
+    cell.textLabel.text = object.title;
 //    cell.textLabel.text = [[object valueForKey:@"name"] description];
 }
 
