@@ -19,7 +19,7 @@
 @property (strong, nonatomic) NSTimer *hardTimer;
 
 @property (nonatomic, strong, readwrite) CLLocation *lastLocation;
-@property (nonatomic, strong, readwrite) CLPlacemark *placemark;
+@property (nonatomic, strong, readwrite) CLPlacemark *lastPlacemark;
 
 @property (nonatomic) CLLocationAccuracy desiredAccuracy;
 @property (nonatomic) NSUInteger softTimeLimitForLocationFix;
@@ -112,9 +112,9 @@
         [self.geocoder reverseGeocodeLocation:location completionHandler:
          ^(NSArray *placemarks, NSError *error) {
              if (error == nil && [placemarks count] > 0) {
-                 self.placemark = [placemarks lastObject];
+                 self.lastPlacemark = [placemarks lastObject];
              } else {
-                 self.placemark = nil;
+                 self.lastPlacemark = nil;
              }
              self.performingReverseGeocoding = NO;
              [self.delegate didUpdateGeocode:YES];

@@ -28,7 +28,7 @@ typedef enum {
 
 @property (strong) id <TSSHLocationManagerDelegate> delegate;
 @property (strong, nonatomic, readonly) CLLocation *lastLocation;
-@property (strong, nonatomic, readonly) CLPlacemark *placemark;
+@property (strong, nonatomic, readonly) CLPlacemark *lastPlacemark;
 
 - (void)startLocationUpdate;
 - (void)stopLocationUpdate;
