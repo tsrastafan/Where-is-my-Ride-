@@ -21,7 +21,18 @@
     if (self) {
         self.addressDictionary = [[NSDictionary alloc] initWithDictionary:placemark.addressDictionary];
         self.administrativeArea = [[NSString alloc] initWithString:placemark.administrativeArea];
-        
+        self.areasOfInterest = [[NSArray alloc] initWithArray:placemark.areasOfInterest];
+        self.country = [[NSString alloc] initWithString:placemark.country];
+        self.inlandWater = [[NSString alloc] initWithString:placemark.inlandWater];
+        self.ISOcountryCode = [[NSString alloc] initWithString:placemark.ISOcountryCode];
+        self.locality = [[NSString alloc] initWithString:placemark.locality];
+        self.name = [[NSString alloc] initWithString:placemark.name];
+        self.ocean = [[NSString alloc] initWithString:placemark.ocean];
+        self.postalCode = [[NSString alloc] initWithString:placemark.postalCode];
+        self.subAdministrativeArea = [[NSString alloc] initWithString:placemark.subAdministrativeArea];
+        self.subLocality = [[NSString alloc] initWithString:placemark.subLocality];
+        self.subThoroughfare = [[NSString alloc] initWithString:placemark.subThoroughfare];
+        self.thoroughfare = [[NSString alloc] initWithString:placemark.thoroughfare];
     }
     return self;
 }

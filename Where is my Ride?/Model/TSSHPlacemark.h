@@ -13,15 +13,14 @@
 
 @property(nonatomic) NSDictionary *addressDictionary;
 @property(nonatomic) NSString *administrativeArea;
-@property(nonatomic) NSString *areasOfInterest;
+@property(nonatomic) NSArray *areasOfInterest;
 @property(nonatomic) NSString *country;
 @property(nonatomic) NSString *inlandWater;
 @property(nonatomic) NSString *ISOcountryCode;
-@property(nonatomic) CLLocation *location;
+@property(nonatomic) NSString *locality;
 @property(nonatomic) NSString *name;
 @property(nonatomic) NSString *ocean;
 @property(nonatomic) NSString *postalCode;
-@property(nonatomic) CLRegion *region;
 @property(nonatomic) NSString *subAdministrativeArea;
 @property(nonatomic) NSString *subLocality;
 @property(nonatomic) NSString *subThoroughfare;
