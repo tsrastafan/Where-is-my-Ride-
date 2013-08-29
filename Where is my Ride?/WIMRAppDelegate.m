@@ -21,6 +21,7 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
+    NSLog(@"%@ sends %@",application.description, url.description);
     return YES;
 }
 
