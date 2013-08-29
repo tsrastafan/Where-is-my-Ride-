@@ -38,9 +38,6 @@
     self.vehicleDetailViewController = (WIMRVehicleDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	// Do any additional setup after loading the view.
     
-    
-    
-    
     //Toolbar Buttons
     [self.navigationController setToolbarHidden:NO animated:YES];
     UIBarButtonItem *toolbarButton = [[UIBarButtonItem alloc] initWithTitle:@"WAI" style:UIBarButtonItemStyleBordered target:self action:nil];
@@ -56,8 +53,9 @@
 {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    [newManagedObject setValue:@"Mein Auto" forKey:@"name"];
+    WIMRVehicleDataModel *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    newManagedObject.title = @"Mein Auto";
+//    [newManagedObject setValue:@"Mein Auto" forKey:@"title"];
     
     //Save the context
     NSError *error;
@@ -154,7 +152,7 @@
     
     [fetchRequest setFetchBatchSize:20];
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
     NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor2, sortDescriptor];
     
@@ -228,8 +226,7 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = object.name;
-//    cell.textLabel.text = [[object valueForKey:@"name"] description];
+    cell.textLabel.text = object.title;
 }
 
 @end

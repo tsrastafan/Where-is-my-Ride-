@@ -10,14 +10,22 @@
 
 @interface WIMRVehicleModel ()
 
+
 @end
 
 
 @implementation WIMRVehicleModel
 
-- (void)shareAnnotation
+@dynamic coordinate;
+
+- (CLLocationCoordinate2D)coordinate
 {
-    NSLog(@"I am here: latitude %+.6f\nlongitude %+.6f", self.coordinate.latitude, self.coordinate.longitude);
+    return self.location.coordinate;
 }
+
+//- (void)shareAnnotation
+//{
+//    NSLog(@"I am here: latitude %+.6f\nlongitude %+.6f", self.coordinate.latitude, self.coordinate.longitude);
+//}
 
 @end

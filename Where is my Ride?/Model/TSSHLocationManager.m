@@ -9,40 +9,37 @@
 #define TIME_INTERVAL_BETWEEN_GPS_FIXES 5
 #define TIME_FOR_PROBING_FOR_BEST_ACCURACY 5
 
-#import "WIMRLocationModel.h"
+#import "TSSHLocationManager.h"
 
-@interface WIMRLocationModel ()
+@interface TSSHLocationManager ()
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLGeocoder *geocoder;
 @property (strong, nonatomic) NSTimer *softTimer;
 @property (strong, nonatomic) NSTimer *hardTimer;
 
+@property (nonatomic, strong, readwrite) CLLocation *lastLocation;
+@property (nonatomic, strong, readwrite) CLPlacemark *lastPlacemark;
 
 @property (nonatomic) CLLocationAccuracy desiredAccuracy;
 @property (nonatomic) NSUInteger softTimeLimitForLocationFix;
 @property (nonatomic) NSUInteger hardTimeLimitForLocationFix;
 
-
 @property (nonatomic) BOOL softTimeLimitForLocationFixExceeded;
 @property (nonatomic) BOOL hardTimeLimitForLocationFixExceeded;
-
-@property (nonatomic, strong, readwrite) CLLocation *lastLocation;
-
-
 @property (nonatomic) BOOL performingReverseGeocoding;
 
 @end
 
 
-@implementation WIMRLocationModel {
+@implementation TSSHLocationManager {
     
 }
 
 /*! Designated initializer
  *
  */
-- (WIMRLocationModel *)init
+- (TSSHLocationManager *)init
 {
     if (self = [super init]) {
         self.desiredAccuracy = 5;
@@ -55,14 +52,14 @@
 
 
 
-/*! Set the CLLocation object (from CoreData)
- *
- * Blaa blaaaa
- */
-- (void)setLastLocationLatitude:(NSNumber *)latitude longitude:(NSNumber *)longitude altitude:(NSNumber *)altitude horizontalAccuracy:(NSNumber *)hAccuracy verticalAccuracy:(NSNumber *)vAccuracy course:(NSNumber *)course speed:(NSNumber *)speed timestamp:(NSDate *)timestamp
-{
-    self.lastLocation = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake([latitude doubleValue], [longitude doubleValue]) altitude:[altitude doubleValue] horizontalAccuracy:[hAccuracy doubleValue] verticalAccuracy:[vAccuracy doubleValue] course:[course doubleValue] speed:[speed doubleValue] timestamp:timestamp];
-}
+///*! Set the CLLocation object (from CoreData)
+// *
+// * Blaa blaaaa
+// */
+//- (void)setLastLocationLatitude:(NSNumber *)latitude longitude:(NSNumber *)longitude altitude:(NSNumber *)altitude horizontalAccuracy:(NSNumber *)hAccuracy verticalAccuracy:(NSNumber *)vAccuracy course:(NSNumber *)course speed:(NSNumber *)speed timestamp:(NSDate *)timestamp
+//{
+//    self.lastLocation = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake([latitude doubleValue], [longitude doubleValue]) altitude:[altitude doubleValue] horizontalAccuracy:[hAccuracy doubleValue] verticalAccuracy:[vAccuracy doubleValue] course:[course doubleValue] speed:[speed doubleValue] timestamp:timestamp];
+//}
 
 
 /*! Set a time limit for fixing the location.
@@ -89,7 +86,6 @@
     }
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    //self.locationManager.distanceFilter = LOCATION_MANAGER_DISTANCE_FILTER;
     
     self.softTimeLimitForLocationFixExceeded = NO;
     self.hardTimeLimitForLocationFixExceeded = NO;
@@ -116,12 +112,12 @@
         [self.geocoder reverseGeocodeLocation:location completionHandler:
          ^(NSArray *placemarks, NSError *error) {
              if (error == nil && [placemarks count] > 0) {
-                 self.placemark = [placemarks lastObject];
+                 self.lastPlacemark = [placemarks lastObject];
              } else {
-                 self.placemark = nil;
+                 self.lastPlacemark = nil;
              }
              self.performingReverseGeocoding = NO;
-             [self.delegate didFinishReverseGeocoding:YES];
+             [self.delegate didUpdateGeocode:YES];
          }];
     }
 }
@@ -136,9 +132,9 @@
     
     self.lastLocation = location;
     
-    if (location.horizontalAccuracy < self.lastLocation.horizontalAccuracy) { //danger -> last location not set
-       // self.lastLocation = location;
-    }
+//    if (location.horizontalAccuracy < self.lastLocation.horizontalAccuracy) { //danger -> last location not set
+//       // self.lastLocation = location;
+//    }
     
     if (location.horizontalAccuracy <= self.desiredAccuracy) {
         [self.locationManager stopUpdatingLocation];

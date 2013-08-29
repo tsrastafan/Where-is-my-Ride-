@@ -11,10 +11,10 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <MessageUI/MessageUI.h>
-#import "WIMRLocationModel.h"
+#import "TSSHLocationManager.h"
 #import "WIMRVehicleDataModel.h"
 
-@interface WIMRVehicleDetailViewController : UIViewController <WIMRLocationModelDelegate, MKMapViewDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UIActionSheetDelegate>
+@interface WIMRVehicleDetailViewController : UIViewController <TSSHLocationManagerDelegate, MKMapViewDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, strong) WIMRVehicleDataModel *managedObject;
 
