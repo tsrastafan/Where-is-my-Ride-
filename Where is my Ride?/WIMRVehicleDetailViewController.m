@@ -196,7 +196,7 @@
     if (success) {
         [self updateUI];
         
-        [self saveVehicleState];
+        [self saveVehicleState];//rename status
         
     } else {
         self.locationLabel.text = @"Could not get update.";
