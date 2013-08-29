@@ -77,7 +77,7 @@
 }
 
 - (IBAction)showActionSheet:(id)sender {
-    UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"E-Mail", nil];
+    UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:[[NSString alloc] initWithFormat:NSLocalizedString(@"CANCEL", @"The cancel button for the action sheet.")] destructiveButtonTitle:nil otherButtonTitles:[[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL", @"Email button in the action sheet.")], nil];
     [shareSheet showFromBarButtonItem:sender animated:YES];
 }
 

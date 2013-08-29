@@ -1,0 +1,15 @@
+
+/* Class = "IBUILabel"; text = "Ready"; ObjectID = "J81-oP-sFE"; */
+"J81-oP-sFE.text" = "Ready";
+
+/* Class = "IBUIButton"; normalTitle = "Share my position"; ObjectID = "OcB-e6-CXk"; */
+"OcB-e6-CXk.normalTitle" = "Share my position";
+
+/* Class = "IBUILabel"; text = "Address"; ObjectID = "XgC-2e-111"; */
+"XgC-2e-111.text" = "Address";
+
+/* Class = "IBUIButton"; normalTitle = "Where am I?"; ObjectID = "u7w-Lr-PLd"; */
+"u7w-Lr-PLd.normalTitle" = "Where am I?";
+
+/* Class = "IBUINavigationItem"; title = "Vehicle List"; ObjectID = "z9C-Xc-wOt"; */
+"z9C-Xc-wOt.title" = "Vehicle List";
