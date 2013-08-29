@@ -213,9 +213,7 @@
     if (success) {
         self.vehicle.location = [self.locationManager.lastLocation copy];
         [self updateUI];
-        
-        [self saveVehicleState];//rename status
-        
+        [self saveVehicleStatus];
     } else {
         self.locationLabel.text = @"Could not get update.";
     }
