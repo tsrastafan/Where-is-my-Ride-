@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81189CD417CE92CE00F0AFD3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 81189CD317CE92CE00F0AFD3 /* Settings.bundle */; };
 		815E089F17C78E670023C3F6 /* WIMRVehicleDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 815E089E17C78E670023C3F6 /* WIMRVehicleDataModel.m */; };
 		8175E6C417C0BA0D004E36E9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8175E6C317C0BA0D004E36E9 /* CoreData.framework */; };
 		8191512E176F3D9600C5E016 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8191512D176F3D9600C5E016 /* Foundation.framework */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		81189CD317CE92CE00F0AFD3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		8147354A1786F2A900949B24 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		815E089D17C78E670023C3F6 /* WIMRVehicleDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicleDataModel.h; sourceTree = "<group>"; };
 		815E089E17C78E670023C3F6 /* WIMRVehicleDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicleDataModel.m; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 		81915134176F3D9600C5E016 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				81189CD317CE92CE00F0AFD3 /* Settings.bundle */,
 				81915135176F3D9600C5E016 /* Where is my Ride?-Info.plist */,
 				81915136176F3D9600C5E016 /* InfoPlist.strings */,
 				81915139176F3D9600C5E016 /* main.m */,
@@ -273,6 +276,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81189CD417CE92CE00F0AFD3 /* Settings.bundle in Resources */,
 				81915146176F3D9600C5E016 /* Images.xcassets in Resources */,
 				81915138176F3D9600C5E016 /* InfoPlist.strings in Resources */,
 				81915141176F3D9600C5E016 /* Main.storyboard in Resources */,
