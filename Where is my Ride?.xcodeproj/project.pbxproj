@@ -70,6 +70,9 @@
 		81BE302F17C3BDA200389DF8 /* WIMRVehicleListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicleListViewController.m; sourceTree = "<group>"; };
 		81BE303517C3CD8F00389DF8 /* WIMRDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WIMRDataModel.xcdatamodel; sourceTree = "<group>"; };
 		81C676D5177DBF8C00ACD875 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		81CA29A617CF57AF00395228 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		81CA29A717CF57AF00395228 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		81CA29A817CF57AF00395228 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E22B5ACC17736F6F0001203D /* WIMRLocationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRLocationModel.h; sourceTree = "<group>"; };
 		E22B5ACD17736F6F0001203D /* WIMRLocationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRLocationModel.m; sourceTree = "<group>"; };
 		E22B5ACE17736F6F0001203D /* WIMRVehicleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicleModel.h; sourceTree = "<group>"; };
@@ -259,6 +262,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 81915121176F3D9600C5E016;
 			productRefGroup = 8191512B176F3D9600C5E016 /* Products */;
@@ -332,6 +336,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				81915137176F3D9600C5E016 /* en */,
+				81CA29A717CF57AF00395228 /* de */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -340,6 +345,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				81915140176F3D9600C5E016 /* Base */,
+				81CA29A617CF57AF00395228 /* de */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -348,6 +354,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				81915156176F3D9700C5E016 /* en */,
+				81CA29A817CF57AF00395228 /* de */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
