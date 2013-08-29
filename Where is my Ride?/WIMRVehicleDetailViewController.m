@@ -42,12 +42,20 @@
     //[self.managedObjectContext save:&error];
     
 
+- (IBAction)showActionSheet:(id)sender {
+    UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"E-Mail", nil];
+    [shareSheet showFromBarButtonItem:sender animated:YES];
+}
 
-
-
-
-
-
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            [self shareLocation:nil];
+            break;
+        case 1:
+            break;
+    }
+}
 
 
 - (IBAction)getLocation:(id)sender {
@@ -100,7 +108,7 @@
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:nil];
     UIBarButtonItem *takeNoteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:nil];
     UIBarButtonItem *setParkTimeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:nil];
-    UIBarButtonItem *systemActionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareLocation:)];
+    UIBarButtonItem *systemActionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet:)];
     UIBarButtonItem *flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
     

@@ -13,7 +13,7 @@
 #import <MessageUI/MessageUI.h>
 #import "WIMRLocationModel.h"
 
-@interface WIMRVehicleDetailViewController : UIViewController <WIMRLocationModelDelegate, MKMapViewDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate>
+@interface WIMRVehicleDetailViewController : UIViewController <WIMRLocationModelDelegate, MKMapViewDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, strong) NSManagedObject *object;
 @property (nonatomic, strong) NSManagedObjectContext *context;
