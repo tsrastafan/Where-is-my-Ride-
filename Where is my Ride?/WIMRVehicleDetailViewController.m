@@ -63,6 +63,17 @@
     [self.managedObject setValue:self.textField.text forKey:@"name"];
     
     
+    
+    
+    NSError *error = nil;
+    
+    if (![self.context save:&error]) {
+        NSLog(@"Error");
+    }
+    
+    return !error;
+    
+}
 
 - (IBAction)showActionSheet:(id)sender {
     UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"E-Mail", nil];

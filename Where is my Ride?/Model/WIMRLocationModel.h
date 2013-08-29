@@ -17,7 +17,6 @@ typedef enum {
 
 @protocol WIMRLocationModelDelegate <NSObject>
 
-
 // rename methods!
 @required
 - (void)didUpdateLocation:(BOOL)success withStatus:(LocationUpdateReturnStatus)status;
