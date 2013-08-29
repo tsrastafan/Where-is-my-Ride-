@@ -140,7 +140,7 @@
     self.typeTextField.delegate = self;
     self.typeTextField.text = [self.managedObject.type description];
     
-    TSSHPlacemark *tsshplacemark = [[TSSHPlacemark  alloc] init];
+//    TSSHPlacemark *tsshplacemark = [[TSSHPlacemark  alloc] init];
 
 //    //load last location from CoreData
 //    // this mehtod should be discussed!
