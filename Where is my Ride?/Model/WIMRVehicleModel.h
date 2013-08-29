@@ -21,6 +21,7 @@ typedef enum {
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) CLPlacemark *placemark;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, copy) NSString *title;
 @property (nonatomic) VehicleType type;
 
 - (void)shareAnnotation;

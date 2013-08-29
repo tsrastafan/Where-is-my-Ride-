@@ -36,6 +36,7 @@
 - (WIMRVehicleModel *)vehicle
 {
     if (!_vehicle) _vehicle = [[WIMRVehicleModel alloc] init];
+    _vehicle.title = @"Here I am Again!";
     return _vehicle;
 }
 
