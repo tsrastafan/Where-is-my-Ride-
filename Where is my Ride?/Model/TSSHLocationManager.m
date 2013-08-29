@@ -121,7 +121,7 @@
                  self.placemark = nil;
              }
              self.performingReverseGeocoding = NO;
-             [self.delegate didFinishReverseGeocoding:YES];
+             [self.delegate didUpdateGeocode:YES];
          }];
     }
 }

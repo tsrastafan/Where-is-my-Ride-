@@ -15,12 +15,12 @@ typedef enum {
     HARD_TIME_LIMIT_EXCEEDED = 2
 } TSSHLocationUpdateReturnStatus;
 
+
 @protocol TSSHLocationManagerDelegate <NSObject>
 
-// rename methods!
 @required
 - (void)didUpdateLocation:(BOOL)success withStatus:(TSSHLocationUpdateReturnStatus)status;
-- (void)didFinishReverseGeocoding:(BOOL)success;
+- (void)didUpdateGeocode:(BOOL)success;
 @end
 
 

@@ -204,7 +204,7 @@
 }
 
 
-- (void)didFinishReverseGeocoding:(BOOL)success
+- (void)didUpdateGeocode:(BOOL)success
 {
     if (success) {
         self.vehicle.placemark = self.locationModel.placemark;
