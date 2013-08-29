@@ -47,6 +47,7 @@
 - (BOOL)saveVehicleStatus
 {
     self.managedObject.location = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.location];
+    self.managedObject.placemark = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.placemark];
     
     self.managedObject.longitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.coordinate.longitude];
     self.managedObject.type = (NSDecimalNumber *)[NSDecimalNumber numberWithInt:[self.typeTextField.text intValue]];
@@ -131,6 +132,7 @@
     [super viewDidLoad];
     
     self.vehicle.location = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.location];
+    self.vehicle.placemark = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.placemark];
     
     self.locationManager = [[TSSHLocationManager alloc] init];
     self.locationManager.delegate = self;
@@ -176,6 +178,13 @@
 
 - (void)updateUI
 {
+    self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
+                               self.vehicle.placemark.thoroughfare,
+                               self.vehicle.placemark.subThoroughfare,
+                               self.vehicle.placemark.postalCode,
+                               self.vehicle.placemark.locality,
+                               self.vehicle.placemark.administrativeArea];
+     
     MKCoordinateRegion region = MKCoordinateRegionMake(self.vehicle.coordinate, MKCoordinateSpanMake(0.005, 0.005));
     [self.mapView removeAnnotation:self.vehicle];
     [self.mapView setRegion:region animated:YES];
@@ -214,12 +223,8 @@
 {
     if (success) {
         self.vehicle.placemark = [self.locationManager.lastPlacemark copy];
-        self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
-                                  self.locationManager.lastPlacemark.thoroughfare,
-                                  self.locationManager.lastPlacemark.subThoroughfare,
-                                  self.locationManager.lastPlacemark.postalCode,
-                                  self.locationManager.lastPlacemark.locality,
-                                  self.locationManager.lastPlacemark.administrativeArea];
+        [self updateUI];
+        [self saveVehicleStatus];
     } else {
         self.addressLabel.text = @"Could not get corresponding address.";
     }
