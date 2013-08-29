@@ -9,9 +9,9 @@
 #define TIME_INTERVAL_BETWEEN_GPS_FIXES 5
 #define TIME_FOR_PROBING_FOR_BEST_ACCURACY 5
 
-#import "WIMRLocationModel.h"
+#import "TSSHLocationManager.h"
 
-@interface WIMRLocationModel ()
+@interface TSSHLocationManager ()
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLGeocoder *geocoder;
@@ -35,14 +35,14 @@
 @end
 
 
-@implementation WIMRLocationModel {
+@implementation TSSHLocationManager {
     
 }
 
 /*! Designated initializer
  *
  */
-- (WIMRLocationModel *)init
+- (TSSHLocationManager *)init
 {
     if (self = [super init]) {
         self.desiredAccuracy = 5;

@@ -13,21 +13,21 @@ typedef enum {
     DESIRED_ACCURACY = 0,
     SOFT_TIME_LIMIT_EXCEEDED = 1,
     HARD_TIME_LIMIT_EXCEEDED = 2
-} LocationUpdateReturnStatus;
+} TSSHLocationUpdateReturnStatus;
 
-@protocol WIMRLocationModelDelegate <NSObject>
+@protocol TSSHLocationManagerDelegate <NSObject>
 
 // rename methods!
 @required
-- (void)didUpdateLocation:(BOOL)success withStatus:(LocationUpdateReturnStatus)status;
+- (void)didUpdateLocation:(BOOL)success withStatus:(TSSHLocationUpdateReturnStatus)status;
 - (void)didFinishReverseGeocoding:(BOOL)success;
 @end
 
 
-@interface WIMRLocationModel : NSObject <CLLocationManagerDelegate>
+@interface TSSHLocationManager : NSObject <CLLocationManagerDelegate>
 
 
-@property (strong) id <WIMRLocationModelDelegate> delegate;
+@property (strong) id <TSSHLocationManagerDelegate> delegate;
 @property (strong, nonatomic, readonly) CLLocation *lastLocation;
 @property (strong, nonatomic) CLPlacemark *placemark;
 

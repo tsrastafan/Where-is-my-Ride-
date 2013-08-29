@@ -13,7 +13,7 @@
 
 @interface WIMRVehicleDetailViewController ()
 
-@property (strong, nonatomic) WIMRLocationModel *locationModel;
+@property (strong, nonatomic) TSSHLocationManager *locationModel;
 @property (strong, nonatomic) WIMRVehicleModel *vehicle;
 
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
@@ -131,7 +131,7 @@
 {
     [super viewDidLoad];
     
-    self.locationModel = [[WIMRLocationModel alloc] init];
+    self.locationModel = [[TSSHLocationManager alloc] init];
     self.locationModel.delegate = self;
     self.mapView.delegate = self;
     self.textField.delegate = self;
@@ -191,7 +191,7 @@
  * Called for the delegate.
  * \param success A BOOL that determines whether the location update was successful.
  */
-- (void)didUpdateLocation:(BOOL)success withStatus:(LocationUpdateReturnStatus)status
+- (void)didUpdateLocation:(BOOL)success withStatus:(TSSHLocationUpdateReturnStatus)status
 {
     if (success) {
         [self updateUI];
