@@ -23,5 +23,6 @@
 @dynamic type;
 @dynamic verticalAccuracy;
 @dynamic placemark;
+@dynamic title;
 
 @end

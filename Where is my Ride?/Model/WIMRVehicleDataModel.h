@@ -24,5 +24,6 @@
 @property (nonatomic, retain) NSDecimalNumber * type;
 @property (nonatomic, retain) NSNumber * verticalAccuracy;
 @property (nonatomic, retain) NSData * placemark;
+@property (nonatomic, retain) NSString * title;
 
 @end
