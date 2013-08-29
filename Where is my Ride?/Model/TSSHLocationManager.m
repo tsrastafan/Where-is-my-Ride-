@@ -18,18 +18,15 @@
 @property (strong, nonatomic) NSTimer *softTimer;
 @property (strong, nonatomic) NSTimer *hardTimer;
 
+@property (nonatomic, strong, readwrite) CLLocation *lastLocation;
+@property (nonatomic, strong, readwrite) CLPlacemark *placemark;
 
 @property (nonatomic) CLLocationAccuracy desiredAccuracy;
 @property (nonatomic) NSUInteger softTimeLimitForLocationFix;
 @property (nonatomic) NSUInteger hardTimeLimitForLocationFix;
 
-
 @property (nonatomic) BOOL softTimeLimitForLocationFixExceeded;
 @property (nonatomic) BOOL hardTimeLimitForLocationFixExceeded;
-
-@property (nonatomic, strong, readwrite) CLLocation *lastLocation;
-
-
 @property (nonatomic) BOOL performingReverseGeocoding;
 
 @end
@@ -55,14 +52,14 @@
 
 
 
-/*! Set the CLLocation object (from CoreData)
- *
- * Blaa blaaaa
- */
-- (void)setLastLocationLatitude:(NSNumber *)latitude longitude:(NSNumber *)longitude altitude:(NSNumber *)altitude horizontalAccuracy:(NSNumber *)hAccuracy verticalAccuracy:(NSNumber *)vAccuracy course:(NSNumber *)course speed:(NSNumber *)speed timestamp:(NSDate *)timestamp
-{
-    self.lastLocation = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake([latitude doubleValue], [longitude doubleValue]) altitude:[altitude doubleValue] horizontalAccuracy:[hAccuracy doubleValue] verticalAccuracy:[vAccuracy doubleValue] course:[course doubleValue] speed:[speed doubleValue] timestamp:timestamp];
-}
+///*! Set the CLLocation object (from CoreData)
+// *
+// * Blaa blaaaa
+// */
+//- (void)setLastLocationLatitude:(NSNumber *)latitude longitude:(NSNumber *)longitude altitude:(NSNumber *)altitude horizontalAccuracy:(NSNumber *)hAccuracy verticalAccuracy:(NSNumber *)vAccuracy course:(NSNumber *)course speed:(NSNumber *)speed timestamp:(NSDate *)timestamp
+//{
+//    self.lastLocation = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake([latitude doubleValue], [longitude doubleValue]) altitude:[altitude doubleValue] horizontalAccuracy:[hAccuracy doubleValue] verticalAccuracy:[vAccuracy doubleValue] course:[course doubleValue] speed:[speed doubleValue] timestamp:timestamp];
+//}
 
 
 /*! Set a time limit for fixing the location.
@@ -89,7 +86,6 @@
     }
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    //self.locationManager.distanceFilter = LOCATION_MANAGER_DISTANCE_FILTER;
     
     self.softTimeLimitForLocationFixExceeded = NO;
     self.hardTimeLimitForLocationFixExceeded = NO;
@@ -136,9 +132,9 @@
     
     self.lastLocation = location;
     
-    if (location.horizontalAccuracy < self.lastLocation.horizontalAccuracy) { //danger -> last location not set
-       // self.lastLocation = location;
-    }
+//    if (location.horizontalAccuracy < self.lastLocation.horizontalAccuracy) { //danger -> last location not set
+//       // self.lastLocation = location;
+//    }
     
     if (location.horizontalAccuracy <= self.desiredAccuracy) {
         [self.locationManager stopUpdatingLocation];

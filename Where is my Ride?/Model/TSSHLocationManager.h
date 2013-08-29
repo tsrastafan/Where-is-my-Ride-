@@ -26,14 +26,13 @@ typedef enum {
 
 @interface TSSHLocationManager : NSObject <CLLocationManagerDelegate>
 
-
 @property (strong) id <TSSHLocationManagerDelegate> delegate;
 @property (strong, nonatomic, readonly) CLLocation *lastLocation;
-@property (strong, nonatomic) CLPlacemark *placemark;
+@property (strong, nonatomic, readonly) CLPlacemark *placemark;
 
 - (void)startLocationUpdate;
 - (void)stopLocationUpdate;
 
-- (void)setLastLocationLatitude:(NSNumber *)latitude longitude:(NSNumber *)longitude altitude:(NSNumber *)altitude horizontalAccuracy:(NSNumber *)hAccuracy verticalAccuracy:(NSNumber *)vAccuracy course:(NSNumber *)course speed:(NSNumber *)speed timestamp:(NSDate *)timestamp;
+//- (void)setLastLocationLatitude:(NSNumber *)latitude longitude:(NSNumber *)longitude altitude:(NSNumber *)altitude horizontalAccuracy:(NSNumber *)hAccuracy verticalAccuracy:(NSNumber *)vAccuracy course:(NSNumber *)course speed:(NSNumber *)speed timestamp:(NSDate *)timestamp;
 
 @end

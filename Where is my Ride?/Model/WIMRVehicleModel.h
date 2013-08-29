@@ -19,6 +19,7 @@ typedef enum {
 @interface WIMRVehicleModel : NSObject <MKAnnotation>
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;
+@property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, strong) CLPlacemark *placemark;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, copy) NSString *title;
