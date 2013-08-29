@@ -48,6 +48,7 @@
 {
     self.managedObject.location = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.location];
     self.managedObject.placemark = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.placemark];
+    self.managedObject.title = self.textField.text;
     
     self.managedObject.longitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.coordinate.longitude];
     self.managedObject.type = (NSDecimalNumber *)[NSDecimalNumber numberWithInt:[self.typeTextField.text intValue]];
@@ -323,6 +324,7 @@
         NSLog(@"Error");
     }
 */    
+    [self saveVehicleStatus];
     return [textField resignFirstResponder];
 }
 

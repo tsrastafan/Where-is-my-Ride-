@@ -53,8 +53,9 @@
 {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    [newManagedObject setValue:@"Mein Auto" forKey:@"name"];
+    WIMRVehicleDataModel *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    newManagedObject.title = @"Mein Auto";
+//    [newManagedObject setValue:@"Mein Auto" forKey:@"title"];
     
     //Save the context
     NSError *error;
