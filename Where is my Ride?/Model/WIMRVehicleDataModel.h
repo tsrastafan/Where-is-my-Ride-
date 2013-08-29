@@ -16,12 +16,13 @@
 @property (nonatomic, retain) NSNumber * course;
 @property (nonatomic, retain) NSNumber * horizontalAccuracy;
 @property (nonatomic, retain) NSNumber * latitude;
+@property (nonatomic, retain) NSData * location;
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * speed;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSDecimalNumber * type;
 @property (nonatomic, retain) NSNumber * verticalAccuracy;
-@property (nonatomic, retain) NSData * location;
+@property (nonatomic, retain) NSData * placemark;
 
 @end

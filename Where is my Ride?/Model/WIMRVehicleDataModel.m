@@ -15,12 +15,13 @@
 @dynamic course;
 @dynamic horizontalAccuracy;
 @dynamic latitude;
+@dynamic location;
 @dynamic longitude;
 @dynamic name;
 @dynamic speed;
 @dynamic timestamp;
 @dynamic type;
 @dynamic verticalAccuracy;
-@dynamic location;
+@dynamic placemark;
 
 @end
