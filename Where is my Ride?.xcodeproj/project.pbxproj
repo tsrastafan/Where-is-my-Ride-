@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81189CD417CE92CE00F0AFD3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 81189CD317CE92CE00F0AFD3 /* Settings.bundle */; };
+		815E089F17C78E670023C3F6 /* WIMRVehicleDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 815E089E17C78E670023C3F6 /* WIMRVehicleDataModel.m */; };
 		8175E6C417C0BA0D004E36E9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8175E6C317C0BA0D004E36E9 /* CoreData.framework */; };
-		8175E79A17C0ECB8004E36E9 /* WIMRVehicleDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8175E79917C0ECB8004E36E9 /* WIMRVehicleDataModel.m */; };
 		8191512E176F3D9600C5E016 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8191512D176F3D9600C5E016 /* Foundation.framework */; };
 		81915130176F3D9600C5E016 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8191512F176F3D9600C5E016 /* CoreGraphics.framework */; };
 		81915132176F3D9600C5E016 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81915131176F3D9600C5E016 /* UIKit.framework */; };
@@ -27,7 +28,7 @@
 		81BE303B17C3D95800389DF8 /* WIMRDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81BE303417C3CD8F00389DF8 /* WIMRDataModel.xcdatamodeld */; };
 		81C676D6177DBF8C00ACD875 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81C676D5177DBF8C00ACD875 /* MapKit.framework */; };
 		E22B5AD017736F6F0001203D /* WIMRLocationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E22B5ACD17736F6F0001203D /* WIMRLocationModel.m */; };
-		E22B5AD117736F6F0001203D /* WIMRVehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = E22B5ACF17736F6F0001203D /* WIMRVehicle.m */; };
+		E22B5AD117736F6F0001203D /* WIMRVehicleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E22B5ACF17736F6F0001203D /* WIMRVehicleModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,10 +42,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		81189CD317CE92CE00F0AFD3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		8147354A1786F2A900949B24 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		815E089D17C78E670023C3F6 /* WIMRVehicleDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicleDataModel.h; sourceTree = "<group>"; };
+		815E089E17C78E670023C3F6 /* WIMRVehicleDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicleDataModel.m; sourceTree = "<group>"; };
 		8175E6C317C0BA0D004E36E9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		8175E79817C0ECB8004E36E9 /* WIMRVehicleDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicleDataModel.h; sourceTree = "<group>"; };
-		8175E79917C0ECB8004E36E9 /* WIMRVehicleDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicleDataModel.m; sourceTree = "<group>"; };
 		8191512A176F3D9600C5E016 /* Where is my Ride?.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Where is my Ride?.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8191512D176F3D9600C5E016 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8191512F176F3D9600C5E016 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -70,8 +72,8 @@
 		81C676D5177DBF8C00ACD875 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E22B5ACC17736F6F0001203D /* WIMRLocationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRLocationModel.h; sourceTree = "<group>"; };
 		E22B5ACD17736F6F0001203D /* WIMRLocationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRLocationModel.m; sourceTree = "<group>"; };
-		E22B5ACE17736F6F0001203D /* WIMRVehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicle.h; sourceTree = "<group>"; };
-		E22B5ACF17736F6F0001203D /* WIMRVehicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicle.m; sourceTree = "<group>"; };
+		E22B5ACE17736F6F0001203D /* WIMRVehicleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicleModel.h; sourceTree = "<group>"; };
+		E22B5ACF17736F6F0001203D /* WIMRVehicleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicleModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,9 +145,9 @@
 				81915142176F3D9600C5E016 /* WIMRVehicleDetailViewController.h */,
 				81915143176F3D9600C5E016 /* WIMRVehicleDetailViewController.m */,
 				81915145176F3D9600C5E016 /* Images.xcassets */,
-				81915134176F3D9600C5E016 /* Supporting Files */,
 				81BE302E17C3BDA200389DF8 /* WIMRVehicleListViewController.h */,
 				81BE302F17C3BDA200389DF8 /* WIMRVehicleListViewController.m */,
+				81915134176F3D9600C5E016 /* Supporting Files */,
 			);
 			path = "Where is my Ride?";
 			sourceTree = "<group>";
@@ -153,6 +155,7 @@
 		81915134176F3D9600C5E016 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				81189CD317CE92CE00F0AFD3 /* Settings.bundle */,
 				81915135176F3D9600C5E016 /* Where is my Ride?-Info.plist */,
 				81915136176F3D9600C5E016 /* InfoPlist.strings */,
 				81915139176F3D9600C5E016 /* main.m */,
@@ -184,11 +187,11 @@
 			children = (
 				E22B5ACC17736F6F0001203D /* WIMRLocationModel.h */,
 				E22B5ACD17736F6F0001203D /* WIMRLocationModel.m */,
-				E22B5ACE17736F6F0001203D /* WIMRVehicle.h */,
-				E22B5ACF17736F6F0001203D /* WIMRVehicle.m */,
-				8175E79817C0ECB8004E36E9 /* WIMRVehicleDataModel.h */,
-				8175E79917C0ECB8004E36E9 /* WIMRVehicleDataModel.m */,
+				E22B5ACE17736F6F0001203D /* WIMRVehicleModel.h */,
+				E22B5ACF17736F6F0001203D /* WIMRVehicleModel.m */,
 				81BE303417C3CD8F00389DF8 /* WIMRDataModel.xcdatamodeld */,
+				815E089D17C78E670023C3F6 /* WIMRVehicleDataModel.h */,
+				815E089E17C78E670023C3F6 /* WIMRVehicleDataModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81189CD417CE92CE00F0AFD3 /* Settings.bundle in Resources */,
 				81915146176F3D9600C5E016 /* Images.xcassets in Resources */,
 				81915138176F3D9600C5E016 /* InfoPlist.strings in Resources */,
 				81915141176F3D9600C5E016 /* Main.storyboard in Resources */,
@@ -294,14 +298,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				815E089F17C78E670023C3F6 /* WIMRVehicleDataModel.m in Sources */,
 				8191513A176F3D9600C5E016 /* main.m in Sources */,
 				81BE303B17C3D95800389DF8 /* WIMRDataModel.xcdatamodeld in Sources */,
 				8191513E176F3D9600C5E016 /* WIMRAppDelegate.m in Sources */,
 				81915144176F3D9600C5E016 /* WIMRVehicleDetailViewController.m in Sources */,
-				8175E79A17C0ECB8004E36E9 /* WIMRVehicleDataModel.m in Sources */,
 				81BE303017C3BDA200389DF8 /* WIMRVehicleListViewController.m in Sources */,
 				E22B5AD017736F6F0001203D /* WIMRLocationModel.m in Sources */,
-				E22B5AD117736F6F0001203D /* WIMRVehicle.m in Sources */,
+				E22B5AD117736F6F0001203D /* WIMRVehicleModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

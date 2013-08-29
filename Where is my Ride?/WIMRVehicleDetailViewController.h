@@ -12,12 +12,12 @@
 #import <MapKit/MapKit.h>
 #import <MessageUI/MessageUI.h>
 #import "WIMRLocationModel.h"
+#import "WIMRVehicleDataModel.h"
 
 @interface WIMRVehicleDetailViewController : UIViewController <WIMRLocationModelDelegate, MKMapViewDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UIActionSheetDelegate>
 
-@property (nonatomic, strong) NSManagedObject *object;
-@property (nonatomic, strong) NSManagedObjectContext *context;
-//@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) WIMRVehicleDataModel *managedObject;
+
 
 
 

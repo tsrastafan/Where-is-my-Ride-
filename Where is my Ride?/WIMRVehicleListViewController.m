@@ -33,7 +33,7 @@
 {
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewVehicle:)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addVehicle:)];
     self.navigationItem.rightBarButtonItem = addButton;
     self.vehicleDetailViewController = (WIMRVehicleDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	// Do any additional setup after loading the view.
@@ -47,7 +47,12 @@
     [self setToolbarItems:[[NSArray alloc] initWithObjects:toolbarButton, nil] animated:YES];
 }
 
-- (void)insertNewVehicle:(id)sender
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [NSFetchedResultsController deleteCacheWithName:@"master"];
+}
+
+- (void)addVehicle:(id)sender
 {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
@@ -69,7 +74,13 @@
 }
 
 
-# pragma mark - Table View
+# pragma mark - Table View Data Source
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo name];
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -123,14 +134,14 @@
     {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [segue.destinationViewController setObject:object];
+        [segue.destinationViewController setManagedObject:object];
        // [segue.destinationViewController setFetchedResultsController:self.fetchedResultsController];
-        [segue.destinationViewController setContext:self.managedObjectContext];
+        //[segue.destinationViewController setContext:self.managedObjectContext];
         
     }
 }
 
-#pragma mark - Fetched results controller
+#pragma mark - Fetched Results Controller
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
@@ -144,11 +155,12 @@
     [fetchRequest setFetchBatchSize:20];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
+    NSArray *sortDescriptors = @[sortDescriptor2, sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"type" cacheName:@"master"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -205,6 +217,8 @@
             break;
     }
 }
+
+
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {

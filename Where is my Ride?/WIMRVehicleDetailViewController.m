@@ -7,15 +7,14 @@
 //
 
 #import "WIMRVehicleDetailViewController.h"
-#import "WIMRVehicle.h"
-#import "WIMRVehicleDataModel.h"
+#import "WIMRVehicleModel.h"
 
 
 
 @interface WIMRVehicleDetailViewController ()
 
 @property (strong, nonatomic) WIMRLocationModel *locationModel;
-@property (strong, nonatomic) WIMRVehicle *vehicle;
+@property (strong, nonatomic) WIMRVehicleModel *vehicle;
 
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
@@ -23,6 +22,9 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UITextField *typeTextField;
+
+@property (strong, nonatomic) NSManagedObjectContext *context;
 
 
 
@@ -31,15 +33,35 @@
 @implementation WIMRVehicleDetailViewController
 
 
+- (WIMRVehicleModel *)vehicle
+{
+    if (!_vehicle) _vehicle = [[WIMRVehicleModel alloc] init];
+    return _vehicle;
+}
+
+- (NSManagedObjectContext *)context
+{
+    if (!_context) _context = self.managedObject.managedObjectContext;
+    return _context;
+}
+
+
+- (BOOL)saveVehicleState
+{
+    self.managedObject.longitude = [NSNumber numberWithDouble:self.locationModel.lastLocation.coordinate.longitude];
+    self.managedObject.type = (NSDecimalNumber *)[NSDecimalNumber numberWithInt:[self.typeTextField.text intValue]];
+    self.managedObject.latitude = [NSNumber numberWithDouble:self.locationModel.lastLocation.coordinate.latitude];
+    self.managedObject.altitude = [NSNumber numberWithDouble:self.locationModel.lastLocation.altitude];
+    self.managedObject.horizontalAccuracy = [NSNumber numberWithDouble:self.locationModel.lastLocation.horizontalAccuracy];
     
-    //NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"WIMRVehicleDataModel" inManagedObjectContext:self.managedObjectContext];
+    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.verticalAccuracy] forKey:@"verticalAccuracy"];
+    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.course] forKey:@"course"];
+    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationModel.lastLocation.speed] forKey:@"speed"];
+    [self.managedObject setValue:self.locationModel.lastLocation.timestamp forKey:@"timestamp"];
     
-    //NSManagedObject *newVehicle = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.managedObjectContext];
     
-    //[newVehicle setValue:@"FOX" forKey:@"name"];
+    [self.managedObject setValue:self.textField.text forKey:@"name"];
     
-    //NSError *error;
-    //[self.managedObjectContext save:&error];
     
 
 - (IBAction)showActionSheet:(id)sender {
@@ -64,6 +86,12 @@
     self.addressLabel.text = @"Updating ...";
 }
 
+
+
+/*! Shares the Location.
+ *
+ *  The location is shared, at the moment only via email.
+ */
 - (IBAction)shareLocation:(id)sender {
     // Email Subject
     NSString *emailTitle = @"Mein Fahrzeug steht hier!";
@@ -93,12 +121,19 @@
     
     self.locationModel = [[WIMRLocationModel alloc] init];
     self.locationModel.delegate = self;
-    self.vehicle = [[WIMRVehicle alloc] init];
-    self.vehicle.title = @"My Vehicle";
     self.mapView.delegate = self;
     self.textField.delegate = self;
-    self.textField.text = [[self.object valueForKey:@"name"] description];
+    self.textField.text = [self.managedObject.name description];
+    self.typeTextField.delegate = self;
+    self.typeTextField.text = [self.managedObject.type description];
     
+    
+    //load last location from CoreData
+    // this mehtod should be discussed!
+    
+#warning Model design, shoud this method be changed
+    
+    [self.locationModel setLastLocationLatitude:self.managedObject.latitude longitude:self.managedObject.longitude altitude:self.managedObject.altitude horizontalAccuracy:self.managedObject.horizontalAccuracy verticalAccuracy:self.managedObject.verticalAccuracy course:self.managedObject.course speed:self.managedObject.speed timestamp:self.managedObject.timestamp];
     
     
     //Toolbar Buttons
@@ -112,10 +147,22 @@
     UIBarButtonItem *flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
     
+    [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, takePhotoButton, flexibleSpaceButton, takeNoteButton, flexibleSpaceButton, setParkTimeButton, flexibleSpaceButton,systemActionButton] animated:YES];
     
+    [self updateUI];
     
-    [self setToolbarItems:[[NSArray alloc] initWithObjects:getLocationButton, flexibleSpaceButton, takePhotoButton, flexibleSpaceButton, takeNoteButton, flexibleSpaceButton, setParkTimeButton, flexibleSpaceButton,systemActionButton, nil] animated:YES];
+}
 
+
+- (void)updateUI
+{
+    self.vehicle.coordinate = self.locationModel.lastLocation.coordinate;
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.locationModel.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
+    [self.mapView removeAnnotation:self.vehicle];
+    [self.mapView setRegion:region animated:YES];
+    [self.mapView addAnnotation:self.vehicle];
+    [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
+    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -124,10 +171,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)updateView
-{
-    
-}
 
 #pragma mark - WIMRLocationModelDelegate
 
@@ -139,34 +182,9 @@
 - (void)didUpdateLocation:(BOOL)success withStatus:(LocationUpdateReturnStatus)status
 {
     if (success) {
-        self.locationLabel.text = [[NSString alloc] initWithFormat:(@"latitude %+.6f\nlongitude %+.6f"),
-                                   self.locationModel.lastLocation.coordinate.latitude,
-                                   self.locationModel.lastLocation.coordinate.longitude];
-        MKCoordinateRegion region = MKCoordinateRegionMake(self.locationModel.lastLocation.coordinate, MKCoordinateSpanMake(0.005, 0.005));
-        [self.mapView removeAnnotation:self.vehicle];
-        [self.mapView setRegion:region animated:YES];
-        self.vehicle.coordinate = self.locationModel.lastLocation.coordinate;
-        [self.mapView addAnnotation:self.vehicle];
-    
-        NSLog(@"%f", self.locationModel.lastLocation.horizontalAccuracy);
-    
-        [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
-        [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.locationModel.lastLocation.coordinate radius:self.locationModel.lastLocation.horizontalAccuracy]];
+        [self updateUI];
         
-        
-        //Save lastLocation to CoreData
-        
-        
-        
-       // [self.context setValue:self.locationModel.lastLocation forKey:@"location"];
-        
-      //  NSError *error;
-      //  if (![self.context save:&error]) {
-      //      NSLog(@"Error while saving...");
-      //  }
-        
-        
-        
+        [self saveVehicleState];
         
     } else {
         self.locationLabel.text = @"Could not get update.";
@@ -203,18 +221,19 @@
     if ([annotation isKindOfClass:[MKPointAnnotation class]])
     {
         // Try to dequeue an existing pin view first.
-        MKPinAnnotationView *thePinAnnotationView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Here I am!"];
+        MKPinAnnotationView *thePinAnnotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Vehicle"];
         
         if (!thePinAnnotationView)
         {
             // If an existing pin view was not available, create one.
-            thePinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
-                                                                    reuseIdentifier:@"Here I am!"];
+            thePinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Vehicle"];
             thePinAnnotationView.animatesDrop = YES;
             thePinAnnotationView.canShowCallout = YES;
+        
         }
-        else
+        else {
             thePinAnnotationView.annotation = annotation;
+        }
         
         return thePinAnnotationView;
     }
@@ -274,13 +293,13 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self.object setValue:self.textField.text forKey:@"name"];
+  /*  [self.managedObject setValue:self.textField.text forKey:@"name"];
     NSError *error;
     
     if (![self.context save:&error]) {
         NSLog(@"Error");
     }
-    
+*/    
     return [textField resignFirstResponder];
 }
 
