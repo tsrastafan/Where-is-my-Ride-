@@ -15,9 +15,9 @@
 
 @implementation WIMRVehicleModel
 
-- (void)shareAnnotation
-{
-    NSLog(@"I am here: latitude %+.6f\nlongitude %+.6f", self.coordinate.latitude, self.coordinate.longitude);
-}
+//- (void)shareAnnotation
+//{
+//    NSLog(@"I am here: latitude %+.6f\nlongitude %+.6f", self.coordinate.latitude, self.coordinate.longitude);
+//}
 
 @end
