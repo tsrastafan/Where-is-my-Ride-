@@ -45,6 +45,57 @@
     return _context;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.vehicle.location = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.location];
+    self.vehicle.placemark = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.placemark];
+    self.vehicle.title = self.managedObject.title;
+    
+    // set delegates
+    self.locationManager.delegate = self;
+    self.mapView.delegate = self;
+    self.textField.delegate = self;
+    self.typeTextField.delegate = self;
+    
+    [self createToolbarButtons];
+    
+    [self updateUI];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Tools
+
+- (void)updateUI
+{
+    self.locationLabel.text = [[NSString alloc] initWithFormat:(@"long.: %g lat.: %g"),
+                               self.vehicle.coordinate.longitude,
+                               self.vehicle.coordinate.latitude];
+    self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
+                              self.vehicle.placemark.thoroughfare,
+                              self.vehicle.placemark.subThoroughfare,
+                              self.vehicle.placemark.postalCode,
+                              self.vehicle.placemark.locality,
+                              self.vehicle.placemark.administrativeArea];
+    
+    self.textField.text = self.vehicle.title;
+    self.typeTextField.text = [self.managedObject.type description];
+    
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.vehicle.coordinate, MKCoordinateSpanMake(0.005, 0.005));
+    [self.mapView setRegion:region animated:YES];
+    [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
+    [self.mapView removeAnnotation:self.vehicle];
+    [self.mapView addAnnotation:self.vehicle];
+    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.vehicle.coordinate radius:self.vehicle.location.horizontalAccuracy]];
+}
+
 - (BOOL)saveVehicleStatus
 {
     self.managedObject.location = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.location];
@@ -52,31 +103,29 @@
     self.managedObject.title = self.textField.text;
     self.managedObject.type = (NSDecimalNumber *)[NSDecimalNumber numberWithInt:[self.typeTextField.text intValue]];
     
-//    self.managedObject.longitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.coordinate.longitude];
-//    self.managedObject.latitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.coordinate.latitude];
-//    self.managedObject.altitude = [NSNumber numberWithDouble:self.locationManager.lastLocation.altitude];
-//    self.managedObject.horizontalAccuracy = [NSNumber numberWithDouble:self.locationManager.lastLocation.horizontalAccuracy];
-    
-//    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationManager.lastLocation.verticalAccuracy] forKey:@"verticalAccuracy"];
-//    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationManager.lastLocation.course] forKey:@"course"];
-//    [self.managedObject setValue:[NSNumber numberWithDouble:self.locationManager.lastLocation.speed] forKey:@"speed"];
-//    [self.managedObject setValue:self.locationManager.lastLocation.timestamp forKey:@"timestamp"];
-    
-    
-//    [self.managedObject setValue:self.textField.text forKey:@"name"];
-    
-    
-    
-    
     NSError *error = nil;
-    
     if (![self.context save:&error]) {
         NSLog(@"Error");
     }
     
     return !error;
-    
 }
+
+- (void)createToolbarButtons
+{
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    UIBarButtonItem *getLocationButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getLocation:)];
+    UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:nil];
+    UIBarButtonItem *takeNoteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:nil];
+    UIBarButtonItem *setParkTimeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:nil];
+    UIBarButtonItem *systemActionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet:)];
+    UIBarButtonItem *flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    
+    
+    [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, takePhotoButton, flexibleSpaceButton, takeNoteButton, flexibleSpaceButton, setParkTimeButton, flexibleSpaceButton,systemActionButton] animated:YES];
+}
+
+#pragma mark - Actions
 
 - (IBAction)showActionSheet:(id)sender {
     UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:[[NSString alloc] initWithFormat:NSLocalizedString(@"CANCEL", @"The cancel button for the action sheet.")] destructiveButtonTitle:nil otherButtonTitles:[[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL", @"Email button in the action sheet.")], nil];
@@ -129,71 +178,8 @@
     [self presentViewController:mc animated:YES completion:NULL];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.vehicle.location = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.location];
-    self.vehicle.placemark = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.placemark];
-    self.vehicle.title = self.managedObject.title;
-    
-    self.locationManager.delegate = self;
-    self.mapView.delegate = self;
-    self.textField.delegate = self;
-    self.typeTextField.delegate = self;
-    
-    [self createToolbarButtons];
-    
-    [self updateUI];
-    
-}
 
-- (void)createToolbarButtons
-{
-    [self.navigationController setToolbarHidden:NO animated:YES];
-    UIBarButtonItem *getLocationButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getLocation:)];
-    UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:nil];
-    UIBarButtonItem *takeNoteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:nil];
-    UIBarButtonItem *setParkTimeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:nil];
-    UIBarButtonItem *systemActionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet:)];
-    UIBarButtonItem *flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    
-    
-    [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, takePhotoButton, flexibleSpaceButton, takeNoteButton, flexibleSpaceButton, setParkTimeButton, flexibleSpaceButton,systemActionButton] animated:YES];
-}
-
-
-- (void)updateUI
-{
-    self.locationLabel.text = [[NSString alloc] initWithFormat:(@"long.: %g lat.: %g"),
-                               self.vehicle.coordinate.longitude,
-                               self.vehicle.coordinate.latitude];
-    self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
-                               self.vehicle.placemark.thoroughfare,
-                               self.vehicle.placemark.subThoroughfare,
-                               self.vehicle.placemark.postalCode,
-                               self.vehicle.placemark.locality,
-                               self.vehicle.placemark.administrativeArea];
-    
-    self.textField.text = self.vehicle.title;
-    self.typeTextField.text = [self.managedObject.type description];
-    
-    MKCoordinateRegion region = MKCoordinateRegionMake(self.vehicle.coordinate, MKCoordinateSpanMake(0.005, 0.005));
-    [self.mapView removeAnnotation:self.vehicle];
-    [self.mapView setRegion:region animated:YES];
-    [self.mapView addAnnotation:self.vehicle];
-    [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
-    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.vehicle.coordinate radius:self.vehicle.location.horizontalAccuracy]];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-#pragma mark - WIMRLocationModelDelegate
+#pragma mark - TSSHLocationManagerDelegate
 
 /*! Inform the delegate that the location process has finished.
  *
@@ -211,7 +197,6 @@
     }
 }
 
-
 - (void)didUpdateGeocode:(BOOL)success
 {
     if (success) {
@@ -223,6 +208,7 @@
     }
 
 }
+
 
 #pragma mark - MKMapViewDelegate
 
@@ -266,7 +252,7 @@
     return circleRenderer;
 }
 
-    /*
+/*
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
 {
     MKCircleView *circleView = [[MKCircleView alloc] initWithOverlay:overlay];
@@ -274,7 +260,8 @@
     circleView.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.4];
     return circleView;
 }
- */
+*/
+
 
 #pragma mark - MFMailComposeViewControllerDelegate
 
@@ -309,13 +296,6 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-  /*  [self.managedObject setValue:self.textField.text forKey:@"name"];
-    NSError *error;
-    
-    if (![self.context save:&error]) {
-        NSLog(@"Error");
-    }
-*/    
     [self saveVehicleStatus];
     return [textField resignFirstResponder];
 }
