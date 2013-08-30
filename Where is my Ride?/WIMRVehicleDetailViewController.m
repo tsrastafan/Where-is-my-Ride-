@@ -56,7 +56,7 @@
 - (UIActionSheet *)shareActionSheet
 {
     if (!_shareActionSheet) {
-        _shareActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+        _shareActionSheet = [[UIActionSheet alloc] initWithTitle:@"Share Info"
                                                         delegate:self
                                                cancelButtonTitle:[[NSString alloc] initWithFormat:NSLocalizedString(@"CANCEL", @"The cancel button for the action sheet.")]
                                           destructiveButtonTitle:nil
@@ -68,7 +68,7 @@
 - (UIActionSheet *)parkingMeterActionSheet
 {
     if (!_parkingMeterActionSheet) {
-        _parkingMeterActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+        _parkingMeterActionSheet = [[UIActionSheet alloc] initWithTitle:@"Parking Meter"
                                                         delegate:self
                                                cancelButtonTitle:[[NSString alloc] initWithFormat:NSLocalizedString(@"CANCEL", @"The cancel button for the action sheet.")]
                                           destructiveButtonTitle:nil
@@ -353,7 +353,7 @@
 
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSLog(@"%@",actionSheet);
+    NSLog(@"%@",[actionSheet title]);    
     switch (buttonIndex) {
         case 0:
             [self shareLocation:nil];
