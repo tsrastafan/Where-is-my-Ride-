@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSManagedObjectContext *context;
 
 @property (strong, nonatomic) UIActionSheet *shareActionSheet;
+@property (strong, nonatomic) UIActionSheet *parkingMeterActionSheet;
 
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
@@ -59,6 +60,18 @@
                                                otherButtonTitles:[[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL", @"Email button in the action sheet.")], nil];
     }
     return _shareActionSheet;
+}
+
+- (UIActionSheet *)parkingMeterActionSheet
+{
+    if (!_parkingMeterActionSheet) {
+        _parkingMeterActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                        delegate:self
+                                               cancelButtonTitle:[[NSString alloc] initWithFormat:NSLocalizedString(@"CANCEL", @"The cancel button for the action sheet.")]
+                                          destructiveButtonTitle:nil
+                                               otherButtonTitles:@"max. Parkdauer", @"max. Parkzeit", @"Stoppuhr", nil];
+    }
+    return _parkingMeterActionSheet;
 }
 
 - (void)viewDidLoad
@@ -134,26 +147,34 @@
     // getLocationButton
     UIImage *getLocationButtonImage = [UIImage imageNamed:@"location"];
     UIBarButtonItem *getLocationButton = [[UIBarButtonItem alloc] initWithImage:getLocationButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(getLocation:)];
-//    UIBarButtonItem *getLocationButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getLocation:)];
+    getLocationButton.title = @"getLocationButton";
     
     // attachPhotoButton
-    UIBarButtonItem *attachPhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:nil];
+    UIImage *attachPhotoButtonImage = [UIImage imageNamed:@"photo"];
+    UIBarButtonItem *attachPhotoButton = [[UIBarButtonItem alloc] initWithImage:attachPhotoButtonImage style:UIBarButtonItemStylePlain target:self action:nil];
+    attachPhotoButton.title = @"attachPhotoButton";
+    attachPhotoButton.tintColor = [UIColor lightGrayColor];
     
     // attachNoteButton
-    UIBarButtonItem *attachNoteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:nil];
+    UIImage *attachNoteButtonImage = [UIImage imageNamed:@"edit"];
+    UIBarButtonItem *attachNoteButton = [[UIBarButtonItem alloc] initWithImage:attachNoteButtonImage style:UIBarButtonItemStylePlain target:self action:nil];
+    attachNoteButton.title = @"attachNoteButton";
+    attachNoteButton.tintColor = [UIColor lightGrayColor];
     
-    // parkingTimerButton
-    UIImage *parkingTimerButtonImage = [UIImage imageNamed:@"stopwatch"];
-    UIBarButtonItem *parkingTimerButton = [[UIBarButtonItem alloc] initWithImage:parkingTimerButtonImage style:UIBarButtonItemStylePlain target:self action:nil];
-    parkingTimerButton.tintColor = [UIColor lightGrayColor];
+    // parkingMeterButton
+    UIImage *parkingMeterButtonImage = [UIImage imageNamed:@"stopwatch"];
+    UIBarButtonItem *parkingMeterButton = [[UIBarButtonItem alloc] initWithImage:parkingMeterButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(showActionSheet:)];
+    parkingMeterButton.title = @"parkingMeterButton";
     
     // shareActionButton
-    UIBarButtonItem *shareActionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet:)];
+    UIImage *shareActionButtonImage = [UIImage imageNamed:@"upload"];
+    UIBarButtonItem *shareActionButton = [[UIBarButtonItem alloc] initWithImage:shareActionButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(showActionSheet:)];
+    shareActionButton.title = @"shareActionButton";
     
     //flexibleSpaceButton
     UIBarButtonItem *flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
-    [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, attachPhotoButton, flexibleSpaceButton, attachNoteButton, flexibleSpaceButton, parkingTimerButton, flexibleSpaceButton,shareActionButton] animated:YES];
+    [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, attachPhotoButton, flexibleSpaceButton, attachNoteButton, flexibleSpaceButton, parkingMeterButton, flexibleSpaceButton, shareActionButton] animated:YES];
 }
 
 - (void)dimmBarButtonItem: (UIBarButtonItem *)barButtonItem
@@ -171,8 +192,13 @@
 #pragma mark - Actions
 
 - (IBAction)showActionSheet:(id)sender {
-    NSLog(@"%@",[sender description]);
-    [self.shareActionSheet showFromBarButtonItem:sender animated:YES];
+    NSLog(@"%@",[sender title]);
+    if ([[sender title] isEqualToString:@"parkingMeterButton"]) {
+        [self.parkingMeterActionSheet showFromBarButtonItem:sender animated:YES];
+    }
+    if ([[sender title] isEqualToString:@"shareActionButton"]) {
+        [self.shareActionSheet showFromBarButtonItem:sender animated:YES];
+    }
 }
 
 - (IBAction)getLocation:(id)sender {
