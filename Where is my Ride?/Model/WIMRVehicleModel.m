@@ -23,6 +23,14 @@
     return self.location.coordinate;
 }
 
+- (WIMRVehicleModel *)init
+{
+    self = [super init];
+    self.capturedImages = [[NSMutableArray alloc] init];
+    
+    return self;
+}
+
 //- (void)shareAnnotation
 //{
 //    NSLog(@"I am here: latitude %+.6f\nlongitude %+.6f", self.coordinate.latitude, self.coordinate.longitude);

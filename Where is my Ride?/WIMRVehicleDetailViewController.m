@@ -15,6 +15,7 @@
 @property (strong, nonatomic) TSSHLocationManager *locationManager;
 @property (strong, nonatomic) WIMRVehicleModel *vehicle;
 @property (strong, nonatomic) NSManagedObjectContext *context;
+@property (strong, nonatomic) UIImagePickerController* imagePickerController;
 
 @property (strong, nonatomic) UIActionSheet *shareActionSheet;
 @property (strong, nonatomic) UIActionSheet *parkingMeterActionSheet;
@@ -24,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 - (void)dimmBarButtonItem: (UIBarButtonItem *)barButtonItem;
 - (void)restoreBarButtonItem: (UIBarButtonItem *)barButtonItem;
@@ -241,6 +243,15 @@
         return;
     }
     NSLog(@"Camera is here!");
+    
+    UIImagePickerController* imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    imagePickerController.delegate = self;
+    //imagePickerController.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
+    //imagePickerController.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+    //imagePickerController.allowsEditing = YES;
+    self.imagePickerController = imagePickerController;
+    [self presentViewController:self.imagePickerController animated:YES completion:nil];
 }
 
 
@@ -374,6 +385,50 @@
 {
     [self saveVehicleStatus];
     return [textField resignFirstResponder];
+}
+
+
+- (void)finishAndUpdate
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    
+    if ([self.vehicle.capturedImages count] > 0)
+    {
+        if ([self.vehicle.capturedImages count] == 1)
+        {
+            // Camera took a single picture.
+            [self.imageView setImage:[self.vehicle.capturedImages objectAtIndex:0]];
+        }
+        else
+        {
+            // Camera took multiple pictures; use the list of images for animation.
+            self.imageView.animationImages = self.vehicle.capturedImages;
+            self.imageView.animationDuration = 5.0;    // Show each captured photo for 5 seconds.
+            self.imageView.animationRepeatCount = 0;   // Animate forever (show all photos).
+            [self.imageView startAnimating];
+        }
+        
+        // To be ready to start again, clear the captured images array.
+        [self.vehicle.capturedImages removeAllObjects];
+    }
+    
+    self.imagePickerController = nil;
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    
+    [self.vehicle.capturedImages addObject:image];
+    
+    [self finishAndUpdate];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

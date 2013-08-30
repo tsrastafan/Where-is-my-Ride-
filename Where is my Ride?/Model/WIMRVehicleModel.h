@@ -27,6 +27,7 @@ typedef enum {
 @property (nonatomic) VehicleType type;
 @property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, strong) CLPlacemark *placemark;
+@property (nonatomic) NSMutableArray *capturedImages;
 
 #pragma mark - Methods used by MKAnnotation protocol
 /* The following method should be implemented when Annotation supports dragging.
