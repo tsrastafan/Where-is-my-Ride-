@@ -32,9 +32,7 @@
 @end
 
 
-@implementation TSSHLocationManager {
-    
-}
+@implementation TSSHLocationManager
 
 /** Designated initializer
  */
