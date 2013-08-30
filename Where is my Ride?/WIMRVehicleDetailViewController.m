@@ -151,7 +151,7 @@
     
     // attachPhotoButton
     UIImage *attachPhotoButtonImage = [UIImage imageNamed:@"photo"];
-    UIBarButtonItem *attachPhotoButton = [[UIBarButtonItem alloc] initWithImage:attachPhotoButtonImage style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *attachPhotoButton = [[UIBarButtonItem alloc] initWithImage:attachPhotoButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(attachPhoto:)];
     attachPhotoButton.title = @"attachPhotoButton";
     attachPhotoButton.tintColor = [UIColor lightGrayColor];
     
@@ -233,6 +233,14 @@
     
     // Present mail view controller on screen
     [self presentViewController:mc animated:YES completion:NULL];
+}
+
+- (IBAction)attachPhoto:(id)sender
+{
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        return;
+    }
+    NSLog(@"Camera is here!");
 }
 
 
