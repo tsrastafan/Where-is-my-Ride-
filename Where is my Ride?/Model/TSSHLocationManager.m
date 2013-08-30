@@ -36,8 +36,7 @@
     
 }
 
-/*! Designated initializer
- *
+/** Designated initializer
  */
 - (TSSHLocationManager *)init
 {
@@ -62,10 +61,10 @@
 //}
 
 
-/*! Set a time limit for fixing the location.
- *
- * \params timeStatus Status code for the exceeded time limit.
- * 1 means soft time limit exceeded, 2 means hard time limit exceeded.
+/** Set a time limit for fixing the location.
+ 
+ \params timeStatus Status code for the exceeded time limit.
+ 1 means soft time limit exceeded, 2 means hard time limit exceeded.
  */
 - (void)setSoftTimeLimitForLocationFixExceededYES:(NSTimer *)timer {
     self.softTimeLimitForLocationFixExceeded = YES;
