@@ -29,6 +29,8 @@
 @property (nonatomic) BOOL hardTimeLimitForLocationFixExceeded;
 @property (nonatomic) BOOL performingReverseGeocoding;
 
+@property (strong, nonatomic) id sender;
+
 @end
 
 
@@ -79,8 +81,9 @@
 /*! Start a standard location update.
  *
  */
-- (void)startLocationUpdate
+- (void)startLocationUpdate:(id)sender
 {
+    self.sender = sender;
     if (!self.locationManager) {
         self.locationManager = [[CLLocationManager alloc] init];
     }
@@ -117,7 +120,7 @@
                  self.lastPlacemark = nil;
              }
              self.performingReverseGeocoding = NO;
-             [self.delegate didUpdateGeocode:YES];
+             [self.delegate didUpdateGeocode:YES sender:self.sender];
          }];
     }
 }

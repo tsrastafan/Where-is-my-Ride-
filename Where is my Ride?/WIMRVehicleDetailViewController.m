@@ -16,12 +16,16 @@
 @property (strong, nonatomic) WIMRVehicleModel *vehicle;
 @property (strong, nonatomic) NSManagedObjectContext *context;
 
+@property (strong, nonatomic) UIActionSheet *shareActionSheet;
+
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
+- (void)dimmBarButtonItem: (UIBarButtonItem *)barButtonItem;
+- (void)restoreBarButtonItem: (UIBarButtonItem *)barButtonItem;
 @end
 
 
@@ -43,6 +47,18 @@
 {
     if (!_context) _context = self.managedObject.managedObjectContext;
     return _context;
+}
+
+- (UIActionSheet *)shareActionSheet
+{
+    if (!_shareActionSheet) {
+        _shareActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                         delegate:self
+                                                cancelButtonTitle:[[NSString alloc] initWithFormat:NSLocalizedString(@"CANCEL", @"The cancel button for the action sheet.")]
+                                           destructiveButtonTitle:nil
+                                                otherButtonTitles:[[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL", @"Email button in the action sheet.")], nil];
+                                 }
+    return _shareActionSheet;
 }
 
 - (void)viewDidLoad
@@ -121,22 +137,32 @@
     UIBarButtonItem *systemActionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet:)];
     UIBarButtonItem *flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
-    
     [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, takePhotoButton, flexibleSpaceButton, takeNoteButton, flexibleSpaceButton, setParkTimeButton, flexibleSpaceButton,systemActionButton] animated:YES];
+}
+
+- (void)dimmBarButtonItem: (UIBarButtonItem *)barButtonItem
+{
+    barButtonItem.tintColor = [UIColor colorWithRed:0.556862745 green:0.556862745 blue:0.576470588 alpha:1];
+}
+
+- (void)restoreBarButtonItem: (UIBarButtonItem *)barButtonItem
+{
+    barButtonItem.tintColor = [UIColor colorWithRed:0 green:0.478431373 blue:1 alpha:1];
 }
 
 
 #pragma mark - Actions
 
 - (IBAction)showActionSheet:(id)sender {
-    UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:[[NSString alloc] initWithFormat:NSLocalizedString(@"CANCEL", @"The cancel button for the action sheet.")] destructiveButtonTitle:nil otherButtonTitles:[[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL", @"Email button in the action sheet.")], nil];
-    [shareSheet showFromBarButtonItem:sender animated:YES];
+    NSLog(@"%@",[sender description]);
+    [self.shareActionSheet showFromBarButtonItem:sender animated:YES];
 }
 
 - (IBAction)getLocation:(id)sender {
-    [self.locationManager startLocationUpdate];
+    [self.locationManager startLocationUpdate:sender];
     self.locationLabel.text = @"Updating ...";
     self.addressLabel.text = @"Updating ...";
+    [self dimmBarButtonItem:sender];
 }
 
 /*! Shares the Location.
@@ -185,7 +211,7 @@
     }
 }
 
-- (void)didUpdateGeocode:(BOOL)success
+- (void)didUpdateGeocode:(BOOL)success sender:(id)sender
 {
     if (success) {
         self.vehicle.placemark = [self.locationManager.lastPlacemark copy];
@@ -194,7 +220,7 @@
     } else {
         self.addressLabel.text = @"Could not get corresponding address.";
     }
-
+    [self restoreBarButtonItem:sender];
 }
 
 
@@ -253,6 +279,7 @@
 
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"%@",actionSheet);
     switch (buttonIndex) {
         case 0:
             [self shareLocation:nil];
