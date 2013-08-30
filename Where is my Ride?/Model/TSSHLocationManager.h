@@ -33,6 +33,4 @@ typedef enum {
 - (void)startLocationUpdate;
 - (void)stopLocationUpdate;
 
-//- (void)setLastLocationLatitude:(NSNumber *)latitude longitude:(NSNumber *)longitude altitude:(NSNumber *)altitude horizontalAccuracy:(NSNumber *)hAccuracy verticalAccuracy:(NSNumber *)vAccuracy course:(NSNumber *)course speed:(NSNumber *)speed timestamp:(NSDate *)timestamp;
-
 @end
