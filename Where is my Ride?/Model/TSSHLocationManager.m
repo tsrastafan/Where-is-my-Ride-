@@ -18,8 +18,8 @@
 @property (strong, nonatomic) NSTimer *softTimer;
 @property (strong, nonatomic) NSTimer *hardTimer;
 
-@property (nonatomic, strong, readwrite) CLLocation *lastLocation;
-@property (nonatomic, strong, readwrite) CLPlacemark *lastPlacemark;
+@property (strong, nonatomic, readwrite) CLLocation *lastLocation;
+@property (strong, nonatomic, readwrite) CLPlacemark *lastPlacemark;
 
 @property (nonatomic) CLLocationAccuracy desiredAccuracy;
 @property (nonatomic) NSUInteger softTimeLimitForLocationFix;
@@ -47,22 +47,12 @@
     return self;
 }
 
-
-
-///*! Set the CLLocation object (from CoreData)
-// *
-// * Blaa blaaaa
-// */
-//- (void)setLastLocationLatitude:(NSNumber *)latitude longitude:(NSNumber *)longitude altitude:(NSNumber *)altitude horizontalAccuracy:(NSNumber *)hAccuracy verticalAccuracy:(NSNumber *)vAccuracy course:(NSNumber *)course speed:(NSNumber *)speed timestamp:(NSDate *)timestamp
-//{
-//    self.lastLocation = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake([latitude doubleValue], [longitude doubleValue]) altitude:[altitude doubleValue] horizontalAccuracy:[hAccuracy doubleValue] verticalAccuracy:[vAccuracy doubleValue] course:[course doubleValue] speed:[speed doubleValue] timestamp:timestamp];
-//}
-
-
-/** Set a time limit for fixing the location.
+/**
+ Set a time limit for fixing the location.
  
  \params timeStatus Status code for the exceeded time limit.
  1 means soft time limit exceeded, 2 means hard time limit exceeded.
+ 
  */
 - (void)setSoftTimeLimitForLocationFixExceededYES:(NSTimer *)timer {
     self.softTimeLimitForLocationFixExceeded = YES;
@@ -108,11 +98,15 @@
         self.performingReverseGeocoding = YES;
         [self.geocoder reverseGeocodeLocation:location completionHandler:
          ^(NSArray *placemarks, NSError *error) {
-             if (error == nil && [placemarks count] > 0) {
+             if (nil == error && [placemarks count] > 0) {
                  self.lastPlacemark = [placemarks lastObject];
+             }
+             //do we really need the else part as lastPlacemark should contain the LAST placemark??
+             /*
              } else {
                  self.lastPlacemark = nil;
              }
+              */
              self.performingReverseGeocoding = NO;
              [self.delegate didUpdateGeocode:YES];
          }];
