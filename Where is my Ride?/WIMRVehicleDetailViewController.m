@@ -12,10 +12,12 @@
 
 @interface WIMRVehicleDetailViewController ()
 
-@property (strong, nonatomic) TSSHLocationManager *locationManager;
 @property (strong, nonatomic) WIMRVehicleModel *vehicle;
+@property (strong, nonatomic) TSSHLocationManager *locationManager;
 @property (strong, nonatomic) NSManagedObjectContext *context;
 @property (strong, nonatomic) UIImagePickerController* imagePickerController;
+@property (strong, nonatomic) WIMRPhotoViewController *photoViewController;
+
 
 @property (strong, nonatomic) UIActionSheet *shareActionSheet;
 @property (strong, nonatomic) UIActionSheet *parkingMeterActionSheet;
@@ -25,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 - (void)dimmBarButtonItem: (UIBarButtonItem *)barButtonItem;
 - (void)restoreBarButtonItem: (UIBarButtonItem *)barButtonItem;
@@ -84,6 +85,8 @@
     self.vehicle.placemark = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.placemark];
     self.vehicle.title = self.managedObject.title;
     
+    self.photoViewController = (WIMRPhotoViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    
     // set delegates
     self.locationManager.delegate = self;
     self.mapView.delegate = self;
@@ -93,6 +96,15 @@
     [self createToolbarButtons];
     
     [self updateUI];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"showPhotos"])
+    {
+        [segue.destinationViewController setManagedObject:self.managedObject];
+        [segue.destinationViewController setVehicle:self.vehicle];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -387,43 +399,15 @@
     return [textField resignFirstResponder];
 }
 
-
-- (void)finishAndUpdate
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
-    
-    if ([self.vehicle.capturedImages count] > 0)
-    {
-        if ([self.vehicle.capturedImages count] == 1)
-        {
-            // Camera took a single picture.
-            [self.imageView setImage:[self.vehicle.capturedImages objectAtIndex:0]];
-        }
-        else
-        {
-            // Camera took multiple pictures; use the list of images for animation.
-            self.imageView.animationImages = self.vehicle.capturedImages;
-            self.imageView.animationDuration = 5.0;    // Show each captured photo for 5 seconds.
-            self.imageView.animationRepeatCount = 0;   // Animate forever (show all photos).
-            [self.imageView startAnimating];
-        }
-        
-        // To be ready to start again, clear the captured images array.
-        [self.vehicle.capturedImages removeAllObjects];
-    }
-    
-    self.imagePickerController = nil;
-}
-
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    
     [self.vehicle.capturedImages addObject:image];
-    
-    [self finishAndUpdate];
+#warning Photo is not stored in database.
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    self.imagePickerController = nil;
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
