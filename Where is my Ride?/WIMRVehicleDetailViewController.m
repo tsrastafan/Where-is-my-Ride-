@@ -53,11 +53,11 @@
 {
     if (!_shareActionSheet) {
         _shareActionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                         delegate:self
-                                                cancelButtonTitle:[[NSString alloc] initWithFormat:NSLocalizedString(@"CANCEL", @"The cancel button for the action sheet.")]
-                                           destructiveButtonTitle:nil
-                                                otherButtonTitles:[[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL", @"Email button in the action sheet.")], nil];
-                                 }
+                                                        delegate:self
+                                               cancelButtonTitle:[[NSString alloc] initWithFormat:NSLocalizedString(@"CANCEL", @"The cancel button for the action sheet.")]
+                                          destructiveButtonTitle:nil
+                                               otherButtonTitles:[[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL", @"Email button in the action sheet.")], nil];
+    }
     return _shareActionSheet;
 }
 
@@ -130,24 +130,41 @@
 - (void)createToolbarButtons
 {
     [self.navigationController setToolbarHidden:NO animated:YES];
-    UIBarButtonItem *getLocationButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getLocation:)];
-    UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:nil];
-    UIBarButtonItem *takeNoteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:nil];
-    UIBarButtonItem *setParkTimeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:nil];
-    UIBarButtonItem *systemActionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet:)];
+    
+    // getLocationButton
+    UIImage *getLocationButtonImage = [UIImage imageNamed:@"location"];
+    UIBarButtonItem *getLocationButton = [[UIBarButtonItem alloc] initWithImage:getLocationButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(getLocation:)];
+//    UIBarButtonItem *getLocationButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getLocation:)];
+    
+    // attachPhotoButton
+    UIBarButtonItem *attachPhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:nil];
+    
+    // attachNoteButton
+    UIBarButtonItem *attachNoteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:nil];
+    
+    // parkingTimerButton
+    UIImage *parkingTimerButtonImage = [UIImage imageNamed:@"stopwatch"];
+    UIBarButtonItem *parkingTimerButton = [[UIBarButtonItem alloc] initWithImage:parkingTimerButtonImage style:UIBarButtonItemStylePlain target:self action:nil];
+    parkingTimerButton.tintColor = [UIColor lightGrayColor];
+    
+    // shareActionButton
+    UIBarButtonItem *shareActionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet:)];
+    
+    //flexibleSpaceButton
     UIBarButtonItem *flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
-    [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, takePhotoButton, flexibleSpaceButton, takeNoteButton, flexibleSpaceButton, setParkTimeButton, flexibleSpaceButton,systemActionButton] animated:YES];
+    [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, attachPhotoButton, flexibleSpaceButton, attachNoteButton, flexibleSpaceButton, parkingTimerButton, flexibleSpaceButton,shareActionButton] animated:YES];
 }
 
 - (void)dimmBarButtonItem: (UIBarButtonItem *)barButtonItem
 {
-    barButtonItem.tintColor = [UIColor colorWithRed:0.556862745 green:0.556862745 blue:0.576470588 alpha:1];
+//    barButtonItem.tintColor = [UIColor colorWithRed:0.556862745 green:0.556862745 blue:0.576470588 alpha:1]; // system gray
+    barButtonItem.tintColor = [UIColor lightGrayColor];
 }
 
 - (void)restoreBarButtonItem: (UIBarButtonItem *)barButtonItem
 {
-    barButtonItem.tintColor = [UIColor colorWithRed:0 green:0.478431373 blue:1 alpha:1];
+    barButtonItem.tintColor = [UIColor colorWithRed:0 green:0.478431373 blue:1 alpha:1]; // system blue
 }
 
 
@@ -239,13 +256,11 @@
         // Try to dequeue an existing pin view first.
         MKPinAnnotationView *thePinAnnotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Vehicle"];
         
-        if (!thePinAnnotationView)
-        {
+        if (!thePinAnnotationView) {
             // If an existing pin view was not available, create one.
             thePinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Vehicle"];
             thePinAnnotationView.animatesDrop = YES;
             thePinAnnotationView.canShowCallout = YES;
-        
         }
         else {
             thePinAnnotationView.annotation = annotation;
