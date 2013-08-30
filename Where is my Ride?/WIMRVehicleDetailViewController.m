@@ -12,8 +12,8 @@
 
 @interface WIMRVehicleDetailViewController ()
 
-@property (strong, nonatomic) WIMRVehicleModel *vehicle;
 @property (strong, nonatomic) TSSHLocationManager *locationManager;
+@property (strong, nonatomic) WIMRVehicleModel *vehicle;
 @property (strong, nonatomic) NSManagedObjectContext *context;
 @property (strong, nonatomic) UIImagePickerController* imagePickerController;
 @property (strong, nonatomic) WIMRPhotoViewController *photoViewController;
@@ -84,6 +84,8 @@
     self.vehicle.location = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.location];
     self.vehicle.placemark = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.placemark];
     self.vehicle.title = self.managedObject.title;
+    self.vehicle.capturedImages = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.photos];
+    if (!self.vehicle.capturedImages) self.vehicle.capturedImages = [[NSMutableArray alloc] init];
     
     self.photoViewController = (WIMRPhotoViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
@@ -145,6 +147,7 @@
     self.managedObject.placemark = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.placemark];
     self.managedObject.title = self.textField.text;
     self.managedObject.type = (NSDecimalNumber *)[NSDecimalNumber numberWithInt:[self.typeTextField.text intValue]];
+    self.managedObject.photos = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.capturedImages];
     
     NSError *error = nil;
     if (![self.context save:&error]) {
@@ -167,7 +170,6 @@
     UIImage *attachPhotoButtonImage = [UIImage imageNamed:@"photo"];
     UIBarButtonItem *attachPhotoButton = [[UIBarButtonItem alloc] initWithImage:attachPhotoButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(attachPhoto:)];
     attachPhotoButton.title = @"attachPhotoButton";
-    attachPhotoButton.tintColor = [UIColor lightGrayColor];
     
     // attachNoteButton
     UIImage *attachNoteButtonImage = [UIImage imageNamed:@"edit"];
@@ -405,7 +407,7 @@
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     [self.vehicle.capturedImages addObject:image];
-#warning Photo is not stored in database.
+    [self saveVehicleStatus];
     [self dismissViewControllerAnimated:YES completion:NULL];
     self.imagePickerController = nil;
 }

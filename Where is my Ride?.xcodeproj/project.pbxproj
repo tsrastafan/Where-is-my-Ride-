@@ -28,9 +28,9 @@
 		81C676D6177DBF8C00ACD875 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81C676D5177DBF8C00ACD875 /* MapKit.framework */; };
 		81CA29AE17CF5BB600395228 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81CA29B017CF5BB600395228 /* Localizable.strings */; };
 		E217FAF117D0FAE200A46B22 /* WIMRPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E217FAF017D0FAE200A46B22 /* WIMRPhotoViewController.m */; };
+		E217FAF417D1364B00A46B22 /* WIMRVehicleDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E217FAF317D1364B00A46B22 /* WIMRVehicleDataModel.m */; };
 		E22B5AD017736F6F0001203D /* TSSHLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E22B5ACD17736F6F0001203D /* TSSHLocationManager.m */; };
 		E22B5AD117736F6F0001203D /* WIMRVehicleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E22B5ACF17736F6F0001203D /* WIMRVehicleModel.m */; };
-		E2D2131817CFAACF007F54A5 /* WIMRVehicleDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D2131717CFAACF007F54A5 /* WIMRVehicleDataModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,12 +78,12 @@
 		81CA29B217CF5BC300395228 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E217FAEF17D0FAE200A46B22 /* WIMRPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRPhotoViewController.h; sourceTree = "<group>"; };
 		E217FAF017D0FAE200A46B22 /* WIMRPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRPhotoViewController.m; sourceTree = "<group>"; };
+		E217FAF217D1364B00A46B22 /* WIMRVehicleDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicleDataModel.h; sourceTree = "<group>"; };
+		E217FAF317D1364B00A46B22 /* WIMRVehicleDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicleDataModel.m; sourceTree = "<group>"; };
 		E22B5ACC17736F6F0001203D /* TSSHLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSHLocationManager.h; sourceTree = "<group>"; };
 		E22B5ACD17736F6F0001203D /* TSSHLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSHLocationManager.m; sourceTree = "<group>"; };
 		E22B5ACE17736F6F0001203D /* WIMRVehicleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicleModel.h; sourceTree = "<group>"; };
 		E22B5ACF17736F6F0001203D /* WIMRVehicleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicleModel.m; sourceTree = "<group>"; };
-		E2D2131617CFAACF007F54A5 /* WIMRVehicleDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicleDataModel.h; sourceTree = "<group>"; };
-		E2D2131717CFAACF007F54A5 /* WIMRVehicleDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicleDataModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,9 +202,9 @@
 				E22B5ACD17736F6F0001203D /* TSSHLocationManager.m */,
 				E22B5ACE17736F6F0001203D /* WIMRVehicleModel.h */,
 				E22B5ACF17736F6F0001203D /* WIMRVehicleModel.m */,
-				E2D2131617CFAACF007F54A5 /* WIMRVehicleDataModel.h */,
-				E2D2131717CFAACF007F54A5 /* WIMRVehicleDataModel.m */,
 				81BE303417C3CD8F00389DF8 /* WIMRDataModel.xcdatamodeld */,
+				E217FAF217D1364B00A46B22 /* WIMRVehicleDataModel.h */,
+				E217FAF317D1364B00A46B22 /* WIMRVehicleDataModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -313,7 +313,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2D2131817CFAACF007F54A5 /* WIMRVehicleDataModel.m in Sources */,
+				E217FAF417D1364B00A46B22 /* WIMRVehicleDataModel.m in Sources */,
 				8191513A176F3D9600C5E016 /* main.m in Sources */,
 				81BE303B17C3D95800389DF8 /* WIMRDataModel.xcdatamodeld in Sources */,
 				8191513E176F3D9600C5E016 /* WIMRAppDelegate.m in Sources */,
