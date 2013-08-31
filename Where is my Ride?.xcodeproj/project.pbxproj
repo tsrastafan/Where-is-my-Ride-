@@ -377,6 +377,7 @@
 			children = (
 				81CA29B117CF5BC200395228 /* de */,
 				81CA29B217CF5BC300395228 /* en */,
+				81FFA4C517D0A3ED0041E045 /* Base */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
