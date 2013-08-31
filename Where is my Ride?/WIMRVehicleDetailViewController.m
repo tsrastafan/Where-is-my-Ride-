@@ -9,7 +9,6 @@
 #import "WIMRVehicleDetailViewController.h"
 #import "WIMRVehicleModel.h"
 
-
 #pragma mark - Interface
 @interface WIMRVehicleDetailViewController ()
 
@@ -20,7 +19,7 @@
 
 #pragma mark - Controller
 @property (strong, nonatomic) UIImagePickerController* imagePickerController;
-@property (strong, nonatomic) WIMRPhotoViewController *photoViewController;
+@property (strong, nonatomic) WIMRPagedPhotoViewController *photoViewController;
 
 #pragma mark - Outlets
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
@@ -28,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *photosButton;
 
 #pragma mark - ActionSheets
 @property (strong, nonatomic) UIActionSheet *shareActionSheet;
@@ -74,7 +74,7 @@
     self.vehicle.capturedImages = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.photos];
     if (!self.vehicle.capturedImages) self.vehicle.capturedImages = [[NSMutableArray alloc] init];
     
-    self.photoViewController = (WIMRPhotoViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    self.photoViewController = (WIMRPagedPhotoViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     // set delegates
     self.locationManager.delegate = self;

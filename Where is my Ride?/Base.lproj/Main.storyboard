@@ -84,7 +84,7 @@
                     <navigationItem key="navigationItem" id="1So-oP-5Iq">
                         <barButtonItem key="rightBarButtonItem" title="Photos" id="FWp-rC-7Db">
                             <connections>
-                                <segue destination="tDH-SL-ry0" kind="push" identifier="showPhotos" id="T47-bL-aqz"/>
+                                <segue destination="huu-XY-Seq" kind="push" identifier="showPhotos" id="ubU-iP-VLp"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -93,6 +93,7 @@
                         <outlet property="imageView" destination="b0y-in-ntX" id="8jB-er-MgQ"/>
                         <outlet property="locationLabel" destination="J81-oP-sFE" id="hF8-8f-Hxw"/>
                         <outlet property="mapView" destination="csv-Cx-wVv" id="jr7-Jb-g3K"/>
+                        <outlet property="photosButton" destination="FWp-rC-7Db" id="4nu-hP-Qbh"/>
                         <outlet property="textField" destination="Lqx-fv-EXb" id="Q2K-vA-5Vg"/>
                         <outlet property="typeTextField" destination="B1J-FP-aQw" id="UZ6-4j-uma"/>
                     </connections>
@@ -100,6 +101,42 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1131" y="349"/>
+        </scene>
+        <!--Paged Photo View Controller-->
+        <scene sceneID="fyi-Al-p9a">
+            <objects>
+                <viewController id="huu-XY-Seq" customClass="WIMRPagedPhotoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wbj-ia-8Dv"/>
+                        <viewControllerLayoutGuide type="bottom" id="B3g-VB-0cR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="EcD-cz-H6d">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" directionalLockEnabled="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ZV-RV-Aai">
+                                <rect key="frame" x="0.0" y="20" width="320" height="415"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </scrollView>
+                            <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="8Gl-QO-mW5">
+                                <rect key="frame" x="20" y="443" width="280" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </pageControl>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="gXd-BE-RuO">
+                        <barButtonItem key="rightBarButtonItem" title="Delete" id="0Yv-Js-YCI"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="deleteButton" destination="0Yv-Js-YCI" id="8C2-el-8wA"/>
+                        <outlet property="pageControl" destination="8Gl-QO-mW5" id="iYm-im-qrF"/>
+                        <outlet property="scrollView" destination="3ZV-RV-Aai" id="Ke0-mY-20f"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V92-Bj-Dt9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1545" y="38"/>
         </scene>
         <!--Photo View Controller-->
         <scene sceneID="vxf-q7-thZ">
@@ -127,7 +164,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TG1-7h-Hgw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1550" y="349"/>
+            <point key="canvasLocation" x="1545" y="610"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hLI-II-1dI">

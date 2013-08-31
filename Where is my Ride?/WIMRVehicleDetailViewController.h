@@ -13,7 +13,7 @@
 #import <MessageUI/MessageUI.h>
 #import "TSSHLocationManager.h"
 #import "WIMRVehicleDataModel.h"
-#import "WIMRPhotoViewController.h"
+#import "WIMRPagedPhotoViewController.h"
 
 @interface WIMRVehicleDetailViewController : UIViewController <TSSHLocationManagerDelegate, MKMapViewDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
