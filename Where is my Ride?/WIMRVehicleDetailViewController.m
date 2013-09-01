@@ -171,11 +171,11 @@
 
 - (void) initializeActionSheetButtonTitles
 {
-    _cancelButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"CANCEL", @"The cancel button for the action sheet.")];
-    _emailButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL", @"Email button in the action sheet.")];
-    _parkingAlertButtonTitle = @"Ende der Parkzeit";
-    _parkingTimerButtonTitle = @"max. Parkdauer";
-    _parkingStopWatchButtonTitle = @"Stoppuhr";
+    _cancelButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"CANCEL", @"Action sheet button: cancel action.")];
+    _emailButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL", @"Action sheet button: compose E-Mail")];
+    _parkingAlertButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"PARKINGALERT", @"Action sheet button: Set date and time at which a vehicle has to removed from its parking spot.")];
+    _parkingTimerButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"PARKINGTIMER", @"Action sheet button: Set maximum parking duration.")];
+    _parkingStopWatchButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"PARKINGSTOPWATCH", @"Action sheet button: Start a stop watch.")];
 }
 
 - (UIActionSheet *)shareActionSheet
