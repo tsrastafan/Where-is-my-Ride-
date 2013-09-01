@@ -145,7 +145,7 @@
  */
 - (IBAction)shareLocation:(id)sender {
     // Email Subject
-    NSString *emailTitle = @"Mein Fahrzeug steht hier!";
+    NSString *emailTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL_SUBJECT", @"E-Mail subject: Where is my ride?")];
     // Email Content
     NSString *messageBody = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
                              self.vehicle.placemark.thoroughfare,
