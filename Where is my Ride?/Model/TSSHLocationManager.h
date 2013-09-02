@@ -20,7 +20,7 @@ typedef enum {
 
 @required
 - (void)didUpdateLocation:(BOOL)success withStatus:(TSSHLocationUpdateReturnStatus)status;
-- (void)didUpdateGeocode:(BOOL)success;
+- (void)didUpdateGeocode:(BOOL)success sender:(id)sender;
 @end
 
 
@@ -30,7 +30,7 @@ typedef enum {
 @property (strong, nonatomic, readonly) CLLocation *lastLocation;
 @property (strong, nonatomic, readonly) CLPlacemark *lastPlacemark;
 
-- (void)startLocationUpdate;
+- (void)startLocationUpdate:(id)sender;
 - (void)stopLocationUpdate;
 
 @end

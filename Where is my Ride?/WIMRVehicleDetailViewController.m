@@ -10,21 +10,40 @@
 #import "WIMRVehicleModel.h"
 
 
+#pragma mark - Interface
 @interface WIMRVehicleDetailViewController ()
 
-@property (strong, nonatomic) TSSHLocationManager *locationManager;
+#pragma mark Model
 @property (strong, nonatomic) WIMRVehicleModel *vehicle;
+@property (strong, nonatomic) TSSHLocationManager *locationManager;
 @property (strong, nonatomic) NSManagedObjectContext *context;
 
+#pragma mark - Controller
+@property (strong, nonatomic) UIImagePickerController* imagePickerController;
+@property (strong, nonatomic) WIMRPhotoViewController *photoViewController;
+
+#pragma mark - Outlets
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
+#pragma mark - ActionSheets
+@property (strong, nonatomic) UIActionSheet *shareActionSheet;
+@property (strong, nonatomic) UIActionSheet *parkingMeterActionSheet;
+
+#pragma mark - Button Titles
+@property (strong, readonly) NSString *cancelButtonTitle;
+@property (strong) NSString *emailButtonTitle;
+@property (strong) NSString *parkingAlertButtonTitle;
+@property (strong) NSString *parkingTimerButtonTitle;
+@property (strong) NSString *parkingStopWatchButtonTitle;
+
 @end
 
 
+#pragma mark - Implementation
 @implementation WIMRVehicleDetailViewController
 
 - (TSSHLocationManager *)locationManager
@@ -52,6 +71,10 @@
     self.vehicle.location = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.location];
     self.vehicle.placemark = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.placemark];
     self.vehicle.title = self.managedObject.title;
+    self.vehicle.capturedImages = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.photos];
+    if (!self.vehicle.capturedImages) self.vehicle.capturedImages = [[NSMutableArray alloc] init];
+    
+    self.photoViewController = (WIMRPhotoViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     // set delegates
     self.locationManager.delegate = self;
@@ -60,14 +83,123 @@
     self.typeTextField.delegate = self;
     
     [self createToolbarButtons];
+    [self initializeActionSheetButtonTitles];
     
     [self updateUI];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"showPhotos"])
+    {
+        [segue.destinationViewController setManagedObject:self.managedObject];
+        [segue.destinationViewController setVehicle:self.vehicle];
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Actions
+
+- (IBAction)getLocation:(id)sender {
+    [self.locationManager startLocationUpdate:sender];
+    self.locationLabel.text = @"Updating ...";
+    self.addressLabel.text = @"Updating ...";
+    [self dimmBarButtonItem:sender];
+}
+
+- (IBAction)attachPhoto:(id)sender
+{
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        return;
+    }
+    NSLog(@"Camera is here!");
+    
+    UIImagePickerController* imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    imagePickerController.delegate = self;
+    //imagePickerController.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
+    //imagePickerController.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+    //imagePickerController.allowsEditing = YES;
+    self.imagePickerController = imagePickerController;
+    [self presentViewController:self.imagePickerController animated:YES completion:nil];
+}
+
+- (IBAction)showActionSheet:(id)sender {
+    if ([[sender title] isEqualToString:@"parkingMeterButton"]) {
+        [self.parkingMeterActionSheet showFromBarButtonItem:sender animated:YES];
+    }
+    if ([[sender title] isEqualToString:@"shareActionButton"]) {
+        [self.shareActionSheet showFromBarButtonItem:sender animated:YES];
+    }
+}
+
+/*! Shares the Location.
+ *
+ *  The location is shared, at the moment only via email.
+ */
+- (IBAction)shareLocation:(id)sender {
+    // Email Subject
+    NSString *emailTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL_SUBJECT", @"E-Mail subject: Where is my ride?")];
+    // Email Content
+    NSString *messageBody = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
+                             self.vehicle.placemark.thoroughfare,
+                             self.vehicle.placemark.subThoroughfare,
+                             self.vehicle.placemark.postalCode,
+                             self.vehicle.placemark.locality,
+                             self.vehicle.placemark.administrativeArea];
+    // To address
+    NSArray *toRecipents = [NSArray arrayWithObject:@"steffenheberle@me.com"];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setMessageBody:messageBody isHTML:NO];
+    [mc setToRecipients:toRecipents];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:NULL];
+}
+
+
+#pragma mark - Action Sheets
+
+- (void) initializeActionSheetButtonTitles
+{
+    _cancelButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"CANCEL", @"Action sheet button: cancel action.")];
+    _emailButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL", @"Action sheet button: compose E-Mail")];
+    _parkingAlertButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"PARKINGALERT", @"Action sheet button: Set date and time at which a vehicle has to removed from its parking spot.")];
+    _parkingTimerButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"PARKINGTIMER", @"Action sheet button: Set maximum parking duration.")];
+    _parkingStopWatchButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"PARKINGSTOPWATCH", @"Action sheet button: Start a stop watch.")];
+}
+
+- (UIActionSheet *)shareActionSheet
+{
+    if (!_shareActionSheet) {
+        _shareActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                        delegate:self
+                                               cancelButtonTitle:self.cancelButtonTitle
+                                          destructiveButtonTitle:nil
+                                               otherButtonTitles:self.emailButtonTitle, nil];
+    }
+    return _shareActionSheet;
+}
+
+- (UIActionSheet *)parkingMeterActionSheet
+{
+    if (!_parkingMeterActionSheet) {
+        _parkingMeterActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                               delegate:self
+                                                      cancelButtonTitle:self.cancelButtonTitle
+                                                 destructiveButtonTitle:nil
+                                                      otherButtonTitles:self.parkingAlertButtonTitle, self.parkingTimerButtonTitle, self.parkingStopWatchButtonTitle, nil];
+    }
+    return _parkingMeterActionSheet;
 }
 
 
@@ -102,6 +234,7 @@
     self.managedObject.placemark = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.placemark];
     self.managedObject.title = self.textField.text;
     self.managedObject.type = (NSDecimalNumber *)[NSDecimalNumber numberWithInt:[self.typeTextField.text intValue]];
+    self.managedObject.photos = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.capturedImages];
     
     NSError *error = nil;
     if (![self.context save:&error]) {
@@ -114,59 +247,52 @@
 - (void)createToolbarButtons
 {
     [self.navigationController setToolbarHidden:NO animated:YES];
-    UIBarButtonItem *getLocationButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getLocation:)];
-    UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:nil];
-    UIBarButtonItem *takeNoteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:nil];
-    UIBarButtonItem *setParkTimeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:nil];
-    UIBarButtonItem *systemActionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet:)];
+    
+    // getLocationButton
+    UIImage *getLocationButtonImage = [UIImage imageNamed:@"location"];
+    UIBarButtonItem *getLocationButton = [[UIBarButtonItem alloc] initWithImage:getLocationButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(getLocation:)];
+    getLocationButton.title = @"getLocationButton";
+    
+    // attachPhotoButton
+    UIImage *attachPhotoButtonImage = [UIImage imageNamed:@"photo"];
+    UIBarButtonItem *attachPhotoButton = [[UIBarButtonItem alloc] initWithImage:attachPhotoButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(attachPhoto:)];
+    attachPhotoButton.title = @"attachPhotoButton";
+    
+    // attachNoteButton
+    UIImage *attachNoteButtonImage = [UIImage imageNamed:@"edit"];
+    UIBarButtonItem *attachNoteButton = [[UIBarButtonItem alloc] initWithImage:attachNoteButtonImage style:UIBarButtonItemStylePlain target:self action:nil];
+    attachNoteButton.title = @"attachNoteButton";
+    attachNoteButton.tintColor = [UIColor lightGrayColor];
+    
+    // parkingMeterButton
+    UIImage *parkingMeterButtonImage = [UIImage imageNamed:@"stopwatch"];
+    UIBarButtonItem *parkingMeterButton = [[UIBarButtonItem alloc] initWithImage:parkingMeterButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(showActionSheet:)];
+    parkingMeterButton.title = @"parkingMeterButton";
+    
+    // shareActionButton
+    UIImage *shareActionButtonImage = [UIImage imageNamed:@"upload"];
+    UIBarButtonItem *shareActionButton = [[UIBarButtonItem alloc] initWithImage:shareActionButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(showActionSheet:)];
+    shareActionButton.title = @"shareActionButton";
+    
+    //flexibleSpaceButton
     UIBarButtonItem *flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
-    
-    [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, takePhotoButton, flexibleSpaceButton, takeNoteButton, flexibleSpaceButton, setParkTimeButton, flexibleSpaceButton,systemActionButton] animated:YES];
+    [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, attachPhotoButton, flexibleSpaceButton, attachNoteButton, flexibleSpaceButton, parkingMeterButton, flexibleSpaceButton, shareActionButton] animated:YES];
+}
+
+- (void)dimmBarButtonItem: (UIBarButtonItem *)barButtonItem
+{
+//    barButtonItem.tintColor = [UIColor colorWithRed:0.556862745 green:0.556862745 blue:0.576470588 alpha:1]; // system gray
+    barButtonItem.tintColor = [UIColor lightGrayColor];
+}
+
+- (void)restoreBarButtonItem: (UIBarButtonItem *)barButtonItem
+{
+    barButtonItem.tintColor = [UIColor colorWithRed:0 green:0.478431373 blue:1 alpha:1]; // system blue
 }
 
 
-#pragma mark - Actions
-
-- (IBAction)showActionSheet:(id)sender {
-    UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:[[NSString alloc] initWithFormat:NSLocalizedString(@"CANCEL", @"The cancel button for the action sheet.")] destructiveButtonTitle:nil otherButtonTitles:[[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL", @"Email button in the action sheet.")], nil];
-    [shareSheet showFromBarButtonItem:sender animated:YES];
-}
-
-- (IBAction)getLocation:(id)sender {
-    [self.locationManager startLocationUpdate];
-    self.locationLabel.text = @"Updating ...";
-    self.addressLabel.text = @"Updating ...";
-}
-
-/*! Shares the Location.
- *
- *  The location is shared, at the moment only via email.
- */
-- (IBAction)shareLocation:(id)sender {
-    // Email Subject
-    NSString *emailTitle = @"Mein Fahrzeug steht hier!";
-    // Email Content
-    NSString *messageBody = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
-                            self.vehicle.placemark.thoroughfare,
-                            self.vehicle.placemark.subThoroughfare,
-                            self.vehicle.placemark.postalCode,
-                            self.vehicle.placemark.locality,
-                            self.vehicle.placemark.administrativeArea];
-    // To address
-    NSArray *toRecipents = [NSArray arrayWithObject:@"steffenheberle@me.com"];
-    
-    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
-    mc.mailComposeDelegate = self;
-    [mc setSubject:emailTitle];
-    [mc setMessageBody:messageBody isHTML:NO];
-    [mc setToRecipients:toRecipents];
-    
-    // Present mail view controller on screen
-    [self presentViewController:mc animated:YES completion:NULL];
-}
-
-
+#pragma mark - Delegate Implementations
 #pragma mark - TSSHLocationManagerDelegate
 
 /*! Inform the delegate that the location process has finished.
@@ -185,7 +311,7 @@
     }
 }
 
-- (void)didUpdateGeocode:(BOOL)success
+- (void)didUpdateGeocode:(BOOL)success sender:(id)sender
 {
     if (success) {
         self.vehicle.placemark = [self.locationManager.lastPlacemark copy];
@@ -194,7 +320,7 @@
     } else {
         self.addressLabel.text = @"Could not get corresponding address.";
     }
-
+    [self restoreBarButtonItem:sender];
 }
 
 
@@ -213,13 +339,11 @@
         // Try to dequeue an existing pin view first.
         MKPinAnnotationView *thePinAnnotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Vehicle"];
         
-        if (!thePinAnnotationView)
-        {
+        if (!thePinAnnotationView) {
             // If an existing pin view was not available, create one.
             thePinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Vehicle"];
             thePinAnnotationView.animatesDrop = YES;
             thePinAnnotationView.canShowCallout = YES;
-        
         }
         else {
             thePinAnnotationView.annotation = annotation;
@@ -253,12 +377,26 @@
 
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:
-            [self shareLocation:nil];
-            break;
-        case 1:
-            break;
+
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    if ([buttonTitle isEqualToString:self.cancelButtonTitle]) {
+        ;;  // do nothing
+    }
+    else if ([buttonTitle isEqualToString:self.emailButtonTitle]) {
+        [self shareLocation:nil];
+    }
+    else if ([buttonTitle isEqualToString:self.parkingAlertButtonTitle]) {
+        NSLog(@"%@",[actionSheet buttonTitleAtIndex:buttonIndex]);
+    }
+    else if ([buttonTitle isEqualToString:self.parkingTimerButtonTitle]) {
+        NSLog(@"%@",[actionSheet buttonTitleAtIndex:buttonIndex]);
+    }
+    else if ([buttonTitle isEqualToString:self.parkingStopWatchButtonTitle]) {
+        NSLog(@"%@",[actionSheet buttonTitleAtIndex:buttonIndex]);
+    }
+    else {
+        ;;  //do nothing
     }
 }
 
@@ -298,6 +436,22 @@
 {
     [self saveVehicleStatus];
     return [textField resignFirstResponder];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    [self.vehicle.capturedImages addObject:image];
+    [self saveVehicleStatus];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    self.imagePickerController = nil;
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

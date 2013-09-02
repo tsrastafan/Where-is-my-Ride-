@@ -28,3 +28,14 @@ Implementierung eines Mehrbenutzersystems, das zugleich die Verwaltung mehrerer 
     * Dauer
     * Fortlaufend
     * Alarm, basierend auf Fußweg
+
+
+## Wichtige Aufgaben
+
+### Beseitige Memory-Leak
+**Beschreibung:**
+Wenn vom `VehicleDetailView` in den `VehicleListView` zurückgewechselt wird, werden anscheinend bestimmte Ressourcen nicht freigegeben, beim erneuten wechseln in den `VehicleDetailView` jedoch erneut und zusätzlich alloziert. Dies führt zu einem hohen Speicherbedarf, insbesondere dann, wenn ein angefordertes `WIMRVehicleModel`-Objekt Fotos enthält.
+
+### Ermögliche Entfernen von Fotos aus `WIMRVehicleModel`-Objekten
+**Beschreibung:**
+Bisher ist es nicht möglich, Fotos aus einem `WIMRVehicleModel`-Objekt Fotos zu löschen. Außerdem ist es nicht möglich, gezielt ein bestimmtes Foto anzuwählen. Hierzu sollte der `WIMRPhotoViewController` angepasst werden.
