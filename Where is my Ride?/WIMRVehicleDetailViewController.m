@@ -16,7 +16,7 @@
 #pragma mark Model
 @property (strong, nonatomic) WIMRVehicleModel *vehicle;
 @property (strong, nonatomic) TSSHLocationManager *locationManager;
-@property (strong, nonatomic) NSManagedObjectContext *context;
+@property (weak, nonatomic) NSManagedObjectContext *context;
 
 #pragma mark - Controller
 @property (strong, nonatomic) UIImagePickerController* imagePickerController;
@@ -34,11 +34,11 @@
 @property (strong, nonatomic) UIActionSheet *parkingMeterActionSheet;
 
 #pragma mark - Button Titles
-@property (strong, readonly) NSString *cancelButtonTitle;
-@property (strong) NSString *emailButtonTitle;
-@property (strong) NSString *parkingAlertButtonTitle;
-@property (strong) NSString *parkingTimerButtonTitle;
-@property (strong) NSString *parkingStopWatchButtonTitle;
+@property (strong, readonly, nonatomic) NSString *cancelButtonTitle;
+@property (strong, nonatomic) NSString *emailButtonTitle;
+@property (strong, nonatomic) NSString *parkingAlertButtonTitle;
+@property (strong, nonatomic) NSString *parkingTimerButtonTitle;
+@property (strong, nonatomic) NSString *parkingStopWatchButtonTitle;
 
 @end
 
@@ -64,6 +64,11 @@
     return _context;
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSLog(@"View will disappear, yeah!");
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -86,6 +91,8 @@
     [self initializeActionSheetButtonTitles];
     
     [self updateUI];
+    
+    NSLog(@"%@", [self.mapView description]);
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

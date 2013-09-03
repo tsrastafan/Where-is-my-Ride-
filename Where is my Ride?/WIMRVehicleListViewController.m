@@ -15,6 +15,10 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+
+
+
 @end
 
 @implementation WIMRVehicleListViewController
@@ -63,6 +67,7 @@
         abort();
     }
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -227,5 +232,6 @@
     WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = object.title;
 }
+
 
 @end
