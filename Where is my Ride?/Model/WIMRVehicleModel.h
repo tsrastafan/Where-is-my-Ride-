@@ -36,7 +36,7 @@ typedef enum {
  *
  * Also see xcdoc://ios/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html
  */
-//- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate
+//- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
 
 #pragma mark - Other methods
 //- (void)shareAnnotation;
