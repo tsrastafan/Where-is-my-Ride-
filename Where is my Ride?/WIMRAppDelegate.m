@@ -22,9 +22,7 @@
 - (MKMapView *)mapView
 {
     if (!_mapView) {
-//        _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-        _mapView = [[MKMapView alloc] init];
-
+        _mapView = [[MKMapView alloc] initWithFrame:self.window.frame];
     }
     return _mapView;
 }
