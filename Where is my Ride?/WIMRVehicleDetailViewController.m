@@ -132,7 +132,7 @@
     [self.locationManager startLocationUpdate:sender];
     self.locationLabel.text = @"Updating ...";
     self.addressLabel.text = @"Updating ...";
-    [self dimmBarButtonItem:sender];
+    [self disableBarButtonItem:sender];
 }
 
 - (IBAction)attachPhoto:(id)sender
@@ -304,15 +304,17 @@
     [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, attachPhotoButton, flexibleSpaceButton, attachNoteButton, flexibleSpaceButton, parkingMeterButton, flexibleSpaceButton, shareActionButton] animated:YES];
 }
 
-- (void)dimmBarButtonItem: (UIBarButtonItem *)barButtonItem
+- (void)disableBarButtonItem: (UIBarButtonItem *)barButtonItem
 {
 //    barButtonItem.tintColor = [UIColor colorWithRed:0.556862745 green:0.556862745 blue:0.576470588 alpha:1]; // system gray
-    barButtonItem.tintColor = [UIColor lightGrayColor];
+//    barButtonItem.tintColor = [UIColor lightGrayColor];
+    barButtonItem.enabled = NO;
 }
 
-- (void)restoreBarButtonItem: (UIBarButtonItem *)barButtonItem
+- (void)enableBarButtonItem: (UIBarButtonItem *)barButtonItem
 {
-    barButtonItem.tintColor = [UIColor colorWithRed:0 green:0.478431373 blue:1 alpha:1]; // system blue
+//    barButtonItem.tintColor = [UIColor colorWithRed:0 green:0.478431373 blue:1 alpha:1]; // system blue
+    barButtonItem.enabled = YES;
 }
 
 
@@ -344,7 +346,7 @@
     } else {
         self.addressLabel.text = @"Could not get corresponding address.";
     }
-    [self restoreBarButtonItem:sender];
+    [self enableBarButtonItem:sender];
 }
 
 
