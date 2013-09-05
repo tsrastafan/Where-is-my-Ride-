@@ -69,17 +69,33 @@
 {
     [super viewDidLoad];
 
+    // adjust map view
+    UIView *superview = self.view;
+    WIMRAppDelegate *appDelegate = (WIMRAppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.mapView = appDelegate.mapView;
+    [superview addSubview:self.mapView];
+
+    self.mapView.translatesAutoresizingMaskIntoConstraints = NO;
+    NSLayoutConstraint *cn =
+    [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:superview attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+    [superview addConstraint:cn];
+    cn =
+    [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:superview attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
+    [superview addConstraint:cn];
+    cn =
+    [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:superview attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0];
+    [superview addConstraint:cn];
+    cn =
+    [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:superview attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+    [superview addConstraint:cn];
+
+    
     self.vehicle.location = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.location];
     self.vehicle.placemark = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.placemark];
     self.vehicle.title = self.managedObject.title;
     self.vehicle.capturedImages = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.photos];
     if (!self.vehicle.capturedImages) self.vehicle.capturedImages = [[NSMutableArray alloc] init];
 
-    // adjust map view
-    WIMRAppDelegate *appDelegate = (WIMRAppDelegate *)[[UIApplication sharedApplication] delegate];
-    self.mapView = appDelegate.mapView;
-    [self.view addSubview:self.mapView];
-    
     // set delegates
     self.locationManager.delegate = self;
     self.mapView.delegate = self;
@@ -90,8 +106,6 @@
     [self initializeActionSheetButtonTitles];
     
     [self updateUI];
-    
-    NSLog(@"%@", [self.mapView description]);
 }
 
 
