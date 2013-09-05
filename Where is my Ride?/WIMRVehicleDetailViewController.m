@@ -16,7 +16,7 @@
 #pragma mark Model
 @property (strong, nonatomic) WIMRVehicleModel *vehicle;
 @property (strong, nonatomic) TSSHLocationManager *locationManager;
-@property (weak, nonatomic) NSManagedObjectContext *context;
+@property (strong, nonatomic) NSManagedObjectContext *context;
 
 #pragma mark - Controller
 @property (strong, nonatomic) UIImagePickerController* imagePickerController;
@@ -66,6 +66,14 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    self.locationManager.delegate = nil;
+    self.mapView.delegate = nil;
+    self.textField.delegate = nil;
+    self.typeTextField.delegate = nil;
+    self.mapView = nil;
+    self.context = nil;
+    self.vehicle = nil;
+    self.locationManager = nil;
     NSLog(@"View will disappear, yeah!");
 }
 
@@ -94,6 +102,8 @@
     
     NSLog(@"%@", [self.mapView description]);
 }
+
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
