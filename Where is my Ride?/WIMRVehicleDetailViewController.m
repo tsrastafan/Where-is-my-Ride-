@@ -66,19 +66,6 @@
     return _context;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    self.locationManager.delegate = nil;
-    self.mapView.delegate = nil;
-    self.textField.delegate = nil;
-    self.typeTextField.delegate = nil;
-    self.mapView = nil;
-    self.context = nil;
-    self.vehicle = nil;
-    self.locationManager = nil;
-    NSLog(@"View will disappear, yeah!");
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
