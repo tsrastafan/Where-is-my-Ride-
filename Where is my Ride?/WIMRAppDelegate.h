@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class MKMapView;
+
 @interface WIMRAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
@@ -15,6 +17,8 @@
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+
+@property (nonatomic, strong) MKMapView *mapView;
 
 
 

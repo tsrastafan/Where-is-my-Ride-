@@ -10,6 +10,8 @@
 //#import "WIMRViewController.h"
 #import "WIMRVehicleListViewController.h"
 
+#import <MapKit/MapKit.h>
+
 @implementation WIMRAppDelegate
 
 @synthesize managedObjectModel = _managedObjectModel;
@@ -17,6 +19,13 @@
 @synthesize managedObjectContext = _managedObjectContext;
 
 
+- (MKMapView *)mapView
+{
+    if (!_mapView) {
+        _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    }
+    return _mapView;
+}
 
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url

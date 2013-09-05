@@ -8,6 +8,8 @@
 
 #import "WIMRVehicleDetailViewController.h"
 #import "WIMRVehicleModel.h"
+#import "WIMRAppDelegate.h"
+
 
 
 #pragma mark - Interface
@@ -80,6 +82,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    WIMRAppDelegate *appDelegate = (WIMRAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    self.mapView = appDelegate.mapView;
+    
+    
+    [self.view addSubview:self.mapView];
+    //self.mapView.delegate = self;
     
     self.vehicle.location = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.location];
     self.vehicle.placemark = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.placemark];
