@@ -22,7 +22,7 @@
 
 #pragma mark - Controller
 @property (strong, nonatomic) UIImagePickerController* imagePickerController;
-@property (strong, nonatomic) WIMRPhotoViewController *photoViewController;
+//@property (strong, nonatomic) WIMRPhotoViewController *photoViewController;
 
 #pragma mark - Outlets
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
@@ -97,7 +97,7 @@
     self.vehicle.capturedImages = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.photos];
     if (!self.vehicle.capturedImages) self.vehicle.capturedImages = [[NSMutableArray alloc] init];
     
-    self.photoViewController = (WIMRPhotoViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+//    self.photoViewController = (WIMRPhotoViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     // set delegates
     self.locationManager.delegate = self;
