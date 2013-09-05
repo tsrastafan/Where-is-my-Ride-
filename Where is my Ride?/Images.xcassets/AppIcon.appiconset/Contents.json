@@ -18,13 +18,13 @@
     {
       "size" : "57x57",
       "idiom" : "iphone",
-      "filename" : "iPhone_Icon_WIMRIcon3.png",
+      "filename" : "iPhone_Icon_WIMR.png",
       "scale" : "1x"
     },
     {
       "size" : "57x57",
       "idiom" : "iphone",
-      "filename" : "iPhoneRetina_Icon_WIMRIcon3.png",
+      "filename" : "iPhoneRetina_Icon_WIMR.png",
       "scale" : "2x"
     },
     {
@@ -55,13 +55,13 @@
     {
       "size" : "72x72",
       "idiom" : "ipad",
-      "filename" : "iPad_Icon_WIMRIcon3.png",
+      "filename" : "iPad_Icon_WIMR.png",
       "scale" : "1x"
     },
     {
       "size" : "72x72",
       "idiom" : "ipad",
-      "filename" : "iPadRetina_Icon_WIMRIcon3.png",
+      "filename" : "iPadRetina_Icon_WIMR.png",
       "scale" : "2x"
     }
   ],
