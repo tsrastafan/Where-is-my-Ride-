@@ -14,6 +14,7 @@
 
 
 
+//@property (strong, nonatomic) WIMRVehicleDetailViewController *vehicleDetailViewController;
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 

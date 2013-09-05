@@ -21,7 +21,6 @@
 @property (nonatomic, strong) MKMapView *mapView;
 
 
-
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 

@@ -39,6 +39,7 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addVehicle:)];
     self.navigationItem.rightBarButtonItem = addButton;
+//    self.vehicleDetailViewController = (WIMRVehicleDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	// Do any additional setup after loading the view.
     
     //Toolbar Buttons
