@@ -35,7 +35,7 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addVehicle:)];
     self.navigationItem.rightBarButtonItem = addButton;
-    self.vehicleDetailViewController = (WIMRVehicleDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+//    self.vehicleDetailViewController = (WIMRVehicleDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	// Do any additional setup after loading the view.
     
     //Toolbar Buttons
@@ -69,6 +69,17 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"showDetail"])
+    {
+//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+//        WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+//        WIMRVehicleDetailViewController *detailViewController = segue.destinationViewController;
+//        detailViewController.managedObject = object;
+    }
 }
 
 
@@ -124,19 +135,6 @@
 {
     // The table view should not be re-orderable.
     return NO;
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"showDetail"])
-    {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [segue.destinationViewController setManagedObject:object];
-       // [segue.destinationViewController setFetchedResultsController:self.fetchedResultsController];
-        //[segue.destinationViewController setContext:self.managedObjectContext];
-        
-    }
 }
 
 #pragma mark - Fetched Results Controller
