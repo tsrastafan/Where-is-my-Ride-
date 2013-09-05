@@ -71,12 +71,19 @@
     [super viewDidLoad];
     
     WIMRAppDelegate *appDelegate = (WIMRAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
     self.mapView = appDelegate.mapView;
     
+    MKMapView *mapView = self.mapView;
+
+    [self.view addSubview:mapView];
+    NSArray *horizontalContraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-[mapView]-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(mapView)];
+    NSArray *verticalContraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[mapView]-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(mapView)];
+    [self.view addConstraints:horizontalContraints];
+    [self.view addConstraints:verticalContraints];
     
-    [self.view addSubview:self.mapView];
-    //self.mapView.delegate = self;
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.mapView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.mapView attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
+    
     
     self.vehicle.location = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.location];
     self.vehicle.placemark = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.placemark];
