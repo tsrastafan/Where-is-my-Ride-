@@ -80,10 +80,10 @@
 {
     if ([[segue identifier] isEqualToString:@"showDetail"])
     {
-//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-//        WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//        WIMRVehicleDetailViewController *detailViewController = segue.destinationViewController;
-//        detailViewController.managedObject = object;
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        WIMRVehicleDetailViewController *detailViewController = segue.destinationViewController;
+        detailViewController.managedObject = object;
     }
 }
 
