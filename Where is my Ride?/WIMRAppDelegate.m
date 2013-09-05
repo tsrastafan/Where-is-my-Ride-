@@ -59,9 +59,8 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [self saveContext];
 }
-
-/*
 
 - (void)saveContext
 {
@@ -77,9 +76,6 @@
     }
 }
 
- 
-*/ 
- 
 #pragma mark - Core Data stack
 
 // Returns the managed object model for the application.
