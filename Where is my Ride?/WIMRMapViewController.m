@@ -352,9 +352,8 @@
     id <MKAnnotation> annotation = [view annotation];
     if ([annotation isKindOfClass:[WIMRVehicleModel class]])
     {
-        NSLog(@"clicked Vehicle annotation");
+        [self performSegueWithIdentifier:@"showDetail" sender:view.annotation];
     }
-    [self performSegueWithIdentifier:@"showDetail" sender:view.annotation];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
