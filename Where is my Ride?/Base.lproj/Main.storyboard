@@ -138,12 +138,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sFx-ff-Ylj">
-                                <rect key="frame" x="64" y="122" width="236" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ready" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="IdA-RA-5mX">
                                 <rect key="frame" x="20" y="196" width="280" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -158,13 +152,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Nv-zW-M7v">
-                                <rect key="frame" x="20" y="126" width="36" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -172,11 +159,6 @@
                             <constraint firstItem="WEl-Vx-xTz" firstAttribute="top" secondItem="6Ko-JF-8AP" secondAttribute="bottom" constant="24" id="1jU-3s-o8p"/>
                             <constraint firstItem="WEl-Vx-xTz" firstAttribute="centerY" secondItem="7va-6M-CCv" secondAttribute="centerY" constant="-0.5" id="PeW-Zo-Eax"/>
                             <constraint firstAttribute="trailing" secondItem="7va-6M-CCv" secondAttribute="trailing" constant="20" id="Rl0-fv-mZ7"/>
-                            <constraint firstItem="4Nv-zW-M7v" firstAttribute="centerY" secondItem="sFx-ff-Ylj" secondAttribute="centerY" constant="-0.5" id="SP9-ud-YUs"/>
-                            <constraint firstAttribute="trailing" secondItem="sFx-ff-Ylj" secondAttribute="trailing" constant="20" id="WVe-k0-wLO"/>
-                            <constraint firstItem="sFx-ff-Ylj" firstAttribute="leading" secondItem="4Nv-zW-M7v" secondAttribute="trailing" constant="8" symbolic="YES" id="XkO-sS-3pE"/>
-                            <constraint firstItem="4Nv-zW-M7v" firstAttribute="leading" secondItem="lzP-RV-wwu" secondAttribute="leading" constant="20" id="bPS-Mj-P96"/>
-                            <constraint firstItem="sFx-ff-Ylj" firstAttribute="top" secondItem="7va-6M-CCv" secondAttribute="bottom" constant="8" id="eXE-om-o60"/>
                             <constraint firstItem="WEl-Vx-xTz" firstAttribute="leading" secondItem="lzP-RV-wwu" secondAttribute="leading" constant="20" id="fY2-4D-q8c"/>
                             <constraint firstItem="7va-6M-CCv" firstAttribute="leading" secondItem="WEl-Vx-xTz" secondAttribute="trailing" constant="8" symbolic="YES" id="t9h-C3-uHw"/>
                         </constraints>
@@ -186,7 +168,6 @@
                         <outlet property="addressLabel" destination="1lB-hS-iJi" id="YUN-vN-x5l"/>
                         <outlet property="locationLabel" destination="IdA-RA-5mX" id="OFb-6X-N6s"/>
                         <outlet property="textField" destination="7va-6M-CCv" id="Bm9-ZL-iZp"/>
-                        <outlet property="typeTextField" destination="sFx-ff-Ylj" id="5sL-V3-5DU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ib5-ks-6jJ" sceneMemberID="firstResponder"/>

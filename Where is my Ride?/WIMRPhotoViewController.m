@@ -7,6 +7,7 @@
 //
 
 #import "WIMRPhotoViewController.h"
+#import "WIMRVehicleDataModel.h"
 
 @interface WIMRPhotoViewController ()
 
@@ -36,17 +37,18 @@
 {
     [super viewDidLoad];
     
-    if ([self.vehicle.capturedImages count] > 0)
+    NSMutableArray *photos = self.vehicle.photos;
+    if ([photos count] > 0)
     {
-        if ([self.vehicle.capturedImages count] == 1)
+        if ([photos count] == 1)
         {
             // Camera took a single picture.
-            [self.imageView setImage:[self.vehicle.capturedImages objectAtIndex:0]];
+            [self.imageView setImage:[photos objectAtIndex:0]];
         }
         else
         {
             // Camera took multiple pictures; use the list of images for animation.
-            self.imageView.animationImages = self.vehicle.capturedImages;
+            self.imageView.animationImages = photos;
             self.imageView.animationDuration = 5.0;    // Show each captured photo for 5 seconds.
             self.imageView.animationRepeatCount = 0;   // Animate forever (show all photos).
             [self.imageView startAnimating];

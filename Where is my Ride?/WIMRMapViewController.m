@@ -7,7 +7,7 @@
 //
 
 #import "WIMRMapViewController.h"
-#import "WIMRVehicle.h"
+#import "WIMRVehicleDataModel.h"
 #import "WIMRAppDelegate.h"
 #import "WIMRVehicleDetailViewController.h"
 
@@ -16,10 +16,10 @@
 #pragma mark - Interface
 @interface WIMRMapViewController ()
 
+@property (nonatomic, readonly, weak) WIMRVehicleDataModel *selectedVehicle;
+
 #pragma mark Model
-@property (strong, nonatomic) WIMRVehicle *vehicle;
 @property (strong, nonatomic) TSSHLocationManager *locationManager;
-@property (strong, nonatomic) NSManagedObjectContext *context;
 
 #pragma mark - Controller
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
@@ -51,22 +51,16 @@
     return _locationManager;
 }
 
-- (WIMRVehicle *)vehicle
-{
-    if (!_vehicle) _vehicle = [[WIMRVehicle alloc] init];
-    return _vehicle;
-}
-
-- (NSManagedObjectContext *)context
-{
-    if (!_context) _context = self.managedObject.managedObjectContext;
-    return _context;
-}
-
 - (WIMRVehicleDetailViewController *)detailViewController
 {
     if (!_detailViewController) _detailViewController = [[WIMRVehicleDetailViewController alloc] init];
     return _detailViewController;
+}
+
+- (WIMRVehicleDataModel *)selectedVehicle
+{
+#warning Implement error handling
+    return self.vehiclesArray[self.selectedVehicleIndex];
 }
 
 - (void)viewDidLoad
@@ -93,12 +87,6 @@
     [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:superview attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
     [superview addConstraint:cn];
     
-    self.vehicle.location = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.location];
-    self.vehicle.placemark = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.placemark];
-    self.vehicle.title = self.managedObject.title;
-    self.vehicle.capturedImages = [NSKeyedUnarchiver unarchiveObjectWithData:self.managedObject.photos];
-    if (!self.vehicle.capturedImages) self.vehicle.capturedImages = [[NSMutableArray alloc] init];
-
     // set delegates
     self.locationManager.delegate = self;
     self.mapView.delegate = self;
@@ -119,13 +107,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showPhotos"]) {
-        [segue.destinationViewController setManagedObject:self.managedObject];
-        [segue.destinationViewController setVehicle:self.vehicle];
+        [segue.destinationViewController setVehicle:self.selectedVehicle];
     }
     else if ([segue.identifier isEqualToString:@"showDetail"])
     {
-        if ([[sender class] isSubclassOfClass:[WIMRVehicle class]]) {
+        if ([[sender class] isSubclassOfClass:[WIMRVehicleDataModel class]]) {
             [segue.destinationViewController setVehicle:sender];
+            [segue.destinationViewController setManagedObjectContext:self.managedObjectContext];
         }
     }
 }
@@ -179,11 +167,11 @@
     NSString *emailTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"EMAIL_SUBJECT", @"E-Mail subject: Where is my ride?")];
     // Email Content
     NSString *messageBody = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
-                             self.vehicle.placemark.thoroughfare,
-                             self.vehicle.placemark.subThoroughfare,
-                             self.vehicle.placemark.postalCode,
-                             self.vehicle.placemark.locality,
-                             self.vehicle.placemark.administrativeArea];
+                             self.selectedVehicle.placemark.thoroughfare,
+                             self.selectedVehicle.placemark.subThoroughfare,
+                             self.selectedVehicle.placemark.postalCode,
+                             self.selectedVehicle.placemark.locality,
+                             self.selectedVehicle.placemark.administrativeArea];
     // To address
     NSArray *toRecipents = [NSArray arrayWithObject:@"steffenheberle@me.com"];
     
@@ -240,22 +228,22 @@
 
 - (void)updateUI
 {
-    MKCoordinateRegion region = MKCoordinateRegionMake(self.vehicle.coordinate, MKCoordinateSpanMake(0.005, 0.005));
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.selectedVehicle.coordinate, MKCoordinateSpanMake(0.005, 0.005));
     [self.mapView setRegion:region animated:YES];
     [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
-    [self.mapView removeAnnotation:self.vehicle];
-    [self.mapView addAnnotation:self.vehicle];
-    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.vehicle.coordinate radius:self.vehicle.location.horizontalAccuracy]];
+    [self.mapView removeAnnotation:self.selectedVehicle];
+    [self.mapView addAnnotation:self.selectedVehicle];
+    [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.selectedVehicle.coordinate radius:self.selectedVehicle.location.horizontalAccuracy]];
 }
 
 - (BOOL)saveVehicleStatus
 {
-    self.managedObject.location = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.location];
-    self.managedObject.placemark = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.placemark];
-    self.managedObject.photos = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.capturedImages];
+//    self.managedObject.location = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.location];
+//    self.managedObject.placemark = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.placemark];
+//    self.managedObject.photos = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.capturedImages];
     
     NSError *error = nil;
-    if (![self.context save:&error]) {
+    if (![self.managedObjectContext save:&error]) {
         NSLog(@"Error");
     }
     
@@ -321,7 +309,7 @@
 - (void)didUpdateLocation:(BOOL)success withStatus:(TSSHLocationUpdateReturnStatus)status
 {
     if (success) {
-        self.vehicle.location = [self.locationManager.lastLocation copy];
+        self.selectedVehicle.location = [self.locationManager.lastLocation copy];
         [self updateUI];
         [self saveVehicleStatus];
     } else {
@@ -332,7 +320,7 @@
 - (void)didUpdateGeocode:(BOOL)success sender:(id)sender
 {
     if (success) {
-        self.vehicle.placemark = [self.locationManager.lastPlacemark copy];
+        self.selectedVehicle.placemark = [self.locationManager.lastPlacemark copy];
         [self updateUI];
         [self saveVehicleStatus];
     } else {
@@ -355,7 +343,7 @@
 {
     // here we illustrate how to detect which annotation type was clicked on for its callout
     id <MKAnnotation> annotation = [view annotation];
-    if ([annotation isKindOfClass:[WIMRVehicle class]])
+    if ([annotation isKindOfClass:[WIMRVehicleDataModel class]])
     {
         [self performSegueWithIdentifier:@"showDetail" sender:view.annotation];
     }
@@ -368,7 +356,7 @@
         return nil;
     
     // Handle any custom annotations.
-    if ([annotation isKindOfClass:[WIMRVehicle class]])
+    if ([annotation isKindOfClass:[WIMRVehicleDataModel class]])
     {
         static NSString *VehicleAnnotationIdentifier = @"vehicleAnnotationIdentifier";
         // Try to dequeue an existing pin view first.
@@ -397,7 +385,7 @@
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
 {
-    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:[MKCircle circleWithCenterCoordinate:self.vehicle.coordinate radius:self.vehicle.location.horizontalAccuracy]];
+    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithCircle:[MKCircle circleWithCenterCoordinate:self.selectedVehicle.coordinate radius:self.selectedVehicle.location.horizontalAccuracy]];
     circleRenderer.fillColor = [[UIColor blueColor] colorWithAlphaComponent:.2];
     circleRenderer.strokeColor = [UIColor redColor];
     circleRenderer.lineWidth = 1;
@@ -475,7 +463,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    [self.vehicle.capturedImages addObject:image];
+    [self.selectedVehicle.photos addObject:image];
     [self saveVehicleStatus];
     [self dismissViewControllerAnimated:YES completion:NULL];
     self.imagePickerController = nil;

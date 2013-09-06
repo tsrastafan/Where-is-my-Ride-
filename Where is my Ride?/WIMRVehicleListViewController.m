@@ -6,16 +6,11 @@
 //  Copyright (c) 2013 Tobias Schultz and Steffen Heberle. All rights reserved.
 //
 
-#define CELL_IDENTIFIER @"Vehicle"
-
 #import "WIMRVehicleListViewController.h"
 #import "WIMRVehicleDataModel.h"
 #import "WIMRMapViewController.h"
 
 @interface WIMRVehicleListViewController ()
-
-@property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -38,6 +33,22 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addVehicle:)];
     self.navigationItem.rightBarButtonItem = addButton;
+    
+    // set up a fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    request.entity = [NSEntityDescription entityForName:@"Vehicle" inManagedObjectContext:self.managedObjectContext];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    request.sortDescriptors = sortDescriptors;
+    
+    // execute fetch request
+    NSError *error = nil;
+    NSMutableArray *mutableFetchResults = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (!mutableFetchResults) {
+        // Handle the error.
+    }
+    self.vehiclesArray = mutableFetchResults;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -49,71 +60,69 @@
 //    [self setToolbarItems:[[NSArray alloc] initWithObjects:toolbarButton, nil] animated:YES];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [NSFetchedResultsController deleteCacheWithName:@"master"];
-}
-
-- (void)addVehicle:(id)sender
-{
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    WIMRVehicleDataModel *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    newManagedObject.title = @"Mein Auto";
-//    [newManagedObject setValue:@"Mein Auto" forKey:@"title"];
-    
-    //Save the context
-    NSError *error;
-    if (![context save:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-}
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+- (void)addVehicle:(id)sender
+{
+    WIMRVehicleDataModel *newVehicle = [NSEntityDescription insertNewObjectForEntityForName:@"Vehicle" inManagedObjectContext:self.managedObjectContext];
+    newVehicle.title = @"Mein Auto";
+    
+    //Save the context
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+#warning Handle error, when saving context
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+
+    // insert new event in eventArray and adjust tableView
+    [self.vehiclesArray insertObject:newVehicle atIndex:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showMap"])
-    {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if ([[segue identifier] isEqualToString:@"showMap"]) {
         WIMRMapViewController *mapViewController = segue.destinationViewController;
-        mapViewController.managedObject = object;
+        mapViewController.vehiclesArray = self.vehiclesArray;
+        mapViewController.selectedVehicleIndex = [self.tableView indexPathForSelectedRow].row;
+        mapViewController.managedObjectContext = self.managedObjectContext;
     }
 }
 
 
 # pragma mark - Table View Data Source
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo name];
-}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.fetchedResultsController sections] count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
+    return self.vehiclesArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
-    [self configureCell:cell atIndexPath:indexPath];
-    return cell;
+    // Dequeue or create a new cell.
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
     
+    WIMRVehicleDataModel *vehicle = [self.vehiclesArray objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = vehicle.title;
+    cell.detailTextLabel.text = vehicle.subtitle;
+    return cell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -125,11 +134,17 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        // Delete managed object at specified index path
+        [self.managedObjectContext deleteObject:[self.vehiclesArray objectAtIndex:indexPath.row]];
+#warning For WIMRMapViewController: Remove AnnotationView from MapView before deleting object.
         
+        // Update array and table view
+        [self.vehiclesArray removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade]; // @[indexPath] == [NSArray arrayWithObject:indexPath]
+        
+        // Commit changes
         NSError *error;
-        if (![context save:&error]) {
+        if (![self.managedObjectContext save:&error]) {
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
@@ -142,96 +157,5 @@
     // The table view should not be re-orderable.
     return NO;
 }
-
-#pragma mark - Fetched Results Controller
-
-- (NSFetchedResultsController *)fetchedResultsController
-{
-    if (_fetchedResultsController != nil) {
-        return _fetchedResultsController;
-    }
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Vehicle" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    [fetchRequest setFetchBatchSize:20];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
-    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor2, sortDescriptor];
-    
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"type" cacheName:@"master"];
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
-    
-    NSError *error;
-    if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
-    }
-    
-    return _fetchedResultsController;
-    
-}
-
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView beginUpdates];
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
-    switch (type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        
-
-    }
-}
-
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
-{
-    UITableView *tableView = self.tableView;
-    
-    switch (type) {
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView endUpdates];
-}
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    WIMRVehicleDataModel *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = object.title;
-}
-
 
 @end

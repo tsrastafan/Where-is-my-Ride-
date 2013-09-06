@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WIMRVehicleListViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface WIMRVehicleListViewController : UITableViewController
 
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic) NSMutableArray *vehiclesArray;
+@property (nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

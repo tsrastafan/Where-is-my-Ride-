@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3394" systemVersion="12E3067" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Vehicle" representedClassName="WIMRVehicleDataModel" syncable="YES">
-        <attribute name="location" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="photos" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="placemark" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="locationEncoded" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="photosEncoded" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="placemarkEncoded" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <elements>
         <element name="Vehicle" positionX="0" positionY="0" width="0" height="0"/>

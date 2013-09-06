@@ -7,7 +7,6 @@
 //
 
 #import "WIMRAppDelegate.h"
-//#import "WIMRViewController.h"
 #import "WIMRVehicleListViewController.h"
 
 #import <MapKit/MapKit.h>

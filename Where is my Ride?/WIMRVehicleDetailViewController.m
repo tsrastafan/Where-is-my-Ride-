@@ -7,18 +7,14 @@
 //
 
 #import "WIMRVehicleDetailViewController.h"
-#import "WIMRVehicle.h"
 #import "WIMRVehicleDataModel.h"
 
 @interface WIMRVehicleDetailViewController ()
-
-@property (strong, nonatomic) NSManagedObjectContext *context;
 
 #pragma mark - Outlets
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 
 @end
 
@@ -40,7 +36,6 @@
     
     // set delegates
     self.textField.delegate = self;
-    self.typeTextField.delegate = self;
     
     [self updateUI];
 }
@@ -71,16 +66,14 @@
                               self.vehicle.placemark.administrativeArea];
     
     self.textField.text = self.vehicle.title;
-    self.typeTextField.text = [self.managedObject.type description];
 }
 
 - (BOOL)saveVehicleStatus
 {
-    self.managedObject.title = self.textField.text;
-    self.managedObject.type = (NSDecimalNumber *)[NSDecimalNumber numberWithInt:[self.typeTextField.text intValue]];
+    self.vehicle.title = self.textField.text;
 
     NSError *error = nil;
-    if (![self.context save:&error]) {
+    if (![self.managedObjectContext save:&error]) {
         NSLog(@"Error");
     }
     
