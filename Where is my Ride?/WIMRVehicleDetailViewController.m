@@ -7,7 +7,7 @@
 //
 
 #import "WIMRVehicleDetailViewController.h"
-#import "WIMRVehicleModel.h"
+#import "WIMRVehicle.h"
 #import "WIMRVehicleDataModel.h"
 
 @interface WIMRVehicleDetailViewController ()

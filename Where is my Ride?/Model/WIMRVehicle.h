@@ -16,7 +16,7 @@ typedef enum {
     
 } VehicleType;
 
-@interface WIMRVehicleModel : NSObject <MKAnnotation>
+@interface WIMRVehicle : NSObject <MKAnnotation>
 
 #pragma mark - Properties used by MKAnnotation protocol
 @property (nonatomic, copy) NSString *title;

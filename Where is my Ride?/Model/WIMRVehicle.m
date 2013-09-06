@@ -6,15 +6,15 @@
 //  Copyright (c) 2013 Tobias Schultz and Steffen Heberle. All rights reserved.
 //
 
-#import "WIMRVehicleModel.h"
+#import "WIMRVehicle.h"
 
-@interface WIMRVehicleModel ()
+@interface WIMRVehicle ()
 
 
 @end
 
 
-@implementation WIMRVehicleModel
+@implementation WIMRVehicle
 
 @dynamic subtitle;
 @dynamic coordinate;

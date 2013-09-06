@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @class WIMRVehicleDataModel;
-@class WIMRVehicleModel;
+@class WIMRVehicle;
 
 @interface WIMRVehicleDetailViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, strong) WIMRVehicleDataModel *managedObject;
-@property (strong, nonatomic) WIMRVehicleModel *vehicle;
+@property (strong, nonatomic) WIMRVehicle *vehicle;
 
 @end

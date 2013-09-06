@@ -7,7 +7,7 @@
 //
 
 #import "WIMRMapViewController.h"
-#import "WIMRVehicleModel.h"
+#import "WIMRVehicle.h"
 #import "WIMRAppDelegate.h"
 #import "WIMRVehicleDetailViewController.h"
 
@@ -17,7 +17,7 @@
 @interface WIMRMapViewController ()
 
 #pragma mark Model
-@property (strong, nonatomic) WIMRVehicleModel *vehicle;
+@property (strong, nonatomic) WIMRVehicle *vehicle;
 @property (strong, nonatomic) TSSHLocationManager *locationManager;
 @property (strong, nonatomic) NSManagedObjectContext *context;
 
@@ -51,9 +51,9 @@
     return _locationManager;
 }
 
-- (WIMRVehicleModel *)vehicle
+- (WIMRVehicle *)vehicle
 {
-    if (!_vehicle) _vehicle = [[WIMRVehicleModel alloc] init];
+    if (!_vehicle) _vehicle = [[WIMRVehicle alloc] init];
     return _vehicle;
 }
 
@@ -124,7 +124,7 @@
     }
     else if ([segue.identifier isEqualToString:@"showDetail"])
     {
-        if ([[sender class] isSubclassOfClass:[WIMRVehicleModel class]]) {
+        if ([[sender class] isSubclassOfClass:[WIMRVehicle class]]) {
             [segue.destinationViewController setVehicle:sender];
         }
     }
@@ -355,7 +355,7 @@
 {
     // here we illustrate how to detect which annotation type was clicked on for its callout
     id <MKAnnotation> annotation = [view annotation];
-    if ([annotation isKindOfClass:[WIMRVehicleModel class]])
+    if ([annotation isKindOfClass:[WIMRVehicle class]])
     {
         [self performSegueWithIdentifier:@"showDetail" sender:view.annotation];
     }
@@ -368,7 +368,7 @@
         return nil;
     
     // Handle any custom annotations.
-    if ([annotation isKindOfClass:[WIMRVehicleModel class]])
+    if ([annotation isKindOfClass:[WIMRVehicle class]])
     {
         static NSString *VehicleAnnotationIdentifier = @"vehicleAnnotationIdentifier";
         // Try to dequeue an existing pin view first.

@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WIMRVehicleModel.h"
+#import "WIMRVehicle.h"
 #import "WIMRVehicleDataModel.h"
 
 @interface WIMRPhotoViewController : UIViewController
 
-@property (nonatomic, strong) WIMRVehicleModel *vehicle;
+@property (nonatomic, strong) WIMRVehicle *vehicle;
 @property (nonatomic, strong) WIMRVehicleDataModel *managedObject;
 
 @end
