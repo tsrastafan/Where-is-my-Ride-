@@ -14,10 +14,9 @@
 
 @implementation WIMRAppDelegate
 
+@synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize managedObjectContext = _managedObjectContext;
-
 
 - (MKMapView *)mapView
 {
@@ -38,8 +37,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    WIMRVehicleListViewController *controller = (WIMRVehicleListViewController *)navigationController.topViewController;
-        controller.managedObjectContext = self.managedObjectContext;
+    WIMRVehicleListViewController *rootViewController = (WIMRVehicleListViewController *)navigationController.topViewController;
+
+    // Pass the managed object context to the view controller.
+    if (!self.managedObjectContext) {
+#warning Handle the error, if managedObjectContext does not exist
+    }
+    rootViewController.managedObjectContext = self.managedObjectContext;
+    
     return YES;
 }
 							
@@ -86,6 +91,27 @@
 }
 
 #pragma mark - Core Data stack
+
+/*! Returns the managed object context for the application.
+ *
+ * If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
+ * \return Managed object context for the application
+ */
+- (NSManagedObjectContext *)managedObjectContext
+{
+    if (_managedObjectContext != nil) {
+        return _managedObjectContext;
+    }
+    
+    NSPersistentStoreCoordinator *coordinator = self.persistentStoreCoordinator;
+    if (coordinator != nil) {
+        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    }
+    
+    return _managedObjectContext;
+}
+
 
 // Returns the managed object model for the application.
 // If the model doesn't already exist, it is created from the application's model.
@@ -148,37 +174,7 @@
     return _persistentStoreCoordinator;
 }
 
-
-
-
-/*! Returns the managed object context for the application.
- *
- * If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
- * \return Managed object context for the application
- */
-- (NSManagedObjectContext *)managedObjectContext
-{
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = self.persistentStoreCoordinator;
-    if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-
-    return _managedObjectContext;
-}
-
-
-
-
-
-
 #pragma mark - Application's Documents directory
-
-
 
 /*! Returns the Application's Document Directory.
  *

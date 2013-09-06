@@ -14,12 +14,11 @@
 
 @property (nonatomic, strong) UIWindow *window;
 
-@property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (readonly, nonatomic, strong) NSManagedObjectModel *managedObjectModel;
+@property (readonly, nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (readonly, nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @property (nonatomic, strong) MKMapView *mapView;
-
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
