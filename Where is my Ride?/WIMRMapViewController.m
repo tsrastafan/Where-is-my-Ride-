@@ -109,6 +109,13 @@
     [self updateUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setToolbarHidden:NO animated:YES];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showPhotos"]) {
@@ -257,8 +264,6 @@
 
 - (void)createToolbarButtons
 {
-    [self.navigationController setToolbarHidden:NO animated:YES];
-    
     // getLocationButton
     UIImage *getLocationButtonImage = [UIImage imageNamed:@"location"];
     UIBarButtonItem *getLocationButton = [[UIBarButtonItem alloc] initWithImage:getLocationButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(getLocation:)];

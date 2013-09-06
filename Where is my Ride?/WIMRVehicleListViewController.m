@@ -42,13 +42,15 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addVehicle:)];
     self.navigationItem.rightBarButtonItem = addButton;
-//    self.vehicleDetailViewController = (WIMRVehicleDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-	// Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
-    //Toolbar Buttons
-    [self.navigationController setToolbarHidden:NO animated:YES];
-    UIBarButtonItem *toolbarButton = [[UIBarButtonItem alloc] initWithTitle:@"WAI" style:UIBarButtonItemStyleBordered target:self action:nil];
-    [self setToolbarItems:[[NSArray alloc] initWithObjects:toolbarButton, nil] animated:YES];
+    [self.navigationController setToolbarHidden:YES animated:YES];
+//    UIBarButtonItem *toolbarButton = [[UIBarButtonItem alloc] initWithTitle:@"WAI" style:UIBarButtonItemStyleBordered target:self action:nil];
+//    [self setToolbarItems:[[NSArray alloc] initWithObjects:toolbarButton, nil] animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

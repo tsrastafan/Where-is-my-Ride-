@@ -28,6 +28,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 - (void)viewDidLoad
