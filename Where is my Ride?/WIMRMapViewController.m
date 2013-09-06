@@ -366,7 +366,7 @@
             // If an existing pin view was not available, create one.
             thePinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:VehicleAnnotationIdentifier];
             thePinAnnotationView.pinColor = MKPinAnnotationColorPurple;
-            thePinAnnotationView.animatesDrop = YES;
+            thePinAnnotationView.animatesDrop = NO;
             thePinAnnotationView.canShowCallout = YES;
 
             UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
