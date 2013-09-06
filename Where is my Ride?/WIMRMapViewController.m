@@ -9,6 +9,7 @@
 #import "WIMRMapViewController.h"
 #import "WIMRVehicleModel.h"
 #import "WIMRAppDelegate.h"
+#import "WIMRVehicleDetailViewController.h"
 
 
 
@@ -22,14 +23,10 @@
 
 #pragma mark - Controller
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
-@property (strong, nonatomic) WIMRPhotoViewController *photoViewController;
 
 #pragma mark - Outlets
-@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
-@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) IBOutlet WIMRVehicleDetailViewController *detailViewController;
 
 #pragma mark - ActionSheets
 @property (strong, nonatomic) UIActionSheet *shareActionSheet;
@@ -66,10 +63,10 @@
     return _context;
 }
 
-- (WIMRPhotoViewController *)photoViewController
+- (WIMRVehicleDetailViewController *)detailViewController
 {
-    if (!_photoViewController) _photoViewController = [[WIMRPhotoViewController alloc] init];
-    return _photoViewController;
+    if (!_detailViewController) _detailViewController = [[WIMRVehicleDetailViewController alloc] init];
+    return _detailViewController;
 }
 
 - (void)viewDidLoad
@@ -106,8 +103,6 @@
     // set delegates
     self.locationManager.delegate = self;
     self.mapView.delegate = self;
-    self.textField.delegate = self;
-    self.typeTextField.delegate = self;
     
     [self createToolbarButtons];
     [self initializeActionSheetButtonTitles];
@@ -115,14 +110,17 @@
     [self updateUI];
 }
 
-
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showPhotos"])
-    {
+    if ([segue.identifier isEqualToString:@"showPhotos"]) {
         [segue.destinationViewController setManagedObject:self.managedObject];
         [segue.destinationViewController setVehicle:self.vehicle];
+    }
+    else if ([segue.identifier isEqualToString:@"showDetail"])
+    {
+        if ([[sender class] isSubclassOfClass:[WIMRVehicleModel class]]) {
+            [segue.destinationViewController setVehicle:sender];
+        }
     }
 }
 
@@ -137,8 +135,6 @@
 
 - (IBAction)getLocation:(id)sender {
     [self.locationManager startLocationUpdate:sender];
-    self.locationLabel.text = @"Updating ...";
-    self.addressLabel.text = @"Updating ...";
     [self disableBarButtonItem:sender];
 }
 
@@ -238,19 +234,6 @@
 
 - (void)updateUI
 {
-    self.locationLabel.text = [[NSString alloc] initWithFormat:(@"long.: %g lat.: %g"),
-                               self.vehicle.coordinate.longitude,
-                               self.vehicle.coordinate.latitude];
-    self.addressLabel.text = [[NSString alloc] initWithFormat:(@"%@ %@\n%@ %@\n%@"),
-                              self.vehicle.placemark.thoroughfare,
-                              self.vehicle.placemark.subThoroughfare,
-                              self.vehicle.placemark.postalCode,
-                              self.vehicle.placemark.locality,
-                              self.vehicle.placemark.administrativeArea];
-    
-    self.textField.text = self.vehicle.title;
-    self.typeTextField.text = [self.managedObject.type description];
-    
     MKCoordinateRegion region = MKCoordinateRegionMake(self.vehicle.coordinate, MKCoordinateSpanMake(0.005, 0.005));
     [self.mapView setRegion:region animated:YES];
     [self.mapView removeOverlay:[self.mapView.overlays lastObject]];
@@ -263,8 +246,6 @@
 {
     self.managedObject.location = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.location];
     self.managedObject.placemark = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.placemark];
-    self.managedObject.title = self.textField.text;
-    self.managedObject.type = (NSDecimalNumber *)[NSDecimalNumber numberWithInt:[self.typeTextField.text intValue]];
     self.managedObject.photos = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.capturedImages];
     
     NSError *error = nil;
@@ -340,7 +321,7 @@
         [self updateUI];
         [self saveVehicleStatus];
     } else {
-        self.locationLabel.text = @"Could not get update.";
+//        self.locationLabel.text = @"Could not get update.";
     }
 }
 
@@ -351,7 +332,7 @@
         [self updateUI];
         [self saveVehicleStatus];
     } else {
-        self.addressLabel.text = @"Could not get corresponding address.";
+//        self.addressLabel.text = @"Could not get corresponding address.";
     }
     [self enableBarButtonItem:sender];
 }
@@ -374,8 +355,7 @@
     {
         NSLog(@"clicked Vehicle annotation");
     }
-    
-    [self.navigationController pushViewController:self.photoViewController animated:YES];
+    [self performSegueWithIdentifier:@"showDetail" sender:view.annotation];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -486,14 +466,6 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [self saveVehicleStatus];
-    return [textField resignFirstResponder];
-}
 
 #pragma mark - UIImagePickerControllerDelegate
 

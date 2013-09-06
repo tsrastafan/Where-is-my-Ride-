@@ -31,6 +31,7 @@
 		E217FAF417D1364B00A46B22 /* WIMRVehicleDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E217FAF317D1364B00A46B22 /* WIMRVehicleDataModel.m */; };
 		E22B5AD017736F6F0001203D /* TSSHLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E22B5ACD17736F6F0001203D /* TSSHLocationManager.m */; };
 		E22B5AD117736F6F0001203D /* WIMRVehicleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E22B5ACF17736F6F0001203D /* WIMRVehicleModel.m */; };
+		E2E1596817D9CBE50093FF07 /* WIMRVehicleDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1596717D9CBE50093FF07 /* WIMRVehicleDetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,8 @@
 		E22B5ACD17736F6F0001203D /* TSSHLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSHLocationManager.m; sourceTree = "<group>"; };
 		E22B5ACE17736F6F0001203D /* WIMRVehicleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicleModel.h; sourceTree = "<group>"; };
 		E22B5ACF17736F6F0001203D /* WIMRVehicleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicleModel.m; sourceTree = "<group>"; };
+		E2E1596617D9CBE50093FF07 /* WIMRVehicleDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicleDetailViewController.h; sourceTree = "<group>"; };
+		E2E1596717D9CBE50093FF07 /* WIMRVehicleDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicleDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +215,8 @@
 				81BE302F17C3BDA200389DF8 /* WIMRVehicleListViewController.m */,
 				81915142176F3D9600C5E016 /* WIMRMapViewController.h */,
 				81915143176F3D9600C5E016 /* WIMRMapViewController.m */,
+				E2E1596617D9CBE50093FF07 /* WIMRVehicleDetailViewController.h */,
+				E2E1596717D9CBE50093FF07 /* WIMRVehicleDetailViewController.m */,
 				E217FAEF17D0FAE200A46B22 /* WIMRPhotoViewController.h */,
 				E217FAF017D0FAE200A46B22 /* WIMRPhotoViewController.m */,
 			);
@@ -329,6 +334,7 @@
 				81915144176F3D9600C5E016 /* WIMRMapViewController.m in Sources */,
 				E217FAF117D0FAE200A46B22 /* WIMRPhotoViewController.m in Sources */,
 				81BE303017C3BDA200389DF8 /* WIMRVehicleListViewController.m in Sources */,
+				E2E1596817D9CBE50093FF07 /* WIMRVehicleDetailViewController.m in Sources */,
 				E22B5AD017736F6F0001203D /* TSSHLocationManager.m in Sources */,
 				E22B5AD117736F6F0001203D /* WIMRVehicleModel.m in Sources */,
 			);
