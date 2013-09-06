@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 Tobias Schultz and Steffen Heberle. All rights reserved.
 //
 
-#import "WIMRVehicleDetailViewController.h"
+#import "WIMRMapViewController.h"
 #import "WIMRVehicleModel.h"
 #import "WIMRAppDelegate.h"
 
 
 
 #pragma mark - Interface
-@interface WIMRVehicleDetailViewController ()
+@interface WIMRMapViewController ()
 
 #pragma mark Model
 @property (strong, nonatomic) WIMRVehicleModel *vehicle;
@@ -21,7 +21,8 @@
 @property (strong, nonatomic) NSManagedObjectContext *context;
 
 #pragma mark - Controller
-@property (strong, nonatomic) UIImagePickerController* imagePickerController;
+@property (strong, nonatomic) UIImagePickerController *imagePickerController;
+@property (strong, nonatomic) WIMRPhotoViewController *photoViewController;
 
 #pragma mark - Outlets
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
@@ -45,7 +46,7 @@
 
 
 #pragma mark - Implementation
-@implementation WIMRVehicleDetailViewController
+@implementation WIMRMapViewController
 
 - (TSSHLocationManager *)locationManager
 {
@@ -63,6 +64,12 @@
 {
     if (!_context) _context = self.managedObject.managedObjectContext;
     return _context;
+}
+
+- (WIMRPhotoViewController *)photoViewController
+{
+    if (!_photoViewController) _photoViewController = [[WIMRPhotoViewController alloc] init];
+    return _photoViewController;
 }
 
 - (void)viewDidLoad
@@ -368,7 +375,7 @@
         NSLog(@"clicked Vehicle annotation");
     }
     
-//    [self.navigationController pushViewController:self.detailViewController animated:YES];
+    [self.navigationController pushViewController:self.photoViewController animated:YES];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4504" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="dgd-V2-VXq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4504" systemVersion="12E3067" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="dgd-V2-VXq">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3734.1"/>
     </dependencies>
@@ -36,10 +36,10 @@
             </objects>
             <point key="canvasLocation" x="711" y="349"/>
         </scene>
-        <!--Vehicle Detail View Controller-->
+        <!--Map View Controller - Map-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="WIMRVehicleDetailViewController" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="WIMRMapViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="z9j-MZ-eDW"/>
                         <viewControllerLayoutGuide type="bottom" id="6cB-Kv-08N"/>
@@ -77,7 +77,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="1So-oP-5Iq">
+                    <navigationItem key="navigationItem" title="Map" id="1So-oP-5Iq">
                         <barButtonItem key="rightBarButtonItem" title="Photos" id="FWp-rC-7Db">
                             <connections>
                                 <segue destination="tDH-SL-ry0" kind="push" identifier="showPhotos" id="T47-bL-aqz"/>

@@ -15,7 +15,7 @@
 #import "WIMRVehicleDataModel.h"
 #import "WIMRPhotoViewController.h"
 
-@interface WIMRVehicleDetailViewController : UIViewController <TSSHLocationManagerDelegate, MKMapViewDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface WIMRMapViewController : UIViewController <TSSHLocationManagerDelegate, MKMapViewDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) WIMRVehicleDataModel *managedObject;
 
