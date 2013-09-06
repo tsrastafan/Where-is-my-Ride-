@@ -16,7 +16,23 @@
 
 @implementation WIMRVehicleModel
 
+@dynamic subtitle;
 @dynamic coordinate;
+
+- (NSString *)subtitle
+{
+    if (!self.placemark) {
+        return nil;
+    }
+    else {
+        return [[NSString alloc] initWithFormat:(@"%@ %@, %@ %@, %@"),
+                self.placemark.thoroughfare,
+                self.placemark.subThoroughfare,
+                self.placemark.postalCode,
+                self.placemark.locality,
+                self.placemark.administrativeArea];
+    }
+}
 
 - (CLLocationCoordinate2D)coordinate
 {

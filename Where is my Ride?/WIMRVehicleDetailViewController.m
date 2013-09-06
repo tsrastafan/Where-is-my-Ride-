@@ -352,24 +352,48 @@
 
 #pragma mark - MKMapViewDelegate
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView
-            viewForAnnotation:(id<MKAnnotation>)annotation
+- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+{
+    for (id<MKAnnotation> currentAnnotation in mapView.annotations) {
+            [mapView selectAnnotation:currentAnnotation animated:YES];
+    }
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    // here we illustrate how to detect which annotation type was clicked on for its callout
+    id <MKAnnotation> annotation = [view annotation];
+    if ([annotation isKindOfClass:[WIMRVehicleModel class]])
+    {
+        NSLog(@"clicked Vehicle annotation");
+    }
+    
+//    [self.navigationController pushViewController:self.detailViewController animated:YES];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
     // If it's the user location, just return nil.
     if ([annotation isKindOfClass:[MKUserLocation class]])
         return nil;
     
     // Handle any custom annotations.
-    if ([annotation isKindOfClass:[MKPointAnnotation class]])
+    if ([annotation isKindOfClass:[WIMRVehicleModel class]])
     {
+        static NSString *VehicleAnnotationIdentifier = @"vehicleAnnotationIdentifier";
         // Try to dequeue an existing pin view first.
-        MKPinAnnotationView *thePinAnnotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Vehicle"];
+        MKPinAnnotationView *thePinAnnotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:VehicleAnnotationIdentifier];
         
         if (!thePinAnnotationView) {
             // If an existing pin view was not available, create one.
-            thePinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Vehicle"];
+            thePinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:VehicleAnnotationIdentifier];
+            thePinAnnotationView.pinColor = MKPinAnnotationColorPurple;
             thePinAnnotationView.animatesDrop = YES;
             thePinAnnotationView.canShowCallout = YES;
+
+            UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            [rightButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+            thePinAnnotationView.rightCalloutAccessoryView = rightButton;
         }
         else {
             thePinAnnotationView.annotation = annotation;
