@@ -7,14 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-//@class WIMRVehicleDetailViewController;
-#import "WIMRMapViewController.h"
 
 @interface WIMRVehicleListViewController : UITableViewController <NSFetchedResultsControllerDelegate>
-
-
-
-//@property (strong, nonatomic) WIMRVehicleDetailViewController *vehicleDetailViewController;
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 

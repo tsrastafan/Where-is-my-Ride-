@@ -10,14 +10,12 @@
 
 #import "WIMRVehicleListViewController.h"
 #import "WIMRVehicleDataModel.h"
+#import "WIMRMapViewController.h"
 
 @interface WIMRVehicleListViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-
-
 
 @end
 
@@ -36,9 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.navigationController.view.tintColor = [UIColor colorWithRed:0.670588235 green:0.239215686 blue:0.670588235 alpha:1.0];
-    
+        
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addVehicle:)];
     self.navigationItem.rightBarButtonItem = addButton;
