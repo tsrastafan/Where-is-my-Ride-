@@ -36,6 +36,9 @@ Implementierung eines Mehrbenutzersystems, das zugleich die Verwaltung mehrerer 
 **Beschreibung:**
 Wenn vom `VehicleDetailView` in den `VehicleListView` zurückgewechselt wird, werden anscheinend bestimmte Ressourcen nicht freigegeben, beim erneuten wechseln in den `VehicleDetailView` jedoch erneut und zusätzlich alloziert. Dies führt zu einem hohen Speicherbedarf, insbesondere dann, wenn ein angefordertes `WIMRVehicleModel`-Objekt Fotos enthält.
 
+***Ergänzung 06.09.2013:***
+Erhöhter Speicherbedarf war anscheinend nur durch immer neue Instanzierung eines `MKMapView`-Objektes ohne Deallozierung verursacht. *Workaround:* Verlegung der Initialisierung des Map Views in den `AppDelegate` und Benutzung dieser einzigen Instanz im `VehicleDetailViewController`.
+
 ### Ermögliche Entfernen von Fotos aus `WIMRVehicleModel`-Objekten
 **Beschreibung:**
 Bisher ist es nicht möglich, Fotos aus einem `WIMRVehicleModel`-Objekt Fotos zu löschen. Außerdem ist es nicht möglich, gezielt ein bestimmtes Foto anzuwählen. Hierzu sollte der `WIMRPhotoViewController` angepasst werden.
