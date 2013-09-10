@@ -30,7 +30,30 @@ Implementierung eines Mehrbenutzersystems, das zugleich die Verwaltung mehrerer 
     * Alarm, basierend auf Fußweg
 
 
-## Wichtige Aufgaben
+## Nächste Aufgaben
+
+### Pin verschiebbar machen
+
+### `DetailView` gestalten
+
+### Custom Toolbar erstellen
+
+### Link zu GPS-Coordinaten
+
+### Weitere Sharing-Optionen
+
+### Pins aller Fahrzeuge gleichzeitig anzeigen
+
+### Navigationsbuttons im `MapView`
+
+### `ListView` in Menüleiste transformieren
+
+### Ermögliche Entfernen von Fotos aus `WIMRVehicleModel`-Objekten
+**Beschreibung:**
+Bisher ist es nicht möglich, Fotos aus einem `WIMRVehicleModel`-Objekt Fotos zu löschen. Außerdem ist es nicht möglich, gezielt ein bestimmtes Foto anzuwählen. Hierzu sollte der `WIMRPhotoViewController` angepasst werden.
+
+
+## Erledigt
 
 ### Beseitige Memory-Leak
 **Beschreibung:**
@@ -38,7 +61,3 @@ Wenn vom `VehicleDetailView` in den `VehicleListView` zurückgewechselt wird, we
 
 ***Ergänzung 06.09.2013:***
 Erhöhter Speicherbedarf war anscheinend nur durch immer neue Instanzierung eines `MKMapView`-Objektes ohne Deallozierung verursacht. *Workaround:* Verlegung der Initialisierung des Map Views in den `AppDelegate` und Benutzung dieser einzigen Instanz im `VehicleDetailViewController`.
-
-### Ermögliche Entfernen von Fotos aus `WIMRVehicleModel`-Objekten
-**Beschreibung:**
-Bisher ist es nicht möglich, Fotos aus einem `WIMRVehicleModel`-Objekt Fotos zu löschen. Außerdem ist es nicht möglich, gezielt ein bestimmtes Foto anzuwählen. Hierzu sollte der `WIMRPhotoViewController` angepasst werden.
