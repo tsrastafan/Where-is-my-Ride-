@@ -10,6 +10,7 @@
 		81189CD417CE92CE00F0AFD3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 81189CD317CE92CE00F0AFD3 /* Settings.bundle */; };
 		816711A717F32EAD00F720E5 /* WIMRMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 816711A617F32EAD00F720E5 /* WIMRMainViewController.m */; };
 		816711AA17F32F1500F720E5 /* TSSHCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 816711A917F32F1500F720E5 /* TSSHCenterViewController.m */; };
+		816711AD17F3337900F720E5 /* TSSHLeftPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 816711AC17F3337900F720E5 /* TSSHLeftPanelViewController.m */; };
 		8175E6C417C0BA0D004E36E9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8175E6C317C0BA0D004E36E9 /* CoreData.framework */; };
 		8191512E176F3D9600C5E016 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8191512D176F3D9600C5E016 /* Foundation.framework */; };
 		81915130176F3D9600C5E016 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8191512F176F3D9600C5E016 /* CoreGraphics.framework */; };
@@ -53,6 +54,8 @@
 		816711A617F32EAD00F720E5 /* WIMRMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRMainViewController.m; sourceTree = "<group>"; };
 		816711A817F32F1500F720E5 /* TSSHCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSHCenterViewController.h; sourceTree = "<group>"; };
 		816711A917F32F1500F720E5 /* TSSHCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSHCenterViewController.m; sourceTree = "<group>"; };
+		816711AB17F3337900F720E5 /* TSSHLeftPanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSHLeftPanelViewController.h; sourceTree = "<group>"; };
+		816711AC17F3337900F720E5 /* TSSHLeftPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSHLeftPanelViewController.m; sourceTree = "<group>"; };
 		8175E6C317C0BA0D004E36E9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		8191512A176F3D9600C5E016 /* Where is my Ride?.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Where is my Ride?.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8191512D176F3D9600C5E016 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -217,18 +220,20 @@
 		E2E1596517D9C4600093FF07 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				81BE302E17C3BDA200389DF8 /* WIMRVehicleListViewController.h */,
-				81BE302F17C3BDA200389DF8 /* WIMRVehicleListViewController.m */,
-				81915142176F3D9600C5E016 /* WIMRMapViewController.h */,
-				816711A517F32EAD00F720E5 /* WIMRMainViewController.h */,
 				816711A817F32F1500F720E5 /* TSSHCenterViewController.h */,
 				816711A917F32F1500F720E5 /* TSSHCenterViewController.m */,
+				816711A517F32EAD00F720E5 /* WIMRMainViewController.h */,
 				816711A617F32EAD00F720E5 /* WIMRMainViewController.m */,
+				81915142176F3D9600C5E016 /* WIMRMapViewController.h */,
 				81915143176F3D9600C5E016 /* WIMRMapViewController.m */,
-				E2E1596617D9CBE50093FF07 /* WIMRVehicleDetailViewController.h */,
-				E2E1596717D9CBE50093FF07 /* WIMRVehicleDetailViewController.m */,
 				E217FAEF17D0FAE200A46B22 /* WIMRPhotoViewController.h */,
 				E217FAF017D0FAE200A46B22 /* WIMRPhotoViewController.m */,
+				E2E1596617D9CBE50093FF07 /* WIMRVehicleDetailViewController.h */,
+				E2E1596717D9CBE50093FF07 /* WIMRVehicleDetailViewController.m */,
+				81BE302E17C3BDA200389DF8 /* WIMRVehicleListViewController.h */,
+				81BE302F17C3BDA200389DF8 /* WIMRVehicleListViewController.m */,
+				816711AB17F3337900F720E5 /* TSSHLeftPanelViewController.h */,
+				816711AC17F3337900F720E5 /* TSSHLeftPanelViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -341,6 +346,7 @@
 				8191513A176F3D9600C5E016 /* main.m in Sources */,
 				81BE303B17C3D95800389DF8 /* WIMRDataModel.xcdatamodeld in Sources */,
 				8191513E176F3D9600C5E016 /* WIMRAppDelegate.m in Sources */,
+				816711AD17F3337900F720E5 /* TSSHLeftPanelViewController.m in Sources */,
 				81915144176F3D9600C5E016 /* WIMRMapViewController.m in Sources */,
 				816711A717F32EAD00F720E5 /* WIMRMainViewController.m in Sources */,
 				E217FAF117D0FAE200A46B22 /* WIMRPhotoViewController.m in Sources */,
