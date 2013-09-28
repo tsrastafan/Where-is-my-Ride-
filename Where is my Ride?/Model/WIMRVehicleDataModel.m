@@ -11,7 +11,7 @@
 
 @implementation WIMRVehicleDataModel
 
-@synthesize title;
+@dynamic title;
 @dynamic subtitle;
 @dynamic coordinate;
 

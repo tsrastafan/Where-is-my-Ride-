@@ -115,10 +115,10 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    WIMRVehicleDataModel *vehicle = [self.vehiclesArray objectAtIndex:indexPath.row];
+//    WIMRVehicleDataModel *vehicle = [self.vehiclesArray objectAtIndex:(NSInteger)indexPath.row];
     
-    cell.textLabel.text = vehicle.title;
-    cell.detailTextLabel.text = vehicle.subtitle;
+    cell.textLabel.text = ((WIMRVehicleDataModel*)self.vehiclesArray[indexPath.row]).title;
+    cell.detailTextLabel.text = ((WIMRVehicleDataModel*)self.vehiclesArray[indexPath.row]).subtitle;
     return cell;
 }
 
