@@ -13,11 +13,7 @@
 @interface WIMRAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
-
-@property (readonly, nonatomic, strong) NSManagedObjectModel *managedObjectModel;
-@property (readonly, nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-
 @property (nonatomic, strong) MKMapView *mapView;
 
 - (void)saveContext;
