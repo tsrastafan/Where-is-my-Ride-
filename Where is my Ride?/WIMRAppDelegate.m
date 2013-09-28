@@ -8,6 +8,7 @@
 
 #import "WIMRAppDelegate.h"
 #import "WIMRVehicleListViewController.h"
+#import "TSSHMainViewController.h"
 
 #import <MapKit/MapKit.h>
 
@@ -40,17 +41,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    WIMRVehicleListViewController *rootViewController = (WIMRVehicleListViewController *)navigationController.topViewController;
-
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.viewController = [[TSSHMainViewController alloc] initWithNibName:@"TSSHMainView" bundle:nil];
     // Set tint color
-    navigationController.view.tintColor = [UIColor colorWithRed:0.670588235 green:0.239215686 blue:0.670588235 alpha:1.0];
+    self.viewController.view.tintColor = [UIColor colorWithRed:0.670588235 green:0.239215686 blue:0.670588235 alpha:1.0];
+    self.window.rootViewController = self.viewController;
+    [self.window makeKeyAndVisible];
     
-    // Pass the managed object context to the view controller.
-    if (!self.managedObjectContext) {
-#warning Handle the error, if managedObjectContext does not exist
-    }
-    rootViewController.managedObjectContext = self.managedObjectContext;
+  /*  UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    WIMRVehicleListViewController *rootViewController = (WIMRVehicleListViewController *)navigationController.topViewController;
+*/
     
     return YES;
 }

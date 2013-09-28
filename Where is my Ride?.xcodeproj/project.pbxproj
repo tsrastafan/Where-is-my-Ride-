@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		810746E817F6ECBA00F273A0 /* WIMRVehicleListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 810746E717F6ECBA00F273A0 /* WIMRVehicleListView.xib */; };
+		810746EA17F6ECD200F273A0 /* WIMRMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 810746E917F6ECD200F273A0 /* WIMRMapView.xib */; };
+		810746EC17F6ED1700F273A0 /* TSSHMainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 810746EB17F6ED1700F273A0 /* TSSHMainView.xib */; };
+		810746EF17F6EEA400F273A0 /* TSSHMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 810746EE17F6EEA400F273A0 /* TSSHMainViewController.m */; };
 		81189CD417CE92CE00F0AFD3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 81189CD317CE92CE00F0AFD3 /* Settings.bundle */; };
 		8175E6C417C0BA0D004E36E9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8175E6C317C0BA0D004E36E9 /* CoreData.framework */; };
 		8191512E176F3D9600C5E016 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8191512D176F3D9600C5E016 /* Foundation.framework */; };
@@ -44,6 +48,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		810746E717F6ECBA00F273A0 /* WIMRVehicleListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WIMRVehicleListView.xib; sourceTree = "<group>"; };
+		810746E917F6ECD200F273A0 /* WIMRMapView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WIMRMapView.xib; sourceTree = "<group>"; };
+		810746EB17F6ED1700F273A0 /* TSSHMainView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSHMainView.xib; sourceTree = "<group>"; };
+		810746ED17F6EEA400F273A0 /* TSSHMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSHMainViewController.h; sourceTree = "<group>"; };
+		810746EE17F6EEA400F273A0 /* TSSHMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSHMainViewController.m; sourceTree = "<group>"; };
 		81189CD317CE92CE00F0AFD3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		8147354A1786F2A900949B24 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		8175E6C317C0BA0D004E36E9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -113,6 +122,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		810746E617F6EC4500F273A0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				810746E717F6ECBA00F273A0 /* WIMRVehicleListView.xib */,
+				810746E917F6ECD200F273A0 /* WIMRMapView.xib */,
+				810746EB17F6ED1700F273A0 /* TSSHMainView.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		81915121176F3D9600C5E016 = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +168,7 @@
 		81915133176F3D9600C5E016 /* Where is my Ride? */ = {
 			isa = PBXGroup;
 			children = (
+				810746E617F6EC4500F273A0 /* Views */,
 				8191513C176F3D9600C5E016 /* WIMRAppDelegate.h */,
 				8191513D176F3D9600C5E016 /* WIMRAppDelegate.m */,
 				E22B5ACB17736F6F0001203D /* Model */,
@@ -214,6 +234,8 @@
 				E2E1596717D9CBE50093FF07 /* WIMRVehicleDetailViewController.m */,
 				E217FAEF17D0FAE200A46B22 /* WIMRPhotoViewController.h */,
 				E217FAF017D0FAE200A46B22 /* WIMRPhotoViewController.m */,
+				810746ED17F6EEA400F273A0 /* TSSHMainViewController.h */,
+				810746EE17F6EEA400F273A0 /* TSSHMainViewController.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -300,7 +322,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				81CA29AE17CF5BB600395228 /* Localizable.strings in Resources */,
+				810746EA17F6ECD200F273A0 /* WIMRMapView.xib in Resources */,
 				81189CD417CE92CE00F0AFD3 /* Settings.bundle in Resources */,
+				810746EC17F6ED1700F273A0 /* TSSHMainView.xib in Resources */,
+				810746E817F6ECBA00F273A0 /* WIMRVehicleListView.xib in Resources */,
 				81915146176F3D9600C5E016 /* Images.xcassets in Resources */,
 				81915138176F3D9600C5E016 /* InfoPlist.strings in Resources */,
 				81915141176F3D9600C5E016 /* Main.storyboard in Resources */,
@@ -323,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E217FAF417D1364B00A46B22 /* WIMRVehicleDataModel.m in Sources */,
+				810746EF17F6EEA400F273A0 /* TSSHMainViewController.m in Sources */,
 				8191513A176F3D9600C5E016 /* main.m in Sources */,
 				81BE303B17C3D95800389DF8 /* WIMRDataModel.xcdatamodeld in Sources */,
 				8191513E176F3D9600C5E016 /* WIMRAppDelegate.m in Sources */,

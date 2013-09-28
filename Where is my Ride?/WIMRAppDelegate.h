@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @class MKMapView;
+@class TSSHMainViewController;
 
 @interface WIMRAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, strong) TSSHMainViewController *viewController;
+
 @property (readonly, nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) MKMapView *mapView;
 
