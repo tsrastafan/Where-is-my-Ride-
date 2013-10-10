@@ -43,6 +43,8 @@
 {
     [super viewDidLoad];
     self.managedObjectContext = self.appDelegate.managedObjectContext;
+    
+
         
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addVehicle:)];

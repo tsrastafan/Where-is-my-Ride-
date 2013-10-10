@@ -64,7 +64,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="791" y="-5"/>
+            <point key="canvasLocation" x="789" y="354"/>
         </scene>
         <!--Photo View Controller-->
         <scene sceneID="vxf-q7-thZ">
@@ -208,6 +208,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="gZb-kD-1wd"/>
+        <segue reference="WQV-CV-gzl"/>
     </inferredMetricsTieBreakers>
 </document>

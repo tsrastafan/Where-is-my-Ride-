@@ -75,7 +75,7 @@
     self.sidebarButton.target = self.revealViewController;
     self.sidebarButton.action = @selector(revealToggle:);
     
-    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    [self.navigationController.navigationBar addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 
     // adjust map view
     UIView *superview = self.view;
