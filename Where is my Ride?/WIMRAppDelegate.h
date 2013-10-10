@@ -18,6 +18,8 @@
 @property (readonly, nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
+@property (readonly, nonatomic) CGFloat rearViewWidth;
+
 @property (nonatomic, strong) MKMapView *mapView;
 
 - (void)saveContext;

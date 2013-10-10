@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Tobias Schultz and Steffen Heberle. All rights reserved.
 //
 
+#define REAR_VIEW_WIDTH 260
+
 #import "WIMRAppDelegate.h"
 #import "WIMRVehicleListViewController.h"
 
@@ -16,6 +18,13 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+
+
+- (CGFloat)rearViewWidth
+{
+    return REAR_VIEW_WIDTH;
+}
+
 
 - (MKMapView *)mapView
 {

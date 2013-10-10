@@ -17,6 +17,8 @@
 #pragma mark - Interface
 @interface WIMRMapViewController ()
 
+@property (nonatomic, weak, readonly) WIMRAppDelegate *appDelegate;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
 @property (nonatomic, readonly, weak) WIMRVehicleDataModel *selectedVehicle;
@@ -48,6 +50,11 @@
 #pragma mark - Implementation
 @implementation WIMRMapViewController
 
+- (WIMRAppDelegate *)appDelegate
+{
+    return [[UIApplication sharedApplication] delegate];
+}
+
 - (TSSHLocationManager *)locationManager
 {
     if (!_locationManager) _locationManager = [[TSSHLocationManager alloc] init];
@@ -70,8 +77,10 @@
 {
     [super viewDidLoad];
     
+    
     //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.5f alpha:0.5f];
     
+    self.revealViewController.rearViewRevealWidth = self.appDelegate.rearViewWidth;
     self.sidebarButton.target = self.revealViewController;
     self.sidebarButton.action = @selector(revealToggle:);
     

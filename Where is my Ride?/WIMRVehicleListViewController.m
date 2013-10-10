@@ -16,7 +16,7 @@
 
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong, readonly) WIMRAppDelegate *appDelegate;
+@property (nonatomic, weak, readonly) WIMRAppDelegate *appDelegate;
 
 @end
 
@@ -72,6 +72,8 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setToolbarHidden:YES animated:YES];
+    
+    self.tableView.frame = CGRectMake(0, 0, self.appDelegate.rearViewWidth, self.view.frame.size.height);
 //    UIBarButtonItem *toolbarButton = [[UIBarButtonItem alloc] initWithTitle:@"WAI" style:UIBarButtonItemStyleBordered target:self action:nil];
 //    [self setToolbarItems:[[NSArray alloc] initWithObjects:toolbarButton, nil] animated:YES];
 }
