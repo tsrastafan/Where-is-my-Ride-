@@ -35,17 +35,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    WIMRVehicleListViewController *rootViewController = (WIMRVehicleListViewController *)navigationController.topViewController;
+    //UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    //WIMRVehicleListViewController *rootViewController = (WIMRVehicleListViewController *)navigationController.topViewController;
 
     // Set tint color
-    navigationController.view.tintColor = [UIColor colorWithRed:0.670588235 green:0.239215686 blue:0.670588235 alpha:1.0];
+    //navigationController.view.tintColor = [UIColor colorWithRed:0.670588235 green:0.239215686 blue:0.670588235 alpha:1.0];
     
     // Pass the managed object context to the view controller.
-    if (!self.managedObjectContext) {
+    //if (!self.managedObjectContext) {
 #warning Handle the error, if managedObjectContext does not exist
-    }
-    rootViewController.managedObjectContext = self.managedObjectContext;
+    //}
+    //rootViewController.managedObjectContext = self.managedObjectContext;
     
     return YES;
 }

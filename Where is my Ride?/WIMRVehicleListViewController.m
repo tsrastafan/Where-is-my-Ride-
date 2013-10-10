@@ -9,12 +9,22 @@
 #import "WIMRVehicleListViewController.h"
 #import "WIMRVehicleDataModel.h"
 #import "WIMRMapViewController.h"
+#import "WIMRAppDelegate.h"
 
 @interface WIMRVehicleListViewController ()
+
+@property (nonatomic, strong, readonly) WIMRAppDelegate *appDelegate;
 
 @end
 
 @implementation WIMRVehicleListViewController
+
+- (WIMRAppDelegate *)appDelegate
+{
+    return [[UIApplication sharedApplication] delegate];
+}
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,6 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.managedObjectContext = self.appDelegate.managedObjectContext;
         
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addVehicle:)];
