@@ -152,7 +152,7 @@
 				8191513C176F3D9600C5E016 /* WIMRAppDelegate.h */,
 				8191513D176F3D9600C5E016 /* WIMRAppDelegate.m */,
 				E22B5ACB17736F6F0001203D /* Model */,
-				E2E1596517D9C4600093FF07 /* View Controller */,
+				E2E1596517D9C4600093FF07 /* View Controllers */,
 				8191513F176F3D9600C5E016 /* Main.storyboard */,
 				81915145176F3D9600C5E016 /* Images.xcassets */,
 				81915134176F3D9600C5E016 /* Supporting Files */,
@@ -203,7 +203,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		E2E1596517D9C4600093FF07 /* View Controller */ = {
+		E2E1596517D9C4600093FF07 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				81BE302E17C3BDA200389DF8 /* WIMRVehicleListViewController.h */,
@@ -215,7 +215,7 @@
 				E217FAEF17D0FAE200A46B22 /* WIMRPhotoViewController.h */,
 				E217FAF017D0FAE200A46B22 /* WIMRPhotoViewController.m */,
 			);
-			name = "View Controller";
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
