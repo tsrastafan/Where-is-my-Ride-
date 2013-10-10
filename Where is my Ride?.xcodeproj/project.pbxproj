@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		810715D71806C6F400CD7E8D /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 810715D61806C6F400CD7E8D /* SWRevealViewController.m */; };
 		81189CD417CE92CE00F0AFD3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 81189CD317CE92CE00F0AFD3 /* Settings.bundle */; };
 		8175E6C417C0BA0D004E36E9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8175E6C317C0BA0D004E36E9 /* CoreData.framework */; };
 		8191512E176F3D9600C5E016 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8191512D176F3D9600C5E016 /* Foundation.framework */; };
@@ -45,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		810715D51806C6F400CD7E8D /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = Library/SWRevealViewController.h; sourceTree = "<group>"; };
+		810715D61806C6F400CD7E8D /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = Library/SWRevealViewController.m; sourceTree = "<group>"; };
 		81189CD317CE92CE00F0AFD3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		8147354A1786F2A900949B24 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		8175E6C317C0BA0D004E36E9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -116,6 +119,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		810715D41806C64600CD7E8D /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				810715D51806C6F400CD7E8D /* SWRevealViewController.h */,
+				810715D61806C6F400CD7E8D /* SWRevealViewController.m */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
 		81915121176F3D9600C5E016 = {
 			isa = PBXGroup;
 			children = (
@@ -152,10 +164,11 @@
 		81915133176F3D9600C5E016 /* Where is my Ride? */ = {
 			isa = PBXGroup;
 			children = (
+				810715D41806C64600CD7E8D /* Library */,
 				8191513C176F3D9600C5E016 /* WIMRAppDelegate.h */,
 				8191513D176F3D9600C5E016 /* WIMRAppDelegate.m */,
 				E22B5ACB17736F6F0001203D /* Model */,
-				E2E1596517D9C4600093FF07 /* View Controller */,
+				E2E1596517D9C4600093FF07 /* View Controllers */,
 				8191513F176F3D9600C5E016 /* Main.storyboard */,
 				81915145176F3D9600C5E016 /* Images.xcassets */,
 				81915134176F3D9600C5E016 /* Supporting Files */,
@@ -208,7 +221,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		E2E1596517D9C4600093FF07 /* View Controller */ = {
+		E2E1596517D9C4600093FF07 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				81BE302E17C3BDA200389DF8 /* WIMRVehicleListViewController.h */,
@@ -220,7 +233,7 @@
 				E217FAEF17D0FAE200A46B22 /* WIMRPhotoViewController.h */,
 				E217FAF017D0FAE200A46B22 /* WIMRPhotoViewController.m */,
 			);
-			name = "View Controller";
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -335,6 +348,7 @@
 				E217FAF117D0FAE200A46B22 /* WIMRPhotoViewController.m in Sources */,
 				81BE303017C3BDA200389DF8 /* WIMRVehicleListViewController.m in Sources */,
 				E2E1596817D9CBE50093FF07 /* WIMRVehicleDetailViewController.m in Sources */,
+				810715D71806C6F400CD7E8D /* SWRevealViewController.m in Sources */,
 				E22B5AD017736F6F0001203D /* TSSHLocationManager.m in Sources */,
 				E22B5AD117736F6F0001203D /* WIMRVehicleModel.m in Sources */,
 			);
