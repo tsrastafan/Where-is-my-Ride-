@@ -19,4 +19,6 @@
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) NSInteger selectedVehicleIndex;
 
+
+
 @end

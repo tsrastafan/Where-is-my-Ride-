@@ -10,6 +10,7 @@
 #import "WIMRVehicleDataModel.h"
 #import "WIMRAppDelegate.h"
 #import "WIMRVehicleDetailViewController.h"
+#import "SWRevealViewController.h"
 
 
 
@@ -66,6 +67,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.side
 
     // adjust map view
     UIView *superview = self.view;

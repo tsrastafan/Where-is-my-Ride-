@@ -125,6 +125,13 @@
 			name = Library;
 			sourceTree = "<group>";
 		};
+		810715DC1806DB4D00CD7E8D /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
 		81915121176F3D9600C5E016 = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +168,7 @@
 		81915133176F3D9600C5E016 /* Where is my Ride? */ = {
 			isa = PBXGroup;
 			children = (
+				810715DC1806DB4D00CD7E8D /* Assets */,
 				810715D81806CB7700CD7E8D /* Library */,
 				8191513C176F3D9600C5E016 /* WIMRAppDelegate.h */,
 				8191513D176F3D9600C5E016 /* WIMRAppDelegate.m */,
