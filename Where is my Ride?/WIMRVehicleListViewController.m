@@ -73,7 +73,7 @@
     
     [self.navigationController setToolbarHidden:YES animated:YES];
     
-    self.tableView.frame = CGRectMake(0, 0, self.appDelegate.rearViewWidth, self.view.frame.size.height);
+    self.navigationController.view.frame = CGRectMake(0, 0, self.appDelegate.rearViewWidth, self.view.frame.size.height);
 //    UIBarButtonItem *toolbarButton = [[UIBarButtonItem alloc] initWithTitle:@"WAI" style:UIBarButtonItemStyleBordered target:self action:nil];
 //    [self setToolbarItems:[[NSArray alloc] initWithObjects:toolbarButton, nil] animated:YES];
 }

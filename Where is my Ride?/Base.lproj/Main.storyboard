@@ -14,7 +14,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="Yei-KT-nKc">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yei-KT-nKc" id="IKu-9a-qh0">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -34,7 +34,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x3m-yp-fdg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="301" y="-287"/>
+            <point key="canvasLocation" x="827" y="-287"/>
         </scene>
         <!--Map View Controller - Map-->
         <scene sceneID="ufC-wZ-h7g">
@@ -109,7 +109,7 @@
                     </view>
                     <connections>
                         <segue destination="dgd-V2-VXq" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegue" id="oBG-Da-pCu"/>
-                        <segue destination="dfd-EX-aEa" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegue" id="cf1-6d-bNd"/>
+                        <segue destination="OUO-hG-Ugc" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegue" id="cf1-6d-bNd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PPg-bD-bYf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -156,7 +156,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7va-6M-CCv">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7va-6M-CCv">
                                 <rect key="frame" x="74" y="84" width="226" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -169,7 +169,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEl-Vx-xTz">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEl-Vx-xTz">
                                 <rect key="frame" x="20" y="88" width="46" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -197,6 +197,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ib5-ks-6jJ" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1578" y="971"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ZoO-vF-y6y">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OUO-hG-Ugc" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Iot-yX-MCR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="dfd-EX-aEa" kind="relationship" relationship="rootViewController" id="GQM-Ip-usX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fQ8-ke-Hab" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="301" y="-287"/>
         </scene>
     </scenes>
     <resources>
