@@ -18,6 +18,8 @@
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, weak, readonly) WIMRAppDelegate *appDelegate;
 
+@property (nonatomic) NSMutableArray *vehiclesArray;
+
 @end
 
 @implementation WIMRVehicleListViewController

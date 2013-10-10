@@ -10,7 +10,7 @@
 
 @interface WIMRVehicleListViewController : UITableViewController
 
-@property (nonatomic) NSMutableArray *vehiclesArray;
+
 
 
 @end

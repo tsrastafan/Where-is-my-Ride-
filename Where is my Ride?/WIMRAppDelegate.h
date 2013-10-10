@@ -13,14 +13,9 @@
 @interface WIMRAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
-
-
 @property (readonly, nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
-
-//@property (nonatomic, strong) MKMapView *mapView;
-
-- (void)saveContext;
-- (NSURL *)applicationDocumentsDirectory;
+//- (void)saveContext;
+//- (NSURL *)applicationDocumentsDirectory;
 
 @end

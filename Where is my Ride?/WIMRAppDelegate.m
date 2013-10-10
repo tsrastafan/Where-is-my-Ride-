@@ -8,8 +8,6 @@
 #import "WIMRAppDelegate.h"
 #import "WIMRVehicleListViewController.h"
 
-//#import <MapKit/MapKit.h>
-
 @interface WIMRAppDelegate ()
 
 @property (readonly, nonatomic, strong) NSManagedObjectModel *managedObjectModel;
@@ -24,17 +22,6 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 
-
-/*
-- (MKMapView *)mapView
-{
-    if (!_mapView) {
-        _mapView = [[MKMapView alloc] init];
-    }
-    return _mapView;
-}
-*/
-
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
     NSLog(@"%@ sends %@",application.description, url.description);
@@ -44,18 +31,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    //WIMRVehicleListViewController *rootViewController = (WIMRVehicleListViewController *)navigationController.topViewController;
-
-    // Set tint color
-    //navigationController.view.tintColor = [UIColor colorWithRed:0.670588235 green:0.239215686 blue:0.670588235 alpha:1.0];
-    
-    // Pass the managed object context to the view controller.
-    //if (!self.managedObjectContext) {
-#warning Handle the error, if managedObjectContext does not exist
-    //}
-    //rootViewController.managedObjectContext = self.managedObjectContext;
-    
     return YES;
 }
 							
@@ -104,16 +79,15 @@
 #pragma mark - Core Data stack
 
 /*! Returns the managed object context for the application.
- *
- * If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
- * \return Managed object context for the application
+ *  If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
+ *  \return Managed object context for the application
  */
+
 - (NSManagedObjectContext *)managedObjectContext
 {
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
     }
-    
     NSPersistentStoreCoordinator *coordinator = self.persistentStoreCoordinator;
     if (coordinator != nil) {
         _managedObjectContext = [[NSManagedObjectContext alloc] init];
