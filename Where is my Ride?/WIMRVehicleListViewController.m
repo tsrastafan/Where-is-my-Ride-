@@ -10,6 +10,7 @@
 #import "WIMRVehicleDataModel.h"
 #import "WIMRMapViewController.h"
 #import "WIMRAppDelegate.h"
+#import "SWRevealViewController.h"
 
 @interface WIMRVehicleListViewController ()
 
@@ -106,6 +107,18 @@
         mapViewController.vehiclesArray = self.vehiclesArray;
         mapViewController.selectedVehicleIndex = [self.tableView indexPathForSelectedRow].row;
         mapViewController.managedObjectContext = self.managedObjectContext;
+    }
+    
+    if ( [segue isKindOfClass: [SWRevealViewControllerSegue class]] ) {
+        SWRevealViewControllerSegue *swSegue = (SWRevealViewControllerSegue*) segue;
+        
+        swSegue.performBlock = ^(SWRevealViewControllerSegue* rvc_segue, UIViewController* svc, UIViewController* dvc) {
+            
+            UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
+            [navController setViewControllers: @[dvc] animated: NO ];
+            [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
+        };
+        
     }
 }
 

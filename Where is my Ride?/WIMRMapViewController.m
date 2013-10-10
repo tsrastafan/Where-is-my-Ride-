@@ -17,6 +17,8 @@
 #pragma mark - Interface
 @interface WIMRMapViewController ()
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
+
 @property (nonatomic, readonly, weak) WIMRVehicleDataModel *selectedVehicle;
 
 #pragma mark Model
@@ -68,7 +70,12 @@
 {
     [super viewDidLoad];
     
-    self.side
+    //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.5f alpha:0.5f];
+    
+    self.sidebarButton.target = self.revealViewController;
+    self.sidebarButton.action = @selector(revealToggle:);
+    
+    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 
     // adjust map view
     UIView *superview = self.view;

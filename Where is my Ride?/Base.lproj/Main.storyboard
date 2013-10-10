@@ -20,6 +20,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="custom" identifier="showMap" customClass="SWRevealViewControllerSegue" id="gZb-kD-1wd"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -47,7 +50,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="1So-oP-5Iq">
-                        <barButtonItem key="leftBarButtonItem" image="location" id="kVW-tw-dax"/>
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="kVW-tw-dax"/>
                         <barButtonItem key="rightBarButtonItem" title="Photos" id="FWp-rC-7Db">
                             <connections>
                                 <segue destination="tDH-SL-ry0" kind="push" identifier="showPhotos" id="T47-bL-aqz"/>
@@ -55,12 +58,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="sidebarButton" destination="kVW-tw-dax" id="AwS-WN-xn5"/>
                         <segue destination="GEt-e6-hdv" kind="push" identifier="showDetail" id="wj5-NC-za5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="851" y="349"/>
+            <point key="canvasLocation" x="791" y="-5"/>
         </scene>
         <!--Photo View Controller-->
         <scene sceneID="vxf-q7-thZ">
@@ -196,11 +200,14 @@
         </scene>
     </scenes>
     <resources>
-        <image name="location" width="25" height="25"/>
+        <image name="menu" width="28" height="20"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="gZb-kD-1wd"/>
+    </inferredMetricsTieBreakers>
 </document>
