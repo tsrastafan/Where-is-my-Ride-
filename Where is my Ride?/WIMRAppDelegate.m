@@ -13,6 +13,13 @@
 
 #import <MapKit/MapKit.h>
 
+@interface WIMRAppDelegate ()
+
+@property (readonly, nonatomic, strong) NSManagedObjectModel *managedObjectModel;
+@property (readonly, nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+@end
+
 @implementation WIMRAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
