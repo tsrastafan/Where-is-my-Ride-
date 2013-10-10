@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 
-@property (nonatomic) NSMutableArray *vehiclesArray;
+@property (nonatomic) NSMutableArray *vehicles;
 
 @end
 
@@ -44,10 +44,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //self.managedObjectContext = self.appDelegate.managedObjectContext;
     
-
-        
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addVehicle:)];
     self.navigationItem.rightBarButtonItem = addButton;
@@ -57,8 +54,7 @@
     request.entity = [NSEntityDescription entityForName:@"Vehicle" inManagedObjectContext:self.managedObjectContext];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    request.sortDescriptors = sortDescriptors;
+    request.sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     
     // execute fetch request
     NSError *error = nil;
@@ -66,18 +62,14 @@
     if (!mutableFetchResults) {
         // Handle the error.
     }
-    self.vehiclesArray = mutableFetchResults;
+    self.vehicles = mutableFetchResults;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     [self.navigationController setToolbarHidden:YES animated:YES];
-    
     self.navigationController.view.frame = CGRectMake(0, 0, SW_REVEAL_VIEW_CONTROLLER_REAR_VIEW_WIDTH, self.view.frame.size.height);
-//    UIBarButtonItem *toolbarButton = [[UIBarButtonItem alloc] initWithTitle:@"WAI" style:UIBarButtonItemStyleBordered target:self action:nil];
-//    [self setToolbarItems:[[NSArray alloc] initWithObjects:toolbarButton, nil] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -100,7 +92,7 @@
     }
 
     // insert new event in eventArray and adjust tableView
-    [self.vehiclesArray insertObject:newVehicle atIndex:0];
+    [self.vehicles insertObject:newVehicle atIndex:0];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
@@ -110,7 +102,7 @@
 {
     if ([[segue identifier] isEqualToString:@"showMap"]) {
         WIMRMapViewController *mapViewController = segue.destinationViewController;
-        mapViewController.vehiclesArray = self.vehiclesArray;
+        mapViewController.vehiclesArray = self.vehicles;
         mapViewController.selectedVehicleIndex = [self.tableView indexPathForSelectedRow].row;
         mapViewController.managedObjectContext = self.managedObjectContext;
     }
@@ -138,7 +130,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.vehiclesArray.count;
+    return self.vehicles.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -149,8 +141,8 @@
     
 //    WIMRVehicleDataModel *vehicle = [self.vehiclesArray objectAtIndex:(NSInteger)indexPath.row];
     
-    cell.textLabel.text = ((WIMRVehicleDataModel*)self.vehiclesArray[indexPath.row]).title;
-    cell.detailTextLabel.text = ((WIMRVehicleDataModel*)self.vehiclesArray[indexPath.row]).subtitle;
+    cell.textLabel.text = ((WIMRVehicleDataModel*)self.vehicles[indexPath.row]).title;
+    cell.detailTextLabel.text = ((WIMRVehicleDataModel*)self.vehicles[indexPath.row]).subtitle;
     return cell;
 }
 
@@ -164,11 +156,11 @@
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         // Delete managed object at specified index path
-        [self.managedObjectContext deleteObject:[self.vehiclesArray objectAtIndex:indexPath.row]];
+        [self.managedObjectContext deleteObject:[self.vehicles objectAtIndex:indexPath.row]];
 #warning For WIMRMapViewController: Remove AnnotationView from MapView before deleting object.
         
         // Update array and table view
-        [self.vehiclesArray removeObjectAtIndex:indexPath.row];
+        [self.vehicles removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade]; // @[indexPath] == [NSArray arrayWithObject:indexPath]
         
         // Commit changes
