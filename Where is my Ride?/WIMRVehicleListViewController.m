@@ -13,6 +13,8 @@
 
 @interface WIMRVehicleListViewController ()
 
+
+@property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong, readonly) WIMRAppDelegate *appDelegate;
 
 @end

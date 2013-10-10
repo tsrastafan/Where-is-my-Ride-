@@ -11,6 +11,6 @@
 @interface WIMRVehicleListViewController : UITableViewController
 
 @property (nonatomic) NSMutableArray *vehiclesArray;
-@property (nonatomic) NSManagedObjectContext *managedObjectContext;
+
 
 @end
