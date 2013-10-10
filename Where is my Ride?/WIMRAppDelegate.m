@@ -5,13 +5,10 @@
 //  Created by Tobias Schultz on 6/17/13.
 //  Copyright (c) 2013 Tobias Schultz and Steffen Heberle. All rights reserved.
 //
-
-#define REAR_VIEW_WIDTH 260
-
 #import "WIMRAppDelegate.h"
 #import "WIMRVehicleListViewController.h"
 
-#import <MapKit/MapKit.h>
+//#import <MapKit/MapKit.h>
 
 @interface WIMRAppDelegate ()
 
@@ -27,12 +24,8 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 
-- (CGFloat)rearViewWidth
-{
-    return REAR_VIEW_WIDTH;
-}
 
-
+/*
 - (MKMapView *)mapView
 {
     if (!_mapView) {
@@ -40,7 +33,7 @@
     }
     return _mapView;
 }
-
+*/
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {

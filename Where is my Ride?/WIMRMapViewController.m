@@ -80,7 +80,7 @@
     
     //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.5f alpha:0.5f];
     
-    self.revealViewController.rearViewRevealWidth = self.appDelegate.rearViewWidth;
+    self.revealViewController.rearViewRevealWidth = SW_REVEAL_VIEW_CONTROLLER_REAR_VIEW_WIDTH;
     self.sidebarButton.target = self.revealViewController;
     self.sidebarButton.action = @selector(revealToggle:);
     

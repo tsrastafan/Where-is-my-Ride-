@@ -16,3 +16,5 @@
     #import <CoreData/CoreData.h>
 #endif
 
+#define SW_REVEAL_VIEW_CONTROLLER_REAR_VIEW_WIDTH 260
+

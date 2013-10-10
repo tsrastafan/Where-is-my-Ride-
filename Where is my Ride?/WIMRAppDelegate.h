@@ -17,9 +17,8 @@
 
 @property (readonly, nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
-@property (readonly, nonatomic) CGFloat rearViewWidth;
 
-@property (nonatomic, strong) MKMapView *mapView;
+//@property (nonatomic, strong) MKMapView *mapView;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
