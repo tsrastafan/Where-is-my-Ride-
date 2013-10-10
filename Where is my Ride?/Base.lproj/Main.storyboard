@@ -47,6 +47,12 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="RXO-wz-LFc">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="1So-oP-5Iq">
@@ -58,6 +64,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="mapView" destination="RXO-wz-LFc" id="dOi-dl-Rk6"/>
                         <outlet property="sidebarButton" destination="kVW-tw-dax" id="AwS-WN-xn5"/>
                         <segue destination="GEt-e6-hdv" kind="push" identifier="showDetail" id="wj5-NC-za5"/>
                     </connections>

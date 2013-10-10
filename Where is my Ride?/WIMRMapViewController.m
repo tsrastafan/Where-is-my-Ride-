@@ -87,7 +87,7 @@
     [self.navigationController.navigationBar addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 
     // adjust map view
-    UIView *superview = self.view;
+ /*   UIView *superview = self.view;
     WIMRAppDelegate *appDelegate = (WIMRAppDelegate *)[[UIApplication sharedApplication] delegate];
     self.mapView = appDelegate.mapView;
     [superview addSubview:self.mapView];
@@ -105,7 +105,9 @@
     cn =
     [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:superview attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
     [superview addConstraint:cn];
-    
+ 
+  */
+  
     // set delegates
     self.locationManager.delegate = self;
     self.mapView.delegate = self;
