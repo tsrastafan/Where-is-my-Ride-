@@ -15,8 +15,7 @@
 @interface WIMRVehicleListViewController ()
 
 
-@property (nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, weak, readonly) WIMRAppDelegate *appDelegate;
+@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 
 @property (nonatomic) NSMutableArray *vehiclesArray;
 
@@ -24,11 +23,12 @@
 
 @implementation WIMRVehicleListViewController
 
-- (WIMRAppDelegate *)appDelegate
-{
-    return [[UIApplication sharedApplication] delegate];
-}
 
+- (NSManagedObjectContext *)managedObjectContext
+{
+    WIMRAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    return appDelegate.managedObjectContext;
+}
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -44,7 +44,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.managedObjectContext = self.appDelegate.managedObjectContext;
+    //self.managedObjectContext = self.appDelegate.managedObjectContext;
     
 
         
