@@ -15,10 +15,11 @@
 
 @interface WIMRMapViewController : UIViewController <TSSHLocationManagerDelegate, MKMapViewDelegate, MFMailComposeViewControllerDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
-@property (nonatomic) NSMutableArray *vehiclesArray;
-@property (nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic) NSInteger selectedVehicleIndex;
+//@property (nonatomic) NSMutableArray *vehiclesArray;
+//@property (nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSIndexPath* selectedVehicleIndexPath;
 
+- (void)performFetch;
 
 
 @end

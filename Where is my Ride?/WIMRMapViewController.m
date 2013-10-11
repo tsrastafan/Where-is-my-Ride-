@@ -15,13 +15,17 @@
 
 
 #pragma mark - Interface
-@interface WIMRMapViewController ()
+@interface WIMRMapViewController () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, weak, readonly) WIMRAppDelegate *appDelegate;
+//@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
+
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
-@property (nonatomic, readonly, weak) WIMRVehicleDataModel *selectedVehicle;
+@property (nonatomic, readonly, strong) WIMRVehicleDataModel *selectedVehicle;
+
+@property (nonatomic, strong) NSArray *vehicles;
 
 #pragma mark Model
 @property (strong, nonatomic) TSSHLocationManager *locationManager;
@@ -50,10 +54,46 @@
 #pragma mark - Implementation
 @implementation WIMRMapViewController
 
-- (WIMRAppDelegate *)appDelegate
+- (NSFetchedResultsController *)fetchedResultsController
 {
-    return [[UIApplication sharedApplication] delegate];
+    if (_fetchedResultsController) {
+        return _fetchedResultsController;
+    }
+    WIMRAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Vehicle" inManagedObjectContext:appDelegate.managedObjectContext];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+    
+    [fetchRequest setEntity:entityDescription];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [fetchRequest setFetchBatchSize:20];
+    
+    
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:appDelegate.managedObjectContext sectionNameKeyPath:nil cacheName:@"Vehicle Cache"];
+    _fetchedResultsController.delegate = self;
+    return _fetchedResultsController;
 }
+
+
+
+// Convenience accessors
+- (NSArray *)vehicles
+{
+    return self.fetchedResultsController.fetchedObjects;
+}
+
+- (WIMRVehicleDataModel *)selectedVehicle
+{
+    return self.vehicles[self.selectedVehicleIndexPath.row];
+}
+
+/*
+- (NSManagedObjectContext *)managedObjectContext
+{
+    WIMRAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    return appDelegate.managedObjectContext;
+}
+*/
 
 - (TSSHLocationManager *)locationManager
 {
@@ -61,16 +101,12 @@
     return _locationManager;
 }
 
+
+//Warum muss der vorher alloziiiert werden?
 - (WIMRVehicleDetailViewController *)detailViewController
 {
     if (!_detailViewController) _detailViewController = [[WIMRVehicleDetailViewController alloc] init];
     return _detailViewController;
-}
-
-- (WIMRVehicleDataModel *)selectedVehicle
-{
-#warning Implement error handling
-    return self.vehiclesArray[self.selectedVehicleIndex];
 }
 
 - (void)viewDidLoad
@@ -108,6 +144,11 @@
  
   */
   
+    
+
+
+
+    
     // set delegates
     self.locationManager.delegate = self;
     self.mapView.delegate = self;
@@ -118,9 +159,18 @@
     [self updateUI];
 }
 
+- (void)performFetch
+{
+    NSError *error;
+    if (![self.fetchedResultsController performFetch:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    }
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self performFetch];
     
     [self.navigationController setToolbarHidden:NO animated:YES];
 }
@@ -134,7 +184,8 @@
     {
         if ([[sender class] isSubclassOfClass:[WIMRVehicleDataModel class]]) {
             [segue.destinationViewController setVehicle:sender];
-            [segue.destinationViewController setManagedObjectContext:self.managedObjectContext];
+//            [segue.destinationViewController setManagedObjectContext:self.managedObjectContext];
+#warning segue will not work
         }
     }
 }
@@ -247,6 +298,7 @@
 
 #pragma mark - Tools
 
+/*
 - (void)updateUI
 {
     MKCoordinateRegion region = MKCoordinateRegionMake(self.selectedVehicle.coordinate, MKCoordinateSpanMake(0.005, 0.005));
@@ -256,15 +308,28 @@
     [self.mapView addAnnotation:self.selectedVehicle];
     [self.mapView addOverlay:[MKCircle circleWithCenterCoordinate:self.selectedVehicle.coordinate radius:self.selectedVehicle.location.horizontalAccuracy]];
 }
+*/
+
+- (void)updateUI
+{
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.selectedVehicle.coordinate, MKCoordinateSpanMake(0.005, 0.005));
+    [self.mapView setRegion:region animated:YES];
+    [self.mapView removeOverlays:self.mapView.overlays];
+    for (WIMRVehicleDataModel *vehicle in self.vehicles) {
+        [self.mapView addAnnotation:vehicle];
+        NSLog(@"***** ADDED ANNOTATION");
+    }
+    
+    
+}
 
 - (BOOL)saveVehicleStatus
 {
 //    self.managedObject.location = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.location];
 //    self.managedObject.placemark = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.placemark];
 //    self.managedObject.photos = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.capturedImages];
-    
     NSError *error = nil;
-    if (![self.managedObjectContext save:&error]) {
+    if (![self.fetchedResultsController.managedObjectContext save:&error]) {
         NSLog(@"Error");
     }
     
@@ -330,9 +395,11 @@
 - (void)didUpdateLocation:(BOOL)success withStatus:(TSSHLocationUpdateReturnStatus)status
 {
     if (success) {
-        self.selectedVehicle.location = [self.locationManager.lastLocation copy];
-        [self updateUI];
+        self.selectedVehicle.location = self.locationManager.lastLocation;
+        NSLog(@"****** Updated Location");
         [self saveVehicleStatus];
+        [self updateUI];
+
     } else {
 //        self.locationLabel.text = @"Could not get update.";
     }
@@ -341,9 +408,10 @@
 - (void)didUpdateGeocode:(BOOL)success sender:(id)sender
 {
     if (success) {
-        self.selectedVehicle.placemark = [self.locationManager.lastPlacemark copy];
-        [self updateUI];
+        self.selectedVehicle.placemark = self.locationManager.lastPlacemark;
+        //[self updateUI];
         [self saveVehicleStatus];
+        [self updateUI];
     } else {
 //        self.addressLabel.text = @"Could not get corresponding address.";
     }
@@ -363,7 +431,7 @@
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
     // here we illustrate how to detect which annotation type was clicked on for its callout
-    id <MKAnnotation> annotation = [view annotation];
+    id <MKAnnotation> annotation = view.annotation;
     if ([annotation isKindOfClass:[WIMRVehicleDataModel class]])
     {
         [self performSegueWithIdentifier:@"showDetail" sender:view.annotation];
@@ -494,5 +562,63 @@
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
+
+
+#pragma mark - NSFetchedResultsControllerDelegate
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
+    //[self.tableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    //UITableView *tableView = self.tableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            //[tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            //[tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            //[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            //[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            //[tableView deleteRowsAtIndexPaths:[NSArray                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            //[tableView insertRowsAtIndexPaths:[NSArray                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+//            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+//            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
+//    [self.tableView endUpdates];
+}
+
+
 
 @end
