@@ -48,13 +48,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RXO-wz-LFc">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="RXO-wz-LFc">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem image="location" id="o2e-9q-Ag4">
+                            <connections>
+                                <action selector="getLocation:" destination="vXZ-lx-hvc" id="ZZV-HP-DF5"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="CJo-TD-YAo"/>
+                        <barButtonItem image="photo" id="xtL-cE-8Ip">
+                            <connections>
+                                <action selector="attachPhoto:" destination="vXZ-lx-hvc" id="uLJ-Uo-NNr"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="aQN-qy-qeb"/>
+                        <barButtonItem image="edit" id="s6P-q8-keZ"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="HCx-Aw-HYC"/>
+                        <barButtonItem image="stopwatch" id="dKJ-fI-GA9"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="2VZ-Hh-WCF"/>
+                        <barButtonItem image="upload" id="14a-FN-vB2"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Map" id="1So-oP-5Iq">
                         <barButtonItem key="leftBarButtonItem" image="menu" id="kVW-tw-dax"/>
                         <barButtonItem key="rightBarButtonItem" title="Photos" id="FWp-rC-7Db">
@@ -64,8 +83,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="attachNoteButton" destination="s6P-q8-keZ" id="Yfc-4E-4rm"/>
+                        <outlet property="attachPhotoButton" destination="xtL-cE-8Ip" id="pZc-7b-3jC"/>
+                        <outlet property="getLocationButton" destination="o2e-9q-Ag4" id="IyY-57-0id"/>
                         <outlet property="mapView" destination="RXO-wz-LFc" id="dOi-dl-Rk6"/>
+                        <outlet property="parkMeterButton" destination="dKJ-fI-GA9" id="YvP-Zp-Tnm"/>
+                        <outlet property="parkingMeterButton" destination="dKJ-fI-GA9" id="C5S-TU-cl4"/>
+                        <outlet property="shareActionButton" destination="14a-FN-vB2" id="Zym-sf-JTv"/>
                         <outlet property="sidebarButton" destination="kVW-tw-dax" id="AwS-WN-xn5"/>
+                        <outlet property="takePhotoButton" destination="xtL-cE-8Ip" id="Vnq-pk-0Y5"/>
                         <segue destination="GEt-e6-hdv" kind="push" identifier="showDetail" id="wj5-NC-za5"/>
                     </connections>
                 </viewController>
@@ -126,7 +152,7 @@
         <!--Navigation Controller-->
         <scene sceneID="hLI-II-1dI">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dgd-V2-VXq" sceneMemberID="viewController">
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="dgd-V2-VXq" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="PJQ-SO-zDv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -163,7 +189,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7va-6M-CCv">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7va-6M-CCv">
                                 <rect key="frame" x="74" y="84" width="226" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -176,7 +202,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEl-Vx-xTz">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEl-Vx-xTz">
                                 <rect key="frame" x="20" y="88" width="46" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -225,7 +251,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="edit" width="25" height="25"/>
+        <image name="location" width="25" height="25"/>
         <image name="menu" width="28" height="20"/>
+        <image name="photo" width="25" height="25"/>
+        <image name="stopwatch" width="25" height="25"/>
+        <image name="upload" width="25" height="25"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -233,6 +264,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="gZb-kD-1wd"/>
+        <segue reference="WQV-CV-gzl"/>
     </inferredMetricsTieBreakers>
 </document>

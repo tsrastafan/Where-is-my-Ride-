@@ -17,7 +17,15 @@
 #pragma mark - Interface
 @interface WIMRMapViewController () <NSFetchedResultsControllerDelegate>
 
-//@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *getLocationButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *attachPhotoButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *attachNoteButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *parkingMeterButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareActionButton;
+
+
+
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
@@ -68,7 +76,6 @@
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     [fetchRequest setFetchBatchSize:20];
     
-    
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:appDelegate.managedObjectContext sectionNameKeyPath:nil cacheName:@"Vehicle Cache"];
     _fetchedResultsController.delegate = self;
     return _fetchedResultsController;
@@ -86,14 +93,6 @@
 {
     return self.vehicles[self.selectedVehicleIndexPath.row];
 }
-
-/*
-- (NSManagedObjectContext *)managedObjectContext
-{
-    WIMRAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    return appDelegate.managedObjectContext;
-}
-*/
 
 - (TSSHLocationManager *)locationManager
 {
@@ -114,6 +113,7 @@
     [super viewDidLoad];
     
     
+    
     //self.sidebarButton.tintColor = [UIColor colorWithWhite:0.5f alpha:0.5f];
     
     self.revealViewController.rearViewRevealWidth = SW_REVEAL_VIEW_CONTROLLER_REAR_VIEW_WIDTH;
@@ -121,42 +121,15 @@
     self.sidebarButton.action = @selector(revealToggle:);
     
     [self.navigationController.navigationBar addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-
-    // adjust map view
- /*   UIView *superview = self.view;
-    WIMRAppDelegate *appDelegate = (WIMRAppDelegate *)[[UIApplication sharedApplication] delegate];
-    self.mapView = appDelegate.mapView;
-    [superview addSubview:self.mapView];
-
-    self.mapView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSLayoutConstraint *cn =
-    [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:superview attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-    [superview addConstraint:cn];
-    cn =
-    [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:superview attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
-    [superview addConstraint:cn];
-    cn =
-    [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:superview attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0];
-    [superview addConstraint:cn];
-    cn =
-    [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:superview attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
-    [superview addConstraint:cn];
- 
-  */
-  
-    
-
-
-
     
     // set delegates
     self.locationManager.delegate = self;
     self.mapView.delegate = self;
     
-    [self createToolbarButtons];
+    //[self createToolbarButtons];
     [self initializeActionSheetButtonTitles];
     
-    [self updateUI];
+    //[self updateUI];
 }
 
 - (void)performFetch
@@ -172,7 +145,7 @@
     [super viewWillAppear:animated];
     [self performFetch];
     
-    [self.navigationController setToolbarHidden:NO animated:YES];
+    //[self.navigationController setToolbarHidden:NO animated:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -184,8 +157,6 @@
     {
         if ([[sender class] isSubclassOfClass:[WIMRVehicleDataModel class]]) {
             [segue.destinationViewController setVehicle:sender];
-//            [segue.destinationViewController setManagedObjectContext:self.managedObjectContext];
-#warning segue will not work
         }
     }
 }
@@ -312,12 +283,17 @@
 
 - (void)updateUI
 {
-    MKCoordinateRegion region = MKCoordinateRegionMake(self.selectedVehicle.coordinate, MKCoordinateSpanMake(0.005, 0.005));
-    [self.mapView setRegion:region animated:YES];
+    
+    
     [self.mapView removeOverlays:self.mapView.overlays];
+    NSInteger i = 0;
     for (WIMRVehicleDataModel *vehicle in self.vehicles) {
         [self.mapView addAnnotation:vehicle];
-        NSLog(@"***** ADDED ANNOTATION");
+        if (i == self.selectedVehicleIndexPath.row) {
+           MKCoordinateRegion region = MKCoordinateRegionMake(self.selectedVehicle.coordinate, MKCoordinateSpanMake(0.005, 0.005));
+            [self.mapView setRegion:region animated:YES];
+        }
+        i++;
     }
     
     
@@ -325,16 +301,13 @@
 
 - (BOOL)saveVehicleStatus
 {
-//    self.managedObject.location = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.location];
-//    self.managedObject.placemark = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.placemark];
-//    self.managedObject.photos = [NSKeyedArchiver archivedDataWithRootObject:self.vehicle.capturedImages];
     NSError *error = nil;
     if (![self.fetchedResultsController.managedObjectContext save:&error]) {
         NSLog(@"Error");
     }
-    
     return !error;
 }
+/*
 
 - (void)createToolbarButtons
 {
@@ -370,6 +343,7 @@
     [self setToolbarItems:@[getLocationButton, flexibleSpaceButton, attachPhotoButton, flexibleSpaceButton, attachNoteButton, flexibleSpaceButton, parkingMeterButton, flexibleSpaceButton, shareActionButton] animated:YES];
 }
 
+*/
 - (void)disableBarButtonItem: (UIBarButtonItem *)barButtonItem
 {
 //    barButtonItem.tintColor = [UIColor colorWithRed:0.556862745 green:0.556862745 blue:0.576470588 alpha:1]; // system gray
