@@ -24,6 +24,7 @@
 		8191514F176F3D9700C5E016 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81915131176F3D9600C5E016 /* UIKit.framework */; };
 		81915157176F3D9700C5E016 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81915155176F3D9700C5E016 /* InfoPlist.strings */; };
 		81915159176F3D9700C5E016 /* Where_is_my_Ride_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 81915158176F3D9700C5E016 /* Where_is_my_Ride_Tests.m */; };
+		81B151BD180C4FA8000FFA34 /* TSSHCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81B151BC180C4FA8000FFA34 /* TSSHCoreDataManager.m */; };
 		81BE303017C3BDA200389DF8 /* WIMRVehicleListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BE302F17C3BDA200389DF8 /* WIMRVehicleListViewController.m */; };
 		81BE303B17C3D95800389DF8 /* WIMRDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81BE303417C3CD8F00389DF8 /* WIMRDataModel.xcdatamodeld */; };
 		81C676D6177DBF8C00ACD875 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81C676D5177DBF8C00ACD875 /* MapKit.framework */; };
@@ -67,6 +68,8 @@
 		8191514C176F3D9700C5E016 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		81915154176F3D9700C5E016 /* Where is my Ride?Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Where is my Ride?Tests-Info.plist"; sourceTree = "<group>"; };
 		81915158176F3D9700C5E016 /* Where_is_my_Ride_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Where_is_my_Ride_Tests.m; sourceTree = "<group>"; };
+		81B151BB180C4FA8000FFA34 /* TSSHCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSHCoreDataManager.h; sourceTree = "<group>"; };
+		81B151BC180C4FA8000FFA34 /* TSSHCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSHCoreDataManager.m; sourceTree = "<group>"; };
 		81BE302E17C3BDA200389DF8 /* WIMRVehicleListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIMRVehicleListViewController.h; sourceTree = "<group>"; };
 		81BE302F17C3BDA200389DF8 /* WIMRVehicleListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIMRVehicleListViewController.m; sourceTree = "<group>"; };
 		81BE303517C3CD8F00389DF8 /* WIMRDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WIMRDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -220,6 +223,8 @@
 				81BE303417C3CD8F00389DF8 /* WIMRDataModel.xcdatamodeld */,
 				E217FAF217D1364B00A46B22 /* WIMRVehicleDataModel.h */,
 				E217FAF317D1364B00A46B22 /* WIMRVehicleDataModel.m */,
+				81B151BB180C4FA8000FFA34 /* TSSHCoreDataManager.h */,
+				81B151BC180C4FA8000FFA34 /* TSSHCoreDataManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -343,6 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81B151BD180C4FA8000FFA34 /* TSSHCoreDataManager.m in Sources */,
 				E217FAF417D1364B00A46B22 /* WIMRVehicleDataModel.m in Sources */,
 				8191513A176F3D9600C5E016 /* main.m in Sources */,
 				81BE303B17C3D95800389DF8 /* WIMRDataModel.xcdatamodeld in Sources */,

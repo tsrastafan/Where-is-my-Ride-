@@ -11,15 +11,19 @@
 #import "WIMRMapViewController.h"
 #import "WIMRAppDelegate.h"
 #import "SWRevealViewController.h"
+#import "TSSHCoreDataManager.h"
 
-@interface WIMRVehicleListViewController () <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface WIMRVehicleListViewController () <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, TSSHLocationManagerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) id<TSSCoreDataManagerDelegate> coreDataManagerDelegate;
+@property (nonatomic, strong) TSSHCoreDataManager *coreDataManager;
 
 @end
 
 @implementation WIMRVehicleListViewController
 
+/*
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
@@ -40,7 +44,7 @@
     _fetchedResultsController.delegate = self;
     return _fetchedResultsController;
 }
-
+*/
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,6 +55,11 @@
     return self;
 }
 
+- (TSSHCoreDataManager *)coreDataManager
+{
+    if (!_coreDataManager) _coreDataManager = [[TSSHCoreDataManager alloc] init];
+    return _coreDataManager;
+}
 
 - (void)viewDidLoad
 {
@@ -62,6 +71,8 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addVehicle:)];
     self.navigationItem.rightBarButtonItem = addButton;
+    
+    self.coreDataManagerDelegate = self;
     
     NSError *error;
     if (![self.fetchedResultsController performFetch:&error]) {
