@@ -272,7 +272,7 @@
 				ORGANIZATIONNAME = "Tobias Schultz and Steffen Heberle";
 				TargetAttributes = {
 					81915129176F3D9600C5E016 = {
-						DevelopmentTeam = ND39WNH36L;
+						DevelopmentTeam = 7UVDDYR6PZ;
 					};
 					8191514A176F3D9700C5E016 = {
 						TestTargetID = 81915129176F3D9600C5E016;
